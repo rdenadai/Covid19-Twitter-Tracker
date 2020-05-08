@@ -28,11 +28,8 @@ def get_profile():
 class TwitterTagsClient:
     def __init__(self, np_posts=5):
         self.np_posts = np_posts
-        self.results = []
-        self.results = {"data": []}
 
-    def start(self, hashtag):
-
+    def load(self, hashtag):
         # Using Firefox driver NO WINDOW MODE
         os.environ["MOZ_HEADLESS"] = "1"
 
@@ -57,57 +54,57 @@ class TwitterTagsClient:
                 )
                 ultimas[1].click()
                 not_found = True
-                time.sleep(5)
+                time.sleep(0.1)
             except Exception as e:
                 print(f"ERROR: AdaptiveFiltersBar-target not found : {e}")
 
-        for _ in range(self.np_posts):
-            driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
-            time.sleep(4)
-
         data = {"hashtag": hashtag, "comments": []}
+        for _ in range(self.np_posts + 1):
+            driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
+            time.sleep(3)
 
-        tweets = driver.find_elements_by_tag_name("article")
-        for tweet in tweets:
-            try:
-                username = tweet.find_element_by_xpath(
-                    "./div/div[2]/div[2]/div[1]/div/div/div[1]/div[1]/a/div/div[2]/div/span"
-                )
-                comment = tweet.find_element_by_xpath(
-                    "./div/div[2]/div[2]/div[2]/div[1]"
-                )
-                dt = tweet.find_element_by_xpath(
-                    "./div/div[2]/div[2]/div[1]/div/div/div[1]/a"
-                )
-
-                if username and comment:
-                    username = username.text.strip()
-                    comment = comment.text.strip()
-
-                    # Tratamento de data
-                    tm = (
-                        dt.get_attribute("title")
-                        .replace(" de ", "/")
-                        .replace(" · ", " ")
-                    ).lower()
-                    for key, value in months.items():
-                        if key in tm:
-                            tm = tm.replace(key, value.title())
-                            break
-                    dt = arrow.get(tm, "h:mm A D/MMM/YYYY")
-
-                    data["comments"].append(
-                        {
-                            "hash": hashlib.sha256(
-                                (username + "|" + comment).encode("ascii", "ignore")
-                            ).hexdigest(),
-                            "username": username,
-                            "data": dt.format("DD/MM/YYYY HH:mm"),
-                            "timestamp": dt.timestamp,
-                            "comment": comment,
-                        }
+            tweets = driver.find_elements_by_tag_name("article")
+            for tweet in tweets:
+                try:
+                    username = tweet.find_element_by_xpath(
+                        "./div/div[2]/div[2]/div[1]/div/div/div[1]/div[1]/a/div/div[2]/div/span"
                     )
-            except Exception as e:
-                print(f"ERROR: username or comment not found : {e}")
-        self.results["data"].append(data)
+                    comment = tweet.find_element_by_xpath(
+                        "./div/div[2]/div[2]/div[2]/div[1]"
+                    )
+                    dt = tweet.find_element_by_xpath(
+                        "./div/div[2]/div[2]/div[1]/div/div/div[1]/a"
+                    )
+
+                    if username and comment:
+                        username = username.text.strip()
+                        comment = comment.text.strip()
+
+                        # Tratamento de data
+                        tm = (
+                            dt.get_attribute("title")
+                            .replace(" de ", "/")
+                            .replace(" · ", " ")
+                        ).lower()
+                        for key, value in months.items():
+                            if key in tm:
+                                tm = tm.replace(key, value.title())
+                                break
+                        dt = arrow.get(tm, "h:mm A D/MMM/YYYY")
+
+                        data["comments"].append(
+                            {
+                                "hash": hashlib.sha256(
+                                    (username + "|" + comment).encode("ascii", "ignore")
+                                ).hexdigest(),
+                                "username": username,
+                                "data": dt.format("DD/MM/YYYY HH:mm"),
+                                "timestamp": dt.timestamp,
+                                "comment": comment,
+                            }
+                        )
+                except Exception as e:
+                    pass
+                    # print(f"ERROR: username or comment not found : {e}")
         driver.close()
+        return data
