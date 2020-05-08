@@ -4,7 +4,7 @@ from .models import TwitterTagsClient
 from ..database.models import RawHashtagComments
 
 
-def run_hashtag(hashtag, n_posts_2_extract):
+def run_hashtag(n_posts_2_extract, hashtag):
     print(f"- Collecting hashtag : {hashtag}")
     tw = TwitterTagsClient(n_posts_2_extract=n_posts_2_extract)
     return tw.load(hashtag)

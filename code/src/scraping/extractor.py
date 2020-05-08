@@ -12,12 +12,17 @@ if __name__ == "__main__":
         "falta de ar",
         "tosse",
         "coriza",
+        "diarréia covid",
+        "diarréia corona",
+        "dor de garganta",
         "tosse febre coriza",
         "estou com covid",
         "peguei covid",
+        "dor de cabeça febre",
+        "dor de cabeça corona",
     ]
 
-    n_posts_2_extract = config("N_POSTS_TO_EXTRACT", default=1)
+    n_posts_2_extract = int(config("N_POSTS_TO_EXTRACT", default=1))
     with concurrent.futures.ProcessPoolExecutor(max_workers=4) as executor:
         start_time = time.time()
         contents = list(
@@ -29,5 +34,5 @@ if __name__ == "__main__":
         print(f"--- Save tweets took {round(time.time() - start_time, 2)} seconds ---")
         for i, item in enumerate(salvos):
             print(
-                f"--- # of tweets for {item['hashtag']} => {len(contents[i]['comments'])}/{item['salvos']}"
+                f"--- # of tweets for : {item['hashtag']} => {len(contents[i]['comments'])}/{item['salvos']}"
             )
