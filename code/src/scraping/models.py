@@ -26,8 +26,8 @@ def get_profile():
 
 
 class TwitterTagsClient:
-    def __init__(self, np_posts=5):
-        self.np_posts = np_posts
+    def __init__(self, n_posts_2_extract=5):
+        self.n_posts_2_extract = n_posts_2_extract
 
     def load(self, hashtag):
         # Using Firefox driver NO WINDOW MODE
@@ -59,7 +59,7 @@ class TwitterTagsClient:
                 print(f"ERROR: AdaptiveFiltersBar-target not found : {e}")
 
         data = {"hashtag": hashtag, "comments": []}
-        for _ in range(self.np_posts + 1):
+        for _ in range(self.n_posts_2_extract + 1):
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
             time.sleep(3)
 

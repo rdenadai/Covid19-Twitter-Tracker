@@ -9,10 +9,6 @@ class SmallComments(Model):
     comment = TextField()
     clean_comment = TextField(default="")
     sanitized_comment = TextField(default="")
-    emotion = CharField(max_length=255, default="")
-    emotion_prob = CharField(max_length=255, default="")
-    valence = CharField(max_length=255, default="")
-    valence_prob = CharField(max_length=255, default="")
 
     class Meta:
         database = db
@@ -47,10 +43,6 @@ class RawHashtagComments(Model):
     timestamp = TimestampField(resolution=100)
     clean_comment = TextField(default="")
     sanitized_comment = TextField(default="")
-    emotion = CharField(max_length=255, default="")
-    emotion_prob = CharField(max_length=255, default="")
-    valence = CharField(max_length=255, default="")
-    valence_prob = CharField(max_length=255, default="")
 
     class Meta:
         database = db
