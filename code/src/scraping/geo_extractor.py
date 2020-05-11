@@ -45,6 +45,7 @@ if __name__ == "__main__":
             contents = list(
                 filter(None, executor.map(run_user_geo, usernames, chunksize=chunk))
             )
+            os.system("pkill chromedriver")
             print(f"--- Load geo took {round(time.time() - start_time, 2)}s ---")
 
             # Normaliza os dados

@@ -1,8 +1,10 @@
-from decouple import config
+import os
 from functools import partial
 from multiprocessing import cpu_count
 from concurrent.futures import ProcessPoolExecutor
 import time
+
+from decouple import config
 
 from ..database.conn import db
 from .utils import run_hashtag, run_save_hashtag
@@ -48,6 +50,7 @@ if __name__ == "__main__":
         contents = list(
             executor.map(partial(run_hashtag, n_posts_2_extract), hashtags, chunksize=1)
         )
+        os.system("pkill chromedriver")
         print(f"--- Load tweets took {round(time.time() - start_time, 2)} seconds ---")
         start_time = time.time()
         with db.atomic() as txn:
