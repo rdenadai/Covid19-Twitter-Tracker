@@ -30,7 +30,7 @@ if __name__ == "__main__":
         .order_by(RawHashtagComments.username.asc())
     )
     usernames_d = [result.username.replace("@", "") for result in results]
-    print(f"# of Users without geolocation: {len(usernames)}")
+    print(f"# of Users without geolocation: {len(usernames_d)}")
 
     # Realizar o processo de pesquisa no twitter, extração e gravação na base de dados
     with ProcessPoolExecutor(max_workers=cpu_count()) as executor:
