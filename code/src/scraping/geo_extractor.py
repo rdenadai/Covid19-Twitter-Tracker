@@ -45,12 +45,9 @@ if __name__ == "__main__":
                 contents = list(
                     filter(None, executor.map(run_user_geo, usernames, chunksize=chunk))
                 )
-                print(
-                    f"--- Load geo took {round(time.time() - start_time, 2)} seconds ---"
-                )
+                print(f"--- Load geo took {round(time.time() - start_time, 2)}s ---")
 
                 # Normaliza os dados
-                start_time = time.time()
                 norm_geo_users = []
                 for i, content in enumerate(contents):
                     try:
@@ -61,16 +58,10 @@ if __name__ == "__main__":
                         ]
                     except:
                         pass
-                print(
-                    f"--- Data norm took {round(time.time() - start_time, 2)} seconds ---"
-                )
+                print(f"Qtd usernames : {len(norm_geo_users)}")
 
                 start_time = time.time()
                 executor.map(run_save_user_location, norm_geo_users, chunksize=chunk)
                 txn.commit()
-                print(
-                    f"--- Save geo took {round(time.time() - start_time, 2)} seconds ---"
-                )
-        print(
-            f"--- All process took {round(time.time() - start_time_t, 2)} seconds ---"
-        )
+                print(f"--- Save geo took {round(time.time() - start_time, 3)}s ---")
+        print(f"--- All process took {round(time.time() - start_time_t, 2)}s ---")
