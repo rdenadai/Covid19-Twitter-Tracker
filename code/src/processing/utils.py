@@ -2,8 +2,14 @@ from string import punctuation
 from unicodedata import normalize
 
 
+def divide_chunks(lista, n):
+    # looping till length l
+    for i in range(0, len(lista), n):
+        yield lista[i : i + n]
+
+
 def remover_acentos(txt):
-    return normalize('NFKD', txt).encode('ASCII', 'ignore').decode('ASCII')
+    return normalize("NFKD", txt).encode("ASCII", "ignore").decode("ASCII")
 
 
 def normalizar(txt, sort=True):
