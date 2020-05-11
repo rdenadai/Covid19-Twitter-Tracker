@@ -31,8 +31,14 @@ def run_save_user_location(item):
     try:
         geo = UserLocation.get(UserLocation.username == item[0])
     except DoesNotExist:
-        UserLocation(**{"username": item[0], "city": item[1], "geo": item[2]}).save(
-            force_insert=True
-        )
+        UserLocation(
+            **{
+                "username": item[0],
+                "city": item[1],
+                "state": item[2],
+                "region": item[3],
+                "geo": item[4],
+            }
+        ).save(force_insert=True)
         return 1
     return 0

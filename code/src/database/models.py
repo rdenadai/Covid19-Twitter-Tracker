@@ -52,6 +52,8 @@ class RawHashtagComments(Model):
 class UserLocation(Model):
     username = ForeignKeyField(RawHashtagComments, backref="location")
     city = CharField(max_length=255)
+    state = CharField(max_length=255)
+    region = CharField(max_length=255)
     geo = CharField(max_length=255)
 
     class Meta:

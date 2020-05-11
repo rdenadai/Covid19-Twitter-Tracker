@@ -14,7 +14,7 @@ from ..processing.utils import normalizar, divide_chunks
 
 if __name__ == "__main__":
 
-    cidades = pd.read_csv(f"{os.getcwd()}/data/brazil_cities.csv")
+    cidades = pd.read_csv(f"{os.getcwd()}/data/brazil_cities_final.csv")
     cidades["nome_norm"] = cidades["nome"].apply(
         lambda nome: normalizar(nome, sort=False)
     )
@@ -52,9 +52,15 @@ if __name__ == "__main__":
                 for i, content in enumerate(contents):
                     try:
                         geo = cidades[cidades["nome_norm"] == content[1]]
-                        lat, lng = geo[["LATITUDE", "LONGITUDE"]].values.tolist()[0]
+                        lat, lng = geo[["lat", "lng"]].values.tolist()[0]
                         norm_geo_users += [
-                            (f"@{content[0]}", geo["nome"].values[0], f"{lat},{lng}")
+                            (
+                                f"@{content[0]}",
+                                geo["nome"].values[0],
+                                geo["estado"].values[0],
+                                geo["regiao"].values[0],
+                                f"{lat},{lng}",
+                            )
                         ]
                     except:
                         pass
