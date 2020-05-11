@@ -8,7 +8,7 @@ from peewee import JOIN
 
 from ..database.models import RawHashtagComments, UserLocation
 from .utils import run_user_geo, run_save_user_location
-from ..processing.utils import normalizar
+from ..processing.utils import normalizar, divide_chunks
 
 
 if __name__ == "__main__":
