@@ -68,11 +68,14 @@ if __name__ == "__main__":
 
             start_time = time.time()
             with db.atomic() as txn:
-                list(
-                    executor.map(
-                        run_save_user_location, norm_geo_users, chunksize=chunk
+                qtde = sum(
+                    list(
+                        executor.map(
+                            run_save_user_location, norm_geo_users, chunksize=chunk
+                        )
                     )
                 )
+                print(f"Qtde saved usernames : {qtde}")
                 txn.commit()
             print(f"--- Save geo took {round(time.time() - start_time, 3)}s ---")
         print(f"--- All process took {round(time.time() - start_time_t, 2)}s ---")
