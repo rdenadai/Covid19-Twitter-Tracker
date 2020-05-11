@@ -33,14 +33,17 @@ if __name__ == "__main__":
     usernames_d = [result.username.replace("@", "") for result in results]
     print(f"# of Users without geolocation: {len(usernames_d)}")
 
+    k = 30
+    procs = cpu_count() * 2
+    chunk = int(k / procs)
     # Realizar o processo de pesquisa no twitter, extração e gravação na base de dados
-    with ProcessPoolExecutor(max_workers=cpu_count()) as executor:
+    with ProcessPoolExecutor(max_workers=procs) as executor:
         start_time_t = time.time()
         with db.atomic() as txn:
-            for usernames in divide_chunks(usernames_d, 20):
+            for usernames in divide_chunks(usernames_d, k):
                 start_time = time.time()
                 contents = list(
-                    filter(None, executor.map(run_user_geo, usernames, chunksize=5))
+                    filter(None, executor.map(run_user_geo, usernames, chunksize=chunk))
                 )
                 print(
                     f"--- Load geo took {round(time.time() - start_time, 2)} seconds ---"
@@ -63,7 +66,7 @@ if __name__ == "__main__":
                 )
 
                 start_time = time.time()
-                executor.map(run_save_user_location, norm_geo_users, chunksize=5)
+                executor.map(run_save_user_location, norm_geo_users, chunksize=chunk)
                 txn.commit()
                 print(
                     f"--- Save geo took {round(time.time() - start_time, 2)} seconds ---"
