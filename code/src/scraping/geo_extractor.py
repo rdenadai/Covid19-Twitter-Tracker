@@ -40,39 +40,39 @@ if __name__ == "__main__":
     # Realizar o processo de pesquisa no twitter, extração e gravação na base de dados
     with ProcessPoolExecutor(max_workers=procs) as executor:
         start_time_t = time.time()
-            for usernames in divide_chunks(usernames_d, k):
-                start_time = time.time()
-                contents = list(
-                    filter(None, executor.map(run_user_geo, usernames, chunksize=chunk))
-                )
-                print(f"--- Load geo took {round(time.time() - start_time, 2)}s ---")
+        for usernames in divide_chunks(usernames_d, k):
+            start_time = time.time()
+            contents = list(
+                filter(None, executor.map(run_user_geo, usernames, chunksize=chunk))
+            )
+            print(f"--- Load geo took {round(time.time() - start_time, 2)}s ---")
 
-                # Normaliza os dados
-                norm_geo_users = []
-                for i, content in enumerate(contents):
-                    try:
-                        geo = cidades[cidades["nome_norm"] == content[1]]
-                        lat, lng = geo[["lat", "lng"]].values.tolist()[0]
-                        norm_geo_users += [
-                            (
-                                f"@{content[0]}",
-                                geo["nome"].values[0],
-                                geo["estado"].values[0],
-                                geo["regiao"].values[0],
-                                f"{lat},{lng}",
-                            )
-                        ]
-                    except:
-                        pass
-                print(f"Qtd usernames : {len(norm_geo_users)}")
-
-                start_time = time.time()
-                with db.atomic() as txn:
-                    list(
-                        executor.map(
-                            run_save_user_location, norm_geo_users, chunksize=chunk
+            # Normaliza os dados
+            norm_geo_users = []
+            for i, content in enumerate(contents):
+                try:
+                    geo = cidades[cidades["nome_norm"] == content[1]]
+                    lat, lng = geo[["lat", "lng"]].values.tolist()[0]
+                    norm_geo_users += [
+                        (
+                            f"@{content[0]}",
+                            geo["nome"].values[0],
+                            geo["estado"].values[0],
+                            geo["regiao"].values[0],
+                            f"{lat},{lng}",
                         )
+                    ]
+                except:
+                    pass
+            print(f"Qtd usernames : {len(norm_geo_users)}")
+
+            start_time = time.time()
+            with db.atomic() as txn:
+                list(
+                    executor.map(
+                        run_save_user_location, norm_geo_users, chunksize=chunk
                     )
-                    txn.commit()
-                print(f"--- Save geo took {round(time.time() - start_time, 3)}s ---")
+                )
+                txn.commit()
+            print(f"--- Save geo took {round(time.time() - start_time, 3)}s ---")
         print(f"--- All process took {round(time.time() - start_time_t, 2)}s ---")
