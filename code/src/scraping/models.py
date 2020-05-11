@@ -7,7 +7,7 @@ import urllib.parse
 import arrow
 import pandas as pd
 from selenium import webdriver
-
+from selenium.webdriver.chrome.options import Options
 
 from ..processing.utils import normalizar
 
@@ -30,18 +30,35 @@ def get_profile():
     return browser_profile
 
 
+def chrome_options():
+    options = Options()
+    options.add_argument("--disable-extensions")
+    options.add_argument("--disable-gpu")
+    options.add_argument("--no-sandbox")  # linux only
+    options.add_argument("--headless")
+    options.add_argument("--lang=pt-br")
+    options.add_argument("--proxy-server='direct://'")
+    options.add_argument("--proxy-bypass-list=*")
+    return options
+
+
 class TwitterTagsClient:
     def __init__(self, n_posts_2_extract=5):
         self.n_posts_2_extract = n_posts_2_extract
 
     def load_tags(self, hashtag):
         # Using Firefox driver NO WINDOW MODE
-        os.environ["MOZ_HEADLESS"] = "1"
+        # os.environ["MOZ_HEADLESS"] = "1"
+        # driver = webdriver.Firefox(
+        #     firefox_profile=get_profile(),
+        #     executable_path=f"{os.getcwd()}/src/scraping/driver/geckodriver",
+        # )
 
-        driver = webdriver.Firefox(
-            firefox_profile=get_profile(),
-            executable_path=f"{os.getcwd()}/src/scraping/driver/geckodriver",
+        driver = webdriver.Chrome(
+            options=chrome_options(),
+            executable_path=f"{os.getcwd()}/src/scraping/driver/chromedriver",
         )
+
         # f"https://twitter.com/search?q={hashtag}&src=typed_query&f=live"
         # https://twitter.com/hashtag/febre?f=live
         # https://twitter.com/search?q=%22falta%20de%20ar%22%20lang%3Apt&src=typed_query&f=live
@@ -93,7 +110,10 @@ class TwitterTagsClient:
                             if key in tm:
                                 tm = tm.replace(key, value.title())
                                 break
-                        dt = arrow.get(tm, "h:mm A D/MMM/YYYY")
+                        # Chrome
+                        dt = arrow.get(tm, "h:mm A MMM D, YYYY")
+                        # Firefox
+                        # dt = arrow.get(tm, "h:mm A D/MMM/YYYY")
 
                         data["comments"].append(
                             {
@@ -107,8 +127,8 @@ class TwitterTagsClient:
                             }
                         )
                 except Exception as e:
-                    pass
-                    # print(f"ERROR: username or comment not found : {e}")
+                    # pass
+                    print(f"ERROR: username or comment not found : {e}")
         driver.close()
         return data
 
@@ -116,11 +136,15 @@ class TwitterTagsClient:
 class TwitterGeoClient:
     def load_user_geo(self, username):
         # Using Firefox driver NO WINDOW MODE
-        os.environ["MOZ_HEADLESS"] = "1"
+        # os.environ["MOZ_HEADLESS"] = "1"
+        # driver = webdriver.Firefox(
+        #     firefox_profile=get_profile(),
+        #     executable_path=f"{os.getcwd()}/src/scraping/driver/geckodriver",
+        # )
 
-        driver = webdriver.Firefox(
-            firefox_profile=get_profile(),
-            executable_path=f"{os.getcwd()}/src/scraping/driver/geckodriver",
+        driver = webdriver.Chrome(
+            options=chrome_options(),
+            executable_path=f"{os.getcwd()}/src/scraping/driver/chromedriver",
         )
 
         driver.get(f"https://twitter.com/{username}")

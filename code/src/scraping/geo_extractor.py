@@ -36,7 +36,7 @@ if __name__ == "__main__":
     with ProcessPoolExecutor(max_workers=cpu_count()) as executor:
         start_time = time.time()
         contents = list(
-            filter(None, executor.map(run_user_geo, usernames[:4], chunksize=5))
+            filter(None, executor.map(run_user_geo, usernames, chunksize=5))
         )
         print(f"--- Load geo took {round(time.time() - start_time, 2)} seconds ---")
 

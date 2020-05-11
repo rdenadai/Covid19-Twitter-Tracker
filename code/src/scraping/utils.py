@@ -28,7 +28,6 @@ def run_user_geo(username):
 
 
 def run_save_user_location(item):
-    print(item)
     try:
         geo = UserLocation.get(UserLocation.username == item[0])
     except DoesNotExist:
