@@ -5,7 +5,12 @@ import hashlib
 import urllib.parse
 
 import arrow
+import pandas as pd
 from selenium import webdriver
+
+
+from ..processing.utils import normalizar
+
 
 months = {
     "fev": "Feb",
@@ -29,7 +34,7 @@ class TwitterTagsClient:
     def __init__(self, n_posts_2_extract=5):
         self.n_posts_2_extract = n_posts_2_extract
 
-    def load(self, hashtag):
+    def load_tags(self, hashtag):
         # Using Firefox driver NO WINDOW MODE
         os.environ["MOZ_HEADLESS"] = "1"
 
@@ -69,9 +74,7 @@ class TwitterTagsClient:
                     username = tweet.find_element_by_xpath(
                         "./div/div[2]/div[2]/div[1]/div/div/div[1]/div[1]/a/div/div[2]/div/span"
                     )
-                    comment = tweet.find_element_by_xpath(
-                        "./div/div[2]/div[2]/div[2]/div[1]"
-                    )
+                    comment = tweet.find_element_by_xpath("./div/div[2]/div[2]/div[2]")
                     dt = tweet.find_element_by_xpath(
                         "./div/div[2]/div[2]/div[1]/div/div/div[1]/a"
                     )
@@ -108,3 +111,42 @@ class TwitterTagsClient:
                     # print(f"ERROR: username or comment not found : {e}")
         driver.close()
         return data
+
+
+class TwitterGeoClient:
+    def load_user_geo(self, username):
+        # Using Firefox driver NO WINDOW MODE
+        os.environ["MOZ_HEADLESS"] = "1"
+
+        driver = webdriver.Firefox(
+            firefox_profile=get_profile(),
+            executable_path=f"{os.getcwd()}/src/scraping/driver/geckodriver",
+        )
+
+        driver.get(f"https://twitter.com/{username}")
+        counter, not_found = 10, False
+        while not not_found:
+            try:
+                nome = driver.find_element_by_xpath(
+                    "/html/body/div/div/div/div[2]/main/div/div/div/div[1]/div/div/div/div/div[1]/div/div[2]/div/div/div[1]/div/span[1]/span"
+                )
+                not_found = True
+            except:
+                pass
+            time.sleep(0.5)
+            counter -= 1
+            if counter <= 0:
+                not_found = True
+
+        retorno = None
+        try:
+            cidade = driver.find_element_by_xpath(
+                "/html/body/div/div/div/div[2]/main/div/div/div/div[1]/div/div/div/div/div[1]/div/div[4]/div/span[1]"
+            )
+            cidade = normalizar(cidade.text.split(",")[0], sort=False)
+            retorno = [username, cidade]
+        except Exception as e:
+            # print(username, str(e))
+            pass
+        driver.close()
+        return retorno

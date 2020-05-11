@@ -1,6 +1,7 @@
 from decouple import config
 from functools import partial
-import concurrent.futures
+from multiprocessing import cpu_count
+from concurrent.futures import ProcessPoolExecutor
 import time
 
 from .utils import run_hashtag, run_save_hashtag
@@ -41,7 +42,7 @@ if __name__ == "__main__":
     ]
 
     n_posts_2_extract = int(config("N_POSTS_TO_EXTRACT", default=1))
-    with concurrent.futures.ProcessPoolExecutor(max_workers=4) as executor:
+    with ProcessPoolExecutor(max_workers=cpu_count()) as executor:
         start_time = time.time()
         contents = list(
             executor.map(partial(run_hashtag, n_posts_2_extract), hashtags, chunksize=1)

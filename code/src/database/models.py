@@ -47,3 +47,13 @@ class RawHashtagComments(Model):
     class Meta:
         database = db
         table_name = "raw_hashtag_comments"
+
+
+class UserLocation(Model):
+    username = ForeignKeyField(RawHashtagComments, backref="location")
+    city = CharField(max_length=255)
+    geo = CharField(max_length=255)
+
+    class Meta:
+        database = db
+        table_name = "user_geolocation"

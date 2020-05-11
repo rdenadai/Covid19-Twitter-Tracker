@@ -1,5 +1,5 @@
 from .conn import db
-from .models import RawHashtagComments
+from .models import RawHashtagComments, UserLocation
 from peewee import *
 from playhouse.migrate import *
 
@@ -7,7 +7,7 @@ from playhouse.migrate import *
 if __name__ == "__main__":
     db.connect()
     db.create_tables(
-        [RawHashtagComments,]
+        [RawHashtagComments, UserLocation,]
     )
 
     # Exemplo, caso da necessidade de atualizar alguma tabela
