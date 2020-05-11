@@ -68,7 +68,11 @@ if __name__ == "__main__":
                 print(f"Qtd usernames : {len(norm_geo_users)}")
 
                 start_time = time.time()
-                executor.map(run_save_user_location, norm_geo_users, chunksize=chunk)
+                list(
+                    executor.map(
+                        run_save_user_location, norm_geo_users, chunksize=chunk
+                    )
+                )
                 txn.commit()
                 print(f"--- Save geo took {round(time.time() - start_time, 3)}s ---")
         print(f"--- All process took {round(time.time() - start_time_t, 2)}s ---")
