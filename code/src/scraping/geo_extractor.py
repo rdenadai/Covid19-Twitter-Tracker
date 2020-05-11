@@ -40,7 +40,6 @@ if __name__ == "__main__":
     # Realizar o processo de pesquisa no twitter, extração e gravação na base de dados
     with ProcessPoolExecutor(max_workers=procs) as executor:
         start_time_t = time.time()
-        with db.atomic() as txn:
             for usernames in divide_chunks(usernames_d, k):
                 start_time = time.time()
                 contents = list(
@@ -68,11 +67,12 @@ if __name__ == "__main__":
                 print(f"Qtd usernames : {len(norm_geo_users)}")
 
                 start_time = time.time()
-                list(
-                    executor.map(
-                        run_save_user_location, norm_geo_users, chunksize=chunk
+                with db.atomic() as txn:
+                    list(
+                        executor.map(
+                            run_save_user_location, norm_geo_users, chunksize=chunk
+                        )
                     )
-                )
-                txn.commit()
+                    txn.commit()
                 print(f"--- Save geo took {round(time.time() - start_time, 3)}s ---")
         print(f"--- All process took {round(time.time() - start_time_t, 2)}s ---")

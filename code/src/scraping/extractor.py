@@ -4,6 +4,7 @@ from multiprocessing import cpu_count
 from concurrent.futures import ProcessPoolExecutor
 import time
 
+from ..database.conn import db
 from .utils import run_hashtag, run_save_hashtag
 
 
@@ -49,7 +50,9 @@ if __name__ == "__main__":
         )
         print(f"--- Load tweets took {round(time.time() - start_time, 2)} seconds ---")
         start_time = time.time()
-        salvos = list(executor.map(run_save_hashtag, contents, chunksize=25))
+        with db.atomic() as txn:
+            salvos = list(executor.map(run_save_hashtag, contents, chunksize=25))
+            txn.commit()
         print(f"--- Save tweets took {round(time.time() - start_time, 2)} seconds ---")
         for i, item in enumerate(salvos):
             print(
