@@ -4,6 +4,12 @@ from .models import TwitterTagsClient, TwitterGeoClient
 from ..database.models import RawHashtagComments, UserLocation
 
 
+def divide_chunks(lista, n):
+    # looping till length l
+    for i in range(0, len(lista), n):
+        yield lista[i : i + n]
+
+
 def run_hashtag(n_posts_2_extract, hashtag):
     print(f"- Collecting hashtag : {hashtag}")
     tw = TwitterTagsClient(n_posts_2_extract=n_posts_2_extract)
