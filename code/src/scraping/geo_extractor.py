@@ -22,12 +22,13 @@ if __name__ == "__main__":
     # Carregar todos os usuários que ainda não foram geolocalizados
     results = (
         RawHashtagComments.select(RawHashtagComments.username)
+        .distinct()
         .join(
             UserLocation,
             JOIN.LEFT_OUTER,
             on=(RawHashtagComments.username == UserLocation.username),
         )
-        .distinct()
+        .where(UserLocation.username.is_null())
         .order_by(RawHashtagComments.username.asc())
     )
     usernames_d = [result.username.replace("@", "") for result in results]
