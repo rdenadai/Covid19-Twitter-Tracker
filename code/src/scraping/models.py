@@ -111,9 +111,9 @@ class TwitterTagsClient:
                                 tm = tm.replace(key, value.title())
                                 break
                         # Chrome
-                        dt = arrow.get(tm, "h:mm A MMM D, YYYY")
+                        # dt = arrow.get(tm, "h:mm A MMM D, YYYY")
                         # Firefox
-                        # dt = arrow.get(tm, "h:mm A D/MMM/YYYY")
+                        dt = arrow.get(tm, "h:mm A D/MMM/YYYY")
 
                         data["comments"].append(
                             {
