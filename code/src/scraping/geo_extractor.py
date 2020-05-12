@@ -65,7 +65,6 @@ if __name__ == "__main__":
                     ]
                 except:
                     pass
-            print(f"Qtd usernames : {len(norm_geo_users)}")
 
             start_time = time.time()
             with db.atomic() as txn:
