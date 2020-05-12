@@ -17,8 +17,11 @@ def run_save_hashtag(item):
         try:
             existe = RawHashtagComments.get(RawHashtagComments.hash == comment["hash"])
         except DoesNotExist:
-            RawHashtagComments(hashtag=hashtag, **comment).save(force_insert=True)
-            salvos += 1
+            try:
+                RawHashtagComments(hashtag=hashtag, **comment).save(force_insert=True)
+                salvos += 1
+            except:
+                pass
     return {"hashtag": hashtag, "salvos": salvos}
 
 
@@ -31,14 +34,17 @@ def run_save_user_location(item):
     try:
         geo = UserLocation.get(UserLocation.username == item[0])
     except DoesNotExist:
-        UserLocation(
-            **{
-                "username": item[0],
-                "city": item[1],
-                "state": item[2],
-                "region": item[3],
-                "geo": item[4],
-            }
-        ).save(force_insert=True)
-        return 1
+        try:
+            UserLocation(
+                **{
+                    "username": item[0],
+                    "city": item[1],
+                    "state": item[2],
+                    "region": item[3],
+                    "geo": item[4],
+                }
+            ).save(force_insert=True)
+            return 1
+        except:
+            pass
     return 0
