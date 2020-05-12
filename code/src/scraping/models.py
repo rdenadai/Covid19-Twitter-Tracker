@@ -127,8 +127,8 @@ class TwitterTagsClient:
                             }
                         )
                 except Exception as e:
-                    # pass
-                    print(f"ERROR: username or comment not found : {e}")
+                    pass
+                    # print(f"ERROR: username or comment not found : {e}")
         driver.close()
         return data
 
