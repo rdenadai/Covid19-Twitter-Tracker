@@ -45,7 +45,7 @@ def tokenizer(phrase, clean=False):
         palavra = "".join([word.lemma_ for word in NLP(palavra)])
         # clfa(STEMMER.stem(palavra))
         clfa(palavra)
-    return " ".join(clean_frase)
+    return " ".join(clean_frase).strip()
 
 
 def clean_up(phrase, join=True):
@@ -75,7 +75,8 @@ def clean_up(phrase, join=True):
     for palavra in phrase:
         if not is_number(palavra) and len(palavra) > 2:
             clfa(palavra)
-    return " ".join(clean_frase) if join else clean_frase
+    clean_frase = " ".join(clean_frase) if join else clean_frase
+    return clean_frase.strip()
 
 
 def remover_acentos(txt):

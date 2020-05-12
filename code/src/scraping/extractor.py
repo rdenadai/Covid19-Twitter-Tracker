@@ -74,12 +74,12 @@ if __name__ == "__main__":
             executor.map(partial(run_hashtag, n_posts_2_extract), hashtags, chunksize=1)
         )
         os.system("pkill chromedriver")
-        print(f"--- Load tweets took {round(time.time() - start_time, 2)} seconds ---")
+        print(f"--- Load tweets took {round(time.time() - start_time, 2)}s ---")
         start_time = time.time()
         with db.atomic() as txn:
             salvos = list(executor.map(run_save_hashtag, contents, chunksize=25))
             txn.commit()
-        print(f"--- Save tweets took {round(time.time() - start_time, 2)} seconds ---")
+        print(f"--- Save tweets took {round(time.time() - start_time, 2)}s ---")
         for i, item in enumerate(salvos):
             print(
                 f"--- # of tweets for : {item['hashtag']} => {len(contents[i]['comments'])}/{item['salvos']}"

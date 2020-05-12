@@ -28,7 +28,7 @@ async def run_model_update(model):
                 (row.hash, row.comment) for row in model.select().paginate(tt, N) if row
             ]
             for hashy, comment in rows:
-                clean_comment = clean_up(comment).strip()
+                clean_comment = clean_up(comment)
                 sanitized_comment = tokenizer(clean_comment, clean=False)
                 query = model.update(
                     sanitized_comment=sanitized_comment, clean_comment=clean_comment
@@ -36,7 +36,7 @@ async def run_model_update(model):
                 query.execute()
             txn.commit()
         print(
-            f"{model.__name__} pag. {tt} - {total-1} --- {round(time.time() - start_time, 2)} seconds ---"
+            f"{model.__name__} pag. {tt} - {total-1} --- {round(time.time() - start_time, 2)}s ---"
         )
         await asyncio.sleep(0.05)
 

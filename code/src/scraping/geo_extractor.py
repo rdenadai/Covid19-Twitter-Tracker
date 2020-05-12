@@ -43,7 +43,7 @@ if __name__ == "__main__":
         for usernames in divide_chunks(usernames_d, k):
             start_time = time.time()
             contents = list(
-                filter(None, executor.map(run_user_geo, usernames, chunksize=chunk))
+                filter(None, executor.map(run_user_geo, usernames, chunksize=1))
             )
             os.system("pkill chromedriver")
             print(f"--- Load geo took {round(time.time() - start_time, 2)}s ---")
