@@ -1,7 +1,8 @@
 import os
+import time
+import json
 from multiprocessing import cpu_count
 from concurrent.futures import ProcessPoolExecutor
-import time
 
 import pandas as pd
 from peewee import JOIN
@@ -14,10 +15,15 @@ from ..processing.utils import normalizar, divide_chunks
 
 if __name__ == "__main__":
 
+    json_file = f"{os.getcwd()}/src/scraping/collected_users.json"
+
     cidades = pd.read_csv(f"{os.getcwd()}/data/brazil_cities_final.csv")
     cidades["nome_norm"] = cidades["nome"].apply(
         lambda nome: normalizar(nome, sort=False)
     )
+
+    with open(json_file) as fh:
+        collected_users = json.load(fh)
 
     # Carregar todos os usuários que ainda não foram geolocalizados
     results = (
@@ -31,10 +37,14 @@ if __name__ == "__main__":
         .where(UserLocation.username.is_null())
         .order_by(RawHashtagComments.timestamp.asc())
     )
-    usernames_d = [result.username.replace("@", "") for result in results]
+    usernames_d = [
+        result.username.replace("@", "")
+        for result in results
+        if result.username not in collected_users
+    ]
     print(f"# of Users without geolocation: {len(usernames_d)}")
 
-    k = 30
+    k = 10
     procs = cpu_count() * 2
     chunk = int(k / procs)
     # Realizar o processo de pesquisa no twitter, extração e gravação na base de dados
@@ -47,6 +57,12 @@ if __name__ == "__main__":
             )
             os.system("pkill chromedriver")
             print(f"--- Load geo took {round(time.time() - start_time, 2)}s ---")
+
+            # Save collected users for history
+            collected_users += [f"@{username}" for username in usernames]
+            with open(json_file, "w") as fh:
+                json.dump(collected_users, fh)
+            # ----
 
             # Normaliza os dados
             norm_geo_users = []
@@ -68,13 +84,15 @@ if __name__ == "__main__":
 
             start_time = time.time()
             with db.atomic() as txn:
-                qtde = sum(
-                    list(
+                resultados = list(
+                    filter(
+                        None,
                         executor.map(
                             run_save_user_location, norm_geo_users, chunksize=chunk
-                        )
+                        ),
                     )
                 )
+                qtde = len(resultados)
                 print(f"Qtde saved usernames : {qtde}")
                 txn.commit()
             print(f"--- Save geo took {round(time.time() - start_time, 3)}s ---")

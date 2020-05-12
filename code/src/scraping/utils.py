@@ -44,7 +44,7 @@ def run_save_user_location(item):
                     "geo": item[4],
                 }
             ).save(force_insert=True)
-            return 1
+            return item[0]
         except:
             pass
-    return 0
+    return None
