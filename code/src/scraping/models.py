@@ -1,5 +1,6 @@
 import os
 import time
+import re
 from datetime import datetime
 import hashlib
 import urllib.parse
@@ -9,7 +10,7 @@ import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-from ..processing.utils import normalizar
+from ..processing.utils import is_number, normalizar
 
 
 months = {
@@ -45,6 +46,18 @@ def chrome_options():
 class TwitterTagsClient:
     def __init__(self, n_posts_2_extract=5):
         self.n_posts_2_extract = n_posts_2_extract
+
+    def treat_comment(self, comment):
+        comment = comment.replace("\n", " ").strip()
+        strip_pos = 0
+        for pos in range(1, len(comment)):
+            if is_number(comment[-pos]) or comment[-pos] == " ":
+                strip_pos = pos
+            else:
+                break
+        if strip_pos > 0:
+            comment = comment[:-strip_pos]
+        return comment
 
     def load_tags(self, hashtag):
         # Using Firefox driver NO WINDOW MODE
@@ -98,7 +111,7 @@ class TwitterTagsClient:
 
                     if username and comment:
                         username = username.text.strip()
-                        comment = comment.text.strip()
+                        comment = self.treat_comment(comment.text.strip())
 
                         # Tratamento de data
                         tm = (
