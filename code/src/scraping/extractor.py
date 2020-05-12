@@ -13,13 +13,19 @@ from .utils import run_hashtag, run_save_hashtag
 if __name__ == "__main__":
     hashtags = [
         '"estou com covid"',
+        "estou com covid",
         '"peguei covid"',
+        "peguei covid",
         '"estou doente" covid',
         '"estou doente" corona',
         '"dor de cabeça" febre',
         '"dor de cabeça" corona',
         '"dor de cabeça" covid',
         '"dor de cabeça" covid19',
+        "dor de cabeça febre",
+        "dor de cabeça corona",
+        "dor de cabeça covid",
+        "dor de cabeça covid19",
         "diarréia corona",
         "diarréia covid",
         "diarréia covid19",
@@ -29,6 +35,9 @@ if __name__ == "__main__":
         '"falta de ar" corona',
         '"falta de ar" covid',
         '"falta de ar" covid19',
+        "falta de ar corona",
+        "falta de ar covid",
+        "falta de ar covid19",
         "tosse corona",
         "tosse covid",
         "tosse covid19",
@@ -38,16 +47,22 @@ if __name__ == "__main__":
         '"dor de garganta" corona',
         '"dor de garganta" covid',
         '"dor de garganta" covid19',
+        "dor de garganta corona",
+        "dor de garganta covid",
+        "dor de garganta covid19",
         "febre",
         '"falta de ar"',
+        "falta de ar",
         "tosse",
         "coriza",
         '"dor de garganta"',
+        "dor de garganta",
         "tosse febre coriza",
+        '"tosse, febre e coriza"',
     ]
 
     n_posts_2_extract = int(config("N_POSTS_TO_EXTRACT", default=1))
-    with ProcessPoolExecutor(max_workers=cpu_count()) as executor:
+    with ProcessPoolExecutor(max_workers=cpu_count() * 2) as executor:
         start_time = time.time()
         contents = list(
             executor.map(partial(run_hashtag, n_posts_2_extract), hashtags, chunksize=1)
