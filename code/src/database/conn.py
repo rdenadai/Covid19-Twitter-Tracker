@@ -7,8 +7,13 @@ from playhouse.pool import PooledSqliteExtDatabase  # , PooledPostgresqlExtDatab
 # db = SqliteDatabase(config('DATABASE_PATH', default='covid19_tracker.db'))
 db = PooledSqliteExtDatabase(
     config("DATABASE_PATH", default="covid19_tracker.db"),
-    pragmas=[("journal_mode", "wal")],
-    max_connections=50,
+    pragmas={
+        "journal_mode": "wal",  # WAL-mode.
+        "cache_size": -64 * 1000,  # 64MB cache.
+        "foreign_keys": 1,
+        "synchronous": 0,
+    },
+    max_connections=150,
     stale_timeout=3600,
     check_same_thread=False,
 )
