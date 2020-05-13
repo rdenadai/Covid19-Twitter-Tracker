@@ -40,6 +40,7 @@ if __name__ == "__main__":
         .where(UserLocation.username.is_null())
         .order_by(RawHashtagComments.timestamp.asc())
     )
+    print(f"# total of Users without geolocation: {len(results)}")
     usernames_d = [
         result.username.replace("@", "")
         for result in results
