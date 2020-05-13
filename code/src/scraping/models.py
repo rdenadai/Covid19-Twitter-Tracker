@@ -176,14 +176,21 @@ class TwitterGeoClient:
                 not_found = True
 
         retorno = None
-        try:
-            cidade = driver.find_element_by_xpath(
-                "/html/body/div/div/div/div[2]/main/div/div/div/div[1]/div/div/div/div/div[1]/div/div[4]/div/span[1]"
-            )
-            cidade = normalizar(cidade.text.split(",")[0], sort=False)
-            retorno = [username, cidade]
-        except Exception as e:
-            # print(username, str(e))
-            pass
+        for xpath in [
+            "/html/body/div/div/div/div[2]/main/div/div/div/div/div/div/div/div/div[1]/div/div[4]/div/span[1]",
+            "/html/body/div/div/div/div[2]/main/div/div/div/div/div/div/div/div/div[1]/div/div[3]/div/span[1]",
+        ]:
+            try:
+                cidade = driver.find_element_by_xpath(xpath)
+                cidade = cidade.text
+                if "," in cidade:
+                    cidade = normalizar(cidade.split(",")[0], sort=False)
+                else:
+                    cidade = normalizar(cidade.split("-")[0], sort=False)
+                retorno = [username, cidade]
+                break
+            except Exception as e:
+                # print(username, str(e))
+                pass
         driver.close()
         return retorno
