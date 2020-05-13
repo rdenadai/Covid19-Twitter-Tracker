@@ -48,7 +48,7 @@ if __name__ == "__main__":
     ]
     print(f"# of Users without geolocation: {len(usernames_d)}")
     # Carregar apenas uma parcela
-    usernames_d = [:N_USER_GEO]
+    usernames_d = usernames_d[:N_USER_GEO]
 
     k = 10
     procs = cpu_count() * 2
