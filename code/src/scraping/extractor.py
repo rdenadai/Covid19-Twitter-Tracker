@@ -15,33 +15,32 @@ if __name__ == "__main__":
 
     n_posts_part = int(config("N_POSTS_PART", default=0))
 
-    if n_posts_part == 0:
-        hashtags = [
-            '"peguei covid"',
-            '"peguei covid19"',
-            '"peguei corona"',
-            '"estou com covid"',
-            '"estou com covid19"',
-            '"estou com corona"',
-            '"estou doente" covid',
-            '"estou doente" covid19',
-            '"estou doente" corona',
-            '"dor de cabeça" febre',
-            '"dor de cabeça" corona',
-            '"dor de cabeça" covid',
-            '"dor de cabeça" covid19',
-            '"falta de ar" corona',
-            '"falta de ar" covid',
-            '"falta de ar" covid19',
-            '"falta de ar"',
-            '"dor de garganta" corona',
-            '"dor de garganta" covid',
-            '"dor de garganta" covid19',
-            '"dor de garganta"',
-            '"tosse, febre e coriza"',
-        ]
-    else:
-        hashtags = [
+    hashtags = [
+        '"peguei covid"',
+        '"peguei covid19"',
+        '"peguei corona"',
+        '"estou com covid"',
+        '"estou com covid19"',
+        '"estou com corona"',
+        '"estou doente" covid',
+        '"estou doente" covid19',
+        '"estou doente" corona',
+        '"dor de cabeça" febre',
+        '"dor de cabeça" corona',
+        '"dor de cabeça" covid',
+        '"dor de cabeça" covid19',
+        '"falta de ar" corona',
+        '"falta de ar" covid',
+        '"falta de ar" covid19',
+        '"falta de ar"',
+        '"dor de garganta" corona',
+        '"dor de garganta" covid',
+        '"dor de garganta" covid19',
+        '"dor de garganta"',
+        '"tosse, febre e coriza"',
+    ]
+    if n_posts_part == 1:
+        hashtags += [
             "peguei covid",
             "estou com covid",
             "dor de cabeça febre",

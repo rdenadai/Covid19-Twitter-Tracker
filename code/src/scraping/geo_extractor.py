@@ -6,6 +6,7 @@ from concurrent.futures import ProcessPoolExecutor
 
 import pandas as pd
 from peewee import JOIN
+from decouple import config
 
 from ..database.conn import db
 from ..database.models import RawHashtagComments, UserLocation
@@ -25,6 +26,8 @@ if __name__ == "__main__":
     with open(json_file) as fh:
         collected_users = json.load(fh)
 
+    N_USER_GEO = int(config("N_USER_GEO", default=100))
+
     # Carregar todos os usuários que ainda não foram geolocalizados
     results = (
         RawHashtagComments.select(RawHashtagComments.username)
@@ -41,7 +44,7 @@ if __name__ == "__main__":
         result.username.replace("@", "")
         for result in results
         if result.username not in collected_users
-    ]
+    ][:N_USER_GEO]
     print(f"# of Users without geolocation: {len(usernames_d)}")
 
     k = 10
