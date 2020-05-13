@@ -83,6 +83,7 @@ if __name__ == "__main__":
                     partial(run_hashtag, n_posts_2_extract), hashtags_, chunksize=1
                 )
             )
+            os.system("pkill chrome")
             os.system("pkill chromedriver")
             print(f"--- Load tweets took {round(time.time() - start_time, 2)}s ---")
             start_time = time.time()
