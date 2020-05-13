@@ -40,13 +40,15 @@ if __name__ == "__main__":
         .where(UserLocation.username.is_null())
         .order_by(RawHashtagComments.timestamp.asc())
     )
-    print(f"# total of Users without geolocation: {len(results)}")
+
     usernames_d = [
         result.username.replace("@", "")
         for result in results
         if result.username not in collected_users
-    ][:N_USER_GEO]
+    ]
     print(f"# of Users without geolocation: {len(usernames_d)}")
+    # Carregar apenas uma parcela
+    usernames_d = [:N_USER_GEO]
 
     k = 10
     procs = cpu_count() * 2
