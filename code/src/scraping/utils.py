@@ -45,6 +45,6 @@ def run_save_user_location(item):
                 }
             ).save(force_insert=True)
             return item[0]
-        except:
-            pass
+        except Exception as e:
+            pass  # print(e)
     return None
