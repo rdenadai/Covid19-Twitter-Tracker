@@ -2,8 +2,6 @@ import re
 from unicodedata import normalize
 from string import punctuation
 from functools import lru_cache
-from string import punctuation
-from unicodedata import normalize
 
 import nltk
 from nltk.corpus import stopwords
