@@ -81,6 +81,19 @@ if __name__ == "__main__":
                     "coronavírus",
                     "vírus_ebola",
                     "doença_por_vírus_ébola",
+                    "organização_mundial_da_saúde",
+                    "índice_de_massa_corporal",
+                    "exercício_físico",
+                    "transtorno_mental",
+                    "neurocirurgia",
+                    "biópsia",
+                    "asma",
+                    "bronquite",
+                    "pneumonia",
+                    "tuberculose",
+                    "sputum",
+                    "sono",
+                    "alergia",
                 ]
             )
         )

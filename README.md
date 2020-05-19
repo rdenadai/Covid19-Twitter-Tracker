@@ -1,7 +1,30 @@
 # Covid19 Twitter Tracker
----
 
-Projeto final para a disciplina de mestrado ia386x ministrada pelo prof. André Santanchè (IC) e prof. Paula Dornhofer Paro Costa (FEEC).
+Projeto final para a disciplina de mestrado Ciência e Visualização de Dados em Saúde (**IA386X**) ministrada pelo **prof. André Santanchè** (IC) e **prof. Paula Dornhofer Paro Costa** (FEEC).
+
+### Integrantes do Projeto
+
+ - Iliana Burguán Valverde
+ - [Rodolfo de Nadai](https://github.com/rdenadai)
+ - [Sabrina Beck Angelini](https://github.com/sabrina-beck)
+ - [Victor Leal de Almeida](https://github.com/victorleal)
+
+
+### Objetivo
+O projeto tem como principal objetivo avaliar a possibilidade de se identificar, através das redes sociais, a disseminação de doenças, especificamente a COVID-19 no Brasil.
+
+A identificação baseia-se na extração e análise de comentários de usuários das redes sociais, que utilizaram termos relacionados aos sintomas da doenças, tais como “dor de cabeça”, “febre” entre outros. O conteúdo desta extração, pré processado e agrupado, será comparado com os dados oficiais de andamento da doença (quantidade de infectados / mortes). Com isso, espera-se verificar a possibilidade de se prever a disseminação de uma doença, bem como auxiliar a identificação de casos.
+
+Esse tipo de análise, caso concreta, poderia fornecer insumos de possíveis casos ainda não registrados oficialmente nas estatísticas elaboradas pelos órgãos oficiais, melhorando a visão de como a doença está disseminada na sociedade.
+
+Há de se observar as grandes controvérsias a respeito de privacidade nas redes sociais. Entretanto, elas ainda são amplamente utilizadas pelas pessoas.
+
+### Perguntas de Pesquisa
+ - É possível identificar a disseminação da COVID-19 no Brasil, através do conteúdo de redes sociais?
+ - Sendo possível:
+   - Com que grau de certeza a disseminação de COVID-19 é identificada?
+   - Com que antecedência podemos identificar a disseminação da doença (em dias/semanas)?
+   - Considerando que boa parte do conteúdo extraído não terá informações de geolocalização, é possível verificar essa disseminação por cidades ou estados?
 
 
 ### Instalação
@@ -26,6 +49,9 @@ Você pode usar o [pyenv](https://github.com/pyenv/pyenv) para instalar várias 
     $> python -m nltk.downloader punkt
     $> python -m nltk.downloader rslp
     $> python -m nltk.downloader perluniprops
+    $> python -m nltk.downloader machado
+    $> python -m nltk.downloader mac_morpho
+    $> python -m nltk.downloader floresta
     $> python -m spacy download en
     $> python -m spacy download pt
     ```
