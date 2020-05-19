@@ -4,7 +4,7 @@ Projeto final para a disciplina de mestrado Ciência e Visualização de Dados e
 
 ### Integrantes do Projeto
 
- - Iliana Burguán Valverde
+ - [Iliana Burguán Valverde](https://github.com/imburguan)
  - [Rodolfo de Nadai](https://github.com/rdenadai)
  - [Sabrina Beck Angelini](https://github.com/sabrina-beck)
  - [Victor Leal de Almeida](https://github.com/victorleal)
