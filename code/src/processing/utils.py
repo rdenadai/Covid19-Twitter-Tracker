@@ -153,8 +153,10 @@ class CleanUp:
                     clfa(self.stemmer.stem(palavra))
                 else:
                     clfa(palavra)
-        clean_frase = " ".join(clean_frase) if not self.return_tokens else clean_frase
-        return clean_frase.strip()
+        clean_frase = (
+            " ".join(clean_frase).strip() if not self.return_tokens else clean_frase
+        )
+        return clean_frase
 
 
 # GLOBALS

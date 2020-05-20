@@ -5,7 +5,7 @@ import pickle
 from multiprocessing import cpu_count
 
 from nltk.corpus import machado, mac_morpho, floresta
-from gensim.models import Word2Vec
+from gensim.models.doc2vec import Doc2Vec, TaggedDocument
 
 from ..processing.utils import CleanUp
 
@@ -20,26 +20,34 @@ if __name__ == "__main__":
     sentences = []
     with open(f"{os.getcwd()}/data/wikipedia.pkl", "rb") as fh:
         sentences = pickle.load(fh)
-        sentences = [normalizar.fit(sent) for sent in sentences]
+        sentences = [
+            TaggedDocument(normalizar.fit(sent), [i])
+            for i, sent in enumerate(sentences)
+        ]
 
+    k = len(sentences)
     objs = [machado, mac_morpho, floresta]
     for obj in objs:
         for fileid in obj.fileids():
-            sentences += [normalizar.fit(" ".join(sent)) for sent in obj.sents(fileid)]
+            sentences += [
+                TaggedDocument(normalizar.fit(" ".join(sent)), [k + i])
+                for i, sent in enumerate(obj.sents(fileid))
+            ]
 
     print(f"Qtde sentenças: {len(sentences)}")
     print(f"Carregar sentenças demorou: {round(time.time() - start, 2)}")
 
     start = time.time()
-    print("Iniciando treinamento do Word2Vec...")
-    model = Word2Vec(
-        sentences=sentences,
-        size=300,
+    print("Iniciando treinamento do Doc2Vec...")
+    model = Doc2Vec(
+        documents=sentences,
+        vector_size=300,
         window=5,
         min_count=1,
         workers=cpu_count() * 2,
-        sg=1,
-        iter=20,
+        dm=1,
+        hs=0,
+        epochs=20,
     )
-    model.save(f"{os.getcwd()}/src/ai/models/w2v.model")
-    print(f"Treinamento Word2Vec demorou: {round(time.time() - start, 2)}")
+    model.save(f"{os.getcwd()}/src/ai/models/d2v.model")
+    print(f"Treinamento Doc2Vec demorou: {round(time.time() - start, 2)}")

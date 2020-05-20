@@ -94,6 +94,34 @@ if __name__ == "__main__":
                     "sputum",
                     "sono",
                     "alergia",
+                    "Matemática",
+                    "Estatística",
+                    "Significância_estatística",
+                    "Distribuição_normal",
+                    "Variável_aleatória",
+                    "Inferência_estatística",
+                    "História_da_medicina",
+                    "Garganta",
+                    "Amor",
+                    "Sistema_límbico",
+                    "Mamíferos",
+                    "Cabelo",
+                    "Poluição",
+                    "Química",
+                    "Programação_de_computadores",
+                    "Linguagem_de_programação",
+                    "Computador",
+                    "Processamento_de_dados",
+                    "Banco_de_dados",
+                    "Modelo_hierárquico_de_banco_de_dados",
+                    "Modelo_entidade_relacionamento",
+                    "Engenharia_de_software",
+                    "Biblioteca_(computação)",
+                    "Orientação_a_objetos",
+                    "Trauma_físico",
+                    "Música",
+                    "Ritmo",
+                    "Poesia",
                 ]
             )
         )
@@ -105,7 +133,7 @@ if __name__ == "__main__":
         if page_py.exists():
             paragrafos = page_py.text.split("\n")
             for parag in paragrafos:
-                phrases += [normalizar(frase) for frase in parag.split(".")]
+                phrases += [frase for frase in parag.split(".")]
         else:
             print(f"Impossível carregar {term}")
 
