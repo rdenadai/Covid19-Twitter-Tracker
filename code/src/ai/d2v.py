@@ -19,9 +19,17 @@ if __name__ == "__main__":
 
     sentences = []
     with open(f"{os.getcwd()}/data/wikipedia.pkl", "rb") as fh:
-        sentences = pickle.load(fh)
+        sentences = pickle.load(fh)[:10]
         sentences = [
             TaggedDocument(normalizar.fit(sent), [i])
+            for i, sent in enumerate(sentences)
+        ]
+
+    k = len(sentences)
+    with open(f"{os.getcwd()}/data/fapesp.pkl", "rb") as fh:
+        sentences = pickle.load(fh)
+        sentences = [
+            TaggedDocument(normalizar.fit(sent), [k + i])
             for i, sent in enumerate(sentences)
         ]
 

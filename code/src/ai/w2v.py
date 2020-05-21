@@ -22,6 +22,10 @@ if __name__ == "__main__":
         sentences = pickle.load(fh)
         sentences = [normalizar.fit(sent) for sent in sentences]
 
+    with open(f"{os.getcwd()}/data/fapesp.pkl", "rb") as fh:
+        sentences = pickle.load(fh)
+        sentences = [normalizar.fit(sent) for sent in sentences]
+
     objs = [machado, mac_morpho, floresta]
     for obj in objs:
         for fileid in obj.fileids():
