@@ -47,7 +47,11 @@ if __name__ == "__main__":
     datasets += [["mac_morpho", fileid] for fileid in mac_morpho.fileids()]
     datasets += [["floresta", fileid] for fileid in floresta.fileids()]
 
-    filenames = [f"{os.getcwd()}/data/wikipedia.pkl", f"{os.getcwd()}/data/fapesp.pkl"]
+    filenames = [
+        f"{os.getcwd()}/data/wikipedia.pkl",
+        f"{os.getcwd()}/data/fapesp.pkl",
+        f"{os.getcwd()}/data/mundo.pkl",
+    ]
 
     # Carregar arquivos com frases em formato pickle
     with ProcessPoolExecutor(max_workers=2) as executor:
@@ -64,12 +68,12 @@ if __name__ == "__main__":
     print("Iniciando treinamento do Word2Vec...")
     w2v = Word2Vec(
         sentences=sentences,
-        size=500,
+        size=300,
         window=5,
         min_count=1,
         workers=cpu_count() * 2,
         sg=1,
-        iter=50,
+        iter=25,
     )
     w2v.save(f"{os.getcwd()}/src/ai/models/w2v.model")
     print(f"Treinamento Word2Vec demorou: {round(time.time() - start, 2)}")
@@ -80,13 +84,13 @@ if __name__ == "__main__":
         documents=[
             TaggedDocument(sentence, [k]) for k, sentence in enumerate(sentences)
         ],
-        vector_size=500,
+        vector_size=300,
         window=5,
         min_count=1,
         workers=cpu_count() * 2,
         dm=1,
         hs=0,
-        epochs=50,
+        epochs=25,
     )
     d2v.save(f"{os.getcwd()}/src/ai/models/d2v.model")
     print(f"Treinamento Doc2Vec demorou: {round(time.time() - start, 2)}")
