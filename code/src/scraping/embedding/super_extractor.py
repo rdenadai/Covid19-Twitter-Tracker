@@ -20,7 +20,7 @@ async def get_link_content(url):
             if r.status_code == 200:
                 html = BeautifulSoup(r.content, "lxml")
                 posts = html.findAll("section")
-                phrases += [post.get_text().split(".") for post in posts]
+                phrases += list(chain(*[post.get_text().split(".") for post in posts]))
     except Exception as e:
         print(f"2. Erro ao carregar posts: {url}")
     return phrases
@@ -49,7 +49,8 @@ async def carregar(func, urls):
 if __name__ == "__main__":
     links = list(filter(None, chain(*asyncio.run(carregar(get_links, urls)))))
     print("Links carregados...")
-    phrases = filter(None, chain(*asyncio.run(carregar(get_link_content, links))))
+    phrases = filter(None, chain(*asyncio.run(carregar(get_link_content, links[:3]))))
     phrases = [phrase for phrase in phrases if len(phrase) > 10]
+    print(phrases)
     with open(f"{os.getcwd()}/data/mundo.pkl", "wb") as fh:
         pickle.dump(phrases, fh)
