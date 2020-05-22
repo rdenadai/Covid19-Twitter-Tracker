@@ -49,8 +49,7 @@ async def carregar(func, urls):
 if __name__ == "__main__":
     links = list(filter(None, chain(*asyncio.run(carregar(get_links, urls)))))
     print("Links carregados...")
-    phrases = filter(None, chain(*asyncio.run(carregar(get_link_content, links[:3]))))
+    phrases = filter(None, chain(*asyncio.run(carregar(get_link_content, links))))
     phrases = [phrase for phrase in phrases if len(phrase) > 10]
-    print(phrases)
     with open(f"{os.getcwd()}/data/mundo.pkl", "wb") as fh:
         pickle.dump(phrases, fh)
