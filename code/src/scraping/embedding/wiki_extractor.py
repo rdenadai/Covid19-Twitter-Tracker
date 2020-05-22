@@ -43,7 +43,11 @@ if __name__ == "__main__":
                 Pediatria,Neurologia,Fisioterapia,Evolução,Genética,Organismo,Enxofre,Massa_atômica,Carbono,Diamante,
                 Sistema_cristalino_cúbico,Alotropia,Grafite,Bateria_(eletricidade),Cátodo,Eletrodoméstico,Exaustor,
                 Cozinha,Máquina_de_lavar_roupa,Motor_elétrico,Frenagem_regenerativa,Energia_elétrica,Usina_termoelétrica,
-                Vapor_de_água,Gás,Estados_físicos_da_matéria,Velocidade,Aceleração,Gravidade,Eletromagnetismo
+                Vapor_de_água,Gás,Estados_físicos_da_matéria,Velocidade,Aceleração,Gravidade,Eletromagnetismo,Fenilefrina,
+                Agonista,Substância,Membrana_plasmática,Midríase,Pupila,Olho,Vertebrados,Medula_espinhal,Suor,Transpiração,
+                Proteína,Macromolécula,Lípido,Vesícula,Bicapa_lipídica,Enzima,Via_metabólica,Vitamina,Ácido_ascórbico,
+                Osso,Dente,Tendão,Vaso_sanguíneo,Aorta,Diástole,Músculo,Tecido,Floema,Flor,Semente,Embrião,Óvulo,
+                Feminilidade,Masculinidade,Zigoto,Meiose,Reprodução_sexuada,Fecundação,Cromossomo,Núcleo_celular,Diâmetro
                 """.split(
                     ","
                 )
