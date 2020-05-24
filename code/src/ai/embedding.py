@@ -68,12 +68,12 @@ if __name__ == "__main__":
     print("Iniciando treinamento do Word2Vec...")
     w2v = Word2Vec(
         sentences=sentences,
-        size=150,
-        window=10,
+        size=300,
+        window=30,
         min_count=1,
         workers=cpu_count() * 2,
         sg=1,
-        iter=10,
+        iter=50,
     )
     w2v.save(f"{os.getcwd()}/src/ai/models/w2v.model")
     print(f"Treinamento Word2Vec demorou: {round(time.time() - start, 2)}")
@@ -84,13 +84,13 @@ if __name__ == "__main__":
         documents=[
             TaggedDocument(sentence, [k]) for k, sentence in enumerate(sentences)
         ],
-        vector_size=150,
-        window=10,
+        vector_size=300,
+        window=30,
         min_count=1,
         workers=cpu_count() * 2,
         dm=1,
         hs=0,
-        epochs=10,
+        epochs=50,
     )
     d2v.save(f"{os.getcwd()}/src/ai/models/d2v.model")
     print(f"Treinamento Doc2Vec demorou: {round(time.time() - start, 2)}")
