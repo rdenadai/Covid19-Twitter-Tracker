@@ -54,12 +54,14 @@ if __name__ == "__main__":
     ]
 
     # Carregar arquivos com frases em formato pickle
-    with ProcessPoolExecutor(max_workers=2) as executor:
+    with ProcessPoolExecutor(max_workers=3) as executor:
         sentences += list(chain(*list(executor.map(carregar_sentencas, filenames))))
 
     # Carregar frases da NLTK
     with ProcessPoolExecutor(max_workers=cpu_count() * 2) as executor:
-        sentences += list(chain(*list(executor.map(carregar_nltk_datasets, datasets))))
+        sentences += list(
+            chain(*list(executor.map(carregar_nltk_datasets, datasets, chunksize=5)))
+        )
 
     print(f"Qtde sentenças: {len(sentences)}")
     print(f"Carregar sentenças demorou: {round(time.time() - start, 2)}")
@@ -68,12 +70,12 @@ if __name__ == "__main__":
     print("Iniciando treinamento do Word2Vec...")
     w2v = Word2Vec(
         sentences=sentences,
-        size=300,
-        window=30,
+        size=150,
+        window=15,
         min_count=1,
         workers=cpu_count() * 2,
         sg=1,
-        iter=50,
+        iter=20,
     )
     w2v.save(f"{os.getcwd()}/src/ai/models/w2v.model")
     print(f"Treinamento Word2Vec demorou: {round(time.time() - start, 2)}")
@@ -84,13 +86,13 @@ if __name__ == "__main__":
         documents=[
             TaggedDocument(sentence, [k]) for k, sentence in enumerate(sentences)
         ],
-        vector_size=300,
-        window=30,
+        vector_size=150,
+        window=15,
         min_count=1,
         workers=cpu_count() * 2,
         dm=1,
         hs=0,
-        epochs=50,
+        epochs=20,
     )
     d2v.save(f"{os.getcwd()}/src/ai/models/d2v.model")
     print(f"Treinamento Doc2Vec demorou: {round(time.time() - start, 2)}")
