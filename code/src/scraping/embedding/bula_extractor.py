@@ -55,7 +55,7 @@ if __name__ == "__main__":
         bulas = []
         for elem in elems:
             remedio = elem.find_element_by_tag_name("a")
-            bulas = [remedio.get_attribute("href")]
+            bulas += [remedio.get_attribute("href")]
 
         time.sleep(0.5)
 
