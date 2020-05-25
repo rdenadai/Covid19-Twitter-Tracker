@@ -51,10 +51,11 @@ if __name__ == "__main__":
         f"{os.getcwd()}/data/wikipedia.pkl",
         f"{os.getcwd()}/data/fapesp.pkl",
         f"{os.getcwd()}/data/mundo.pkl",
+        f"{os.getcwd()}/data/bulas.pkl",
     ]
 
     # Carregar arquivos com frases em formato pickle
-    with ProcessPoolExecutor(max_workers=3) as executor:
+    with ProcessPoolExecutor(max_workers=4) as executor:
         sentences += list(chain(*list(executor.map(carregar_sentencas, filenames))))
 
     # Carregar frases da NLTK
@@ -70,12 +71,12 @@ if __name__ == "__main__":
     print("Iniciando treinamento do Word2Vec...")
     w2v = Word2Vec(
         sentences=sentences,
-        size=150,
+        size=300,
         window=15,
         min_count=1,
         workers=cpu_count() * 2,
         sg=1,
-        iter=20,
+        iter=30,
     )
     w2v.save(f"{os.getcwd()}/src/ai/models/w2v.model")
     print(f"Treinamento Word2Vec demorou: {round(time.time() - start, 2)}")
@@ -86,13 +87,13 @@ if __name__ == "__main__":
         documents=[
             TaggedDocument(sentence, [k]) for k, sentence in enumerate(sentences)
         ],
-        vector_size=150,
+        vector_size=300,
         window=15,
         min_count=1,
         workers=cpu_count() * 2,
         dm=1,
         hs=0,
-        epochs=20,
+        epochs=30,
     )
     d2v.save(f"{os.getcwd()}/src/ai/models/d2v.model")
     print(f"Treinamento Doc2Vec demorou: {round(time.time() - start, 2)}")

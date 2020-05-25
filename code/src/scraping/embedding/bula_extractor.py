@@ -2,6 +2,7 @@ import os
 import sys
 import time
 import pickle
+import random
 from itertools import chain
 
 from selenium import webdriver
@@ -32,14 +33,13 @@ def chrome_options():
 
 if __name__ == "__main__":
 
-    bulas, phrases = [], []
-
     driver = webdriver.Chrome(
         options=chrome_options(),
         executable_path=f"{os.getcwd()}/src/scraping/driver/chromedriver",
     )
 
     for url in urls:
+        print(url)
         driver.get(url)
 
         elems = []
@@ -52,33 +52,37 @@ if __name__ == "__main__":
             except Exception as e:
                 print(f"ERROR: Not found : {e}")
 
+        bulas = []
         for elem in elems:
             remedio = elem.find_element_by_tag_name("a")
-            bulas += [remedio.get_attribute("href")]
+            bulas = [remedio.get_attribute("href")]
 
         time.sleep(0.5)
 
-    for bula in bulas:
-        driver.get(bula)
+        for bula in random.sample(bulas, len(bulas)):
+            print(bula)
+            driver.get(bula)
 
-        contents = None
-        not_found = True
-        while not_found:
-            try:
-                contents = driver.find_elements_by_class_name("leaflet-content")
-                not_found = False
-                time.sleep(0.1)
-            except Exception as e:
-                print(f"ERROR: Not found : {e}")
+            contents = None
+            not_found = True
+            while not_found:
+                try:
+                    contents = driver.find_elements_by_class_name("leaflet-content")
+                    not_found = False
+                    time.sleep(0.1)
+                except Exception as e:
+                    print(f"ERROR: Not found : {e}")
 
-        for content in contents:
-            phrases += content.text.strip().split(".")
+            phrases = []
+            for content in contents:
+                phrases += content.text.strip().split(".")
 
-        time.sleep(0.5)
+            phrases = filter(None, phrases)
+            phrases = [phrase for phrase in phrases if len(phrase) > 10]
+            with open(f"{os.getcwd()}/data/bulas.pkl", "ab") as fh:
+                pickle.dump(phrases, fh)
+
+            time.sleep(0.5)
+        time.sleep(5)
 
     driver.close()
-
-    phrases = filter(None, chain(*phrases))
-    phrases = [phrase for phrase in phrases if len(phrase) > 10]
-    with open(f"{os.getcwd()}/data/bulas.pkl", "wb") as fh:
-        pickle.dump(phrases, fh)
