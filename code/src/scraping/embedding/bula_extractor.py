@@ -11,7 +11,7 @@ from concurrent.futures import ProcessPoolExecutor
 
 
 urls = []
-for p in range(1, 35):
+for p in range(5, 35):
     for w in [w for w in "abcdefghijklmnopqrstuvwxyz"]:
         if p == 1:
             urls += [f"https://consultaremedios.com.br/bulas/{w}"]
@@ -79,10 +79,17 @@ if __name__ == "__main__":
 
             phrases = filter(None, phrases)
             phrases = [phrase for phrase in phrases if len(phrase) > 10]
-            with open(f"{os.getcwd()}/data/bulas.pkl", "ab") as fh:
-                pickle.dump(phrases, fh)
 
-            time.sleep(0.5)
+            sentences = []
+            try:
+                with open(f"{os.getcwd()}/data/bulas.pkl", "rb") as fh:
+                    sentences = pickle.load(fh)
+            except:
+                pass
+            with open(f"{os.getcwd()}/data/bulas.pkl", "wb") as fh:
+                pickle.dump(sentences + phrases, fh)
+
+            time.sleep(2)
         time.sleep(5)
 
     driver.close()

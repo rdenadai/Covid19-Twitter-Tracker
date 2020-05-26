@@ -1,0 +1,62 @@
+import os
+import sys
+import time
+import pickle
+import asyncio
+from itertools import chain
+
+import httpx
+from bs4 import BeautifulSoup
+from aiomultiprocess import Pool
+import feedparser
+
+
+rss = [
+    "http://rss.uol.com.br/feed/tecnologia.xml",
+    "http://rss.home.uol.com.br/index.xml",
+    "https://www.uol.com.br/esporte/ultimas/index.xml",
+    "http://rss.uol.com.br/feed/jogos.xml",
+    "http://rss.uol.com.br/feed/cinema.xml",
+    "http://rss.uol.com.br/feed/economia.xml",
+    "http://rss.uol.com.br/feed/noticias.xml",
+]
+
+
+async def get_link_content(url):
+    phrases = []
+    try:
+        async with httpx.AsyncClient() as client:
+            r = await client.get(url, timeout=60)
+            if r.status_code == 200:
+                html = BeautifulSoup(r.content, "lxml")
+                posts = html.findAll("div", {"class": "text"})
+                for post in posts:
+                    phrases += post.get_text().split(".")
+    except Exception as e:
+        print(f"2. Erro ao carregar posts: {url}")
+    return phrases
+
+
+async def get_links(url):
+    links = []
+    try:
+        d = feedparser.parse(url)
+        links = [item["link"] for item in d["entries"]]
+    except Exception as e:
+        print(f"1. Erro ao carregar posts: {url}, {e}")
+    return links
+
+
+async def carregar(func, urls):
+    async with Pool() as pool:
+        result = await pool.map(func, urls)
+    return result
+
+
+if __name__ == "__main__":
+    links = list(filter(None, chain(*asyncio.run(carregar(get_links, rss)))))
+    print("Links carregados...")
+    phrases = filter(None, chain(*asyncio.run(carregar(get_link_content, links))))
+    phrases = [phrase for phrase in phrases if len(phrase) > 10]
+    with open(f"{os.getcwd()}/data/uol.pkl", "wb") as fh:
+        pickle.dump(phrases, fh)

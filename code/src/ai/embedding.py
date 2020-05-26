@@ -52,6 +52,7 @@ if __name__ == "__main__":
         f"{os.getcwd()}/data/fapesp.pkl",
         f"{os.getcwd()}/data/mundo.pkl",
         f"{os.getcwd()}/data/bulas.pkl",
+        f"{os.getcwd()}/data/uol.pkl",
     ]
 
     # Carregar arquivos com frases em formato pickle
