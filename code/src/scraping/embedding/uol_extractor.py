@@ -57,6 +57,15 @@ if __name__ == "__main__":
     links = list(filter(None, chain(*asyncio.run(carregar(get_links, rss)))))
     print("Links carregados...")
     phrases = filter(None, chain(*asyncio.run(carregar(get_link_content, links))))
-    phrases = [phrase for phrase in phrases if len(phrase) > 10]
+    phrases = [phrase.strip() for phrase in phrases if len(phrase) > 10]
+
+    sentences = []
+    try:
+        with open(f"{os.getcwd()}/data/uol.pkl", "rb") as fh:
+            sentences = pickle.load(fh)
+            sentences = [sent.strip() for sent in sentences]
+    except:
+        pass
     with open(f"{os.getcwd()}/data/uol.pkl", "wb") as fh:
-        pickle.dump(phrases, fh)
+        sents = set(sentences + phrases)
+        pickle.dump(list(sents), fh)

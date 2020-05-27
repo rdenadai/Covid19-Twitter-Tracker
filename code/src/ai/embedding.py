@@ -53,10 +53,11 @@ if __name__ == "__main__":
         f"{os.getcwd()}/data/mundo.pkl",
         f"{os.getcwd()}/data/bulas.pkl",
         f"{os.getcwd()}/data/uol.pkl",
+        f"{os.getcwd()}/data/g1.pkl",
     ]
 
     # Carregar arquivos com frases em formato pickle
-    with ProcessPoolExecutor(max_workers=4) as executor:
+    with ProcessPoolExecutor(max_workers=cpu_count() * 2) as executor:
         sentences += list(chain(*list(executor.map(carregar_sentencas, filenames))))
 
     # Carregar frases da NLTK
@@ -73,7 +74,7 @@ if __name__ == "__main__":
     w2v = Word2Vec(
         sentences=sentences,
         size=300,
-        window=15,
+        window=30,
         min_count=1,
         workers=cpu_count() * 2,
         sg=1,
@@ -89,7 +90,7 @@ if __name__ == "__main__":
             TaggedDocument(sentence, [k]) for k, sentence in enumerate(sentences)
         ],
         vector_size=300,
-        window=15,
+        window=30,
         min_count=1,
         workers=cpu_count() * 2,
         dm=1,

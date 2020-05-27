@@ -17,3 +17,5 @@ Cython==0.29.16
 wordcloud==1.6.0
 aiomultiprocess==0.7.0
 emoji==0.5.4
+feedparser==5.2.1
+beautifulsoup4==4.9.1

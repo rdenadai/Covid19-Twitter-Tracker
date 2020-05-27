@@ -87,7 +87,8 @@ if __name__ == "__main__":
             except:
                 pass
             with open(f"{os.getcwd()}/data/bulas.pkl", "wb") as fh:
-                pickle.dump(sentences + phrases, fh)
+                sents = set(sentences + phrases)
+                pickle.dump(list(sents), fh)
 
             time.sleep(2)
         time.sleep(5)
