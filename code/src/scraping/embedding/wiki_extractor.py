@@ -1,6 +1,8 @@
 import os
 import pickle
+from itertools import chain
 
+from bs4 import BeautifulSoup
 import wikipediaapi
 
 
@@ -55,19 +57,30 @@ if __name__ == "__main__":
         )
     )
 
-    phrases = []
     for term in termos:
         page_py = wiki_wiki.page(term.strip())
         if page_py.exists():
-            paragrafos = page_py.text.split("\n")
-            for parag in paragrafos:
+            phrases = []
+            texto = BeautifulSoup(page_py.text, "lxml").get_text()
+            for parag in texto.split("\n"):
                 phrases += [frase for frase in parag.split(".")]
+            phrases = set(filter(None, phrases))
+            phrases = [phrase.strip() for phrase in phrases if len(phrase) > 10]
+
+            sentences = []
+            try:
+                with open(f"{os.getcwd()}/data/embedding/wikipedia.pkl", "rb") as fh:
+                    sentences = pickle.load(fh)
+                    sentences = [sent.strip() for sent in sentences]
+            except:
+                pass
+            with open(f"{os.getcwd()}/data/embedding/wikipedia.pkl", "wb") as fh:
+                sents = set(sentences + phrases)
+                pickle.dump(list(sents), fh)
         else:
             print(f"Impossível carregar {term}")
 
-    phrases = [phrase for phrase in phrases if len(phrase) > 10]
-
-    with open(f"{os.getcwd()}/data/wikipedia.pkl", "wb") as fh:
-        pickle.dump(phrases, fh)
+    # with open(f"{os.getcwd()}/data/wikipedia.pkl", "wb") as fh:
+    #     pickle.dump(phrases, fh)
     # with open(f{os.getcwd()}/data/wikipedia.pkl, rb) as fh:
     #     phrases = pickle.load(fh)

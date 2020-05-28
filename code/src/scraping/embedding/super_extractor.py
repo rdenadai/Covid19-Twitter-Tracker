@@ -51,5 +51,5 @@ if __name__ == "__main__":
     print("Links carregados...")
     phrases = filter(None, chain(*asyncio.run(carregar(get_link_content, links))))
     phrases = [phrase for phrase in phrases if len(phrase) > 10]
-    with open(f"{os.getcwd()}/data/mundo.pkl", "wb") as fh:
+    with open(f"{os.getcwd()}/data/embedding/mundo.pkl", "wb") as fh:
         pickle.dump(phrases, fh)

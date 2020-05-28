@@ -64,5 +64,5 @@ if __name__ == "__main__":
     links = filter(None, chain(*asyncio.run(carregar(get_links, urls))))
     phrases = filter(None, chain(*asyncio.run(carregar(get_link_content, links))))
     phrases = [phrase for phrase in phrases if len(phrase) > 10]
-    with open(f"{os.getcwd()}/data/fapesp.pkl", "wb") as fh:
+    with open(f"{os.getcwd()}/data/embedding/fapesp.pkl", "wb") as fh:
         pickle.dump(phrases, fh)

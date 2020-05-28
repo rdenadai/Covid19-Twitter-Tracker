@@ -61,11 +61,11 @@ if __name__ == "__main__":
 
     sentences = []
     try:
-        with open(f"{os.getcwd()}/data/uol.pkl", "rb") as fh:
+        with open(f"{os.getcwd()}/data/embedding/uol.pkl", "rb") as fh:
             sentences = pickle.load(fh)
             sentences = [sent.strip() for sent in sentences]
     except:
         pass
-    with open(f"{os.getcwd()}/data/uol.pkl", "wb") as fh:
+    with open(f"{os.getcwd()}/data/embedding/uol.pkl", "wb") as fh:
         sents = set(sentences + phrases)
         pickle.dump(list(sents), fh)
