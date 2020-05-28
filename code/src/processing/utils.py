@@ -78,8 +78,9 @@ class CleanUp:
         self.return_tokens = return_tokens
         self.STOPWORDS, self.PUNCT = self.get_stopwords()
         self.RM = [
-            (r"(http[s]*?:\/\/)+.*[\r\n]*", r""),
-            (r"@", r""),
+            (r"(http[s]*?:\/\/)+[0-9a-zA-Z.-_\/?=]*\s*", r""),  # urls
+            # (r"(Em resposta)", ""),  # Reply
+            (r"(@)[0-9a-zA-Z]+", r""),  # Username
             (r"\n+", r" . "),
             (r'"', r" "),
             (r"\'", r" "),
@@ -89,11 +90,14 @@ class CleanUp:
             (r"[0-9]*", r""),
             (r"“", r""),
             (r"”", ""),
+            (r"\s+", r" "),
             (r"([aeiouqwtyupdfghjklçzxcvbnm|!@$%&\.\[\]\(\)+-_=<>,;:])\1+", r"\1"),
             (r"(\bñ\n)", "não"),
             (r"(nã)", "não"),
-            (r"\s+", r" "),
             (r"(nãoo)", "não"),
+            (r"(vc)", "voce"),
+            (r"(vcs)", "voces"),
+            (r"(vzs)", "voces"),
         ]
 
     def remover_acentos(self, phrase):
@@ -123,6 +127,9 @@ class CleanUp:
                 phrase = re.sub(r"{}\b".format(group), g2, phrase, flags=re.MULTILINE)
         except Exception:
             pass
+        # Remove strings padrão existente, como urls
+        for o, r in self.RM:
+            phrase = re.sub(o, r, phrase, flags=re.MULTILINE)
         # lowercase para fazer outros pre-processamentos
         phrase = phrase.lower()
         # Remoção de emojis
@@ -134,9 +141,6 @@ class CleanUp:
         # Remove pontuação
         for punct in self.PUNCT:
             phrase = phrase.replace(punct, " ")
-        # Remove strings padrão existente, como urls
-        for o, r in self.RM:
-            phrase = re.sub(o, r, phrase, flags=re.MULTILINE)
         phrase = self.remover_acentos(phrase)
 
         # Limpeza extra
