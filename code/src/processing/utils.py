@@ -86,6 +86,13 @@ class CleanUp:
             (r"(vc)", "voce"),
             (r"(vcs)", "voces"),
             (r"(vzs)", "voces"),
+            (r"(crlh)", "caralho"),
+            (r"(crl)", "caralho"),
+            (r"(to)", "estou"),
+            (r"(mds)", "meu deus"),
+            (r"(dms)", "demais"),
+            (r"(cm)", "com"),
+            (r"(cmg)", "comigo"),
         ]
 
     def remover_acentos(self, phrase):
@@ -115,11 +122,11 @@ class CleanUp:
                 phrase = re.sub(r"{}\b".format(group), g2, phrase, flags=re.MULTILINE)
         except Exception:
             pass
+        # lowercase para fazer outros pre-processamentos
+        phrase = phrase.lower()
         # Remove strings padrão existente, como urls
         for o, r in self.RM:
             phrase = re.sub(o, r, phrase, flags=re.MULTILINE)
-        # lowercase para fazer outros pre-processamentos
-        phrase = phrase.lower()
         # Remoção de emojis
         if self.remove_emojis:
             phrase = emoji.get_emoji_regexp().sub(r"", phrase)

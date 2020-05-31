@@ -20,7 +20,7 @@ from .utils import CleanUp, SNOWBALL_STEMMER
 
 
 clean_up = CleanUp(stemmer=SNOWBALL_STEMMER)
-clf = load(f"{os.getcwd()}/src/ai/models/tfidf_sgd_classifier.model")
+clf = load(f"{os.getcwd()}/src/ai/models/tweets_classifier.model")
 
 
 async def run_model_update(md_table):
