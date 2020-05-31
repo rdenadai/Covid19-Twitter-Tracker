@@ -43,6 +43,7 @@ class RawHashtagComments(Model):
     timestamp = TimestampField(resolution=100)
     clean_comment = TextField(default="")
     sanitized_comment = TextField(default="")
+    classify = CharField(max_length=50, default="", index=True)
 
     class Meta:
         database = db

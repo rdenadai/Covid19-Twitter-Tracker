@@ -20,7 +20,7 @@ class LoadCorpus(object):
     def __init__(self, filename):
         self.normalizar = CleanUp(return_tokens=True)
         self.file_it = pd.read_csv(
-            filename, header=None, iterator=True, names=["sentence"], chunksize=25000,
+            filename, header=None, iterator=True, names=["sentence"], chunksize=30000,
         )
 
     def __iter__(self):
@@ -37,13 +37,13 @@ if __name__ == "__main__":
         # sentences=LoadCorpus(f"{os.getcwd()}/data/embedding/corpus.txt"),
         corpus_file=f"{os.getcwd()}/data/embedding/corpus.txt",
         size=300,
-        window=10,
-        min_count=3,
+        window=30,
+        min_count=5,
         workers=cpu_count() * 2,
         sg=1,
         hs=0,
         negative=5,
-        iter=30,
+        iter=20,
     )
     w2v.save(f"{os.getcwd()}/src/ai/models/w2v.model")
     print(f"Treinamento Word2Vec demorou: {round(time.time() - start, 2)}")
@@ -61,14 +61,14 @@ if __name__ == "__main__":
         # ],
         corpus_file=f"{os.getcwd()}/data/embedding/corpus.txt",
         vector_size=300,
-        window=10,
-        min_count=3,
+        window=30,
+        min_count=5,
         workers=cpu_count() * 2,
         dm=1,
         hs=0,
         negative=5,
         dbow_words=1,
-        epochs=30,
+        epochs=20,
     )
     d2v.save(f"{os.getcwd()}/src/ai/models/d2v.model")
     print(f"Treinamento Doc2Vec demorou: {round(time.time() - start, 2)}")

@@ -49,7 +49,11 @@ if __name__ == "__main__":
                 Agonista,Substância,Membrana_plasmática,Midríase,Pupila,Olho,Vertebrados,Medula_espinhal,Suor,Transpiração,
                 Proteína,Macromolécula,Lípido,Vesícula,Bicapa_lipídica,Enzima,Via_metabólica,Vitamina,Ácido_ascórbico,
                 Osso,Dente,Tendão,Vaso_sanguíneo,Aorta,Diástole,Músculo,Tecido,Floema,Flor,Semente,Embrião,Óvulo,
-                Feminilidade,Masculinidade,Zigoto,Meiose,Reprodução_sexuada,Fecundação,Cromossomo,Núcleo_celular,Diâmetro
+                Feminilidade,Masculinidade,Zigoto,Meiose,Reprodução_sexuada,Fecundação,Cromossomo,Núcleo_celular,Diâmetro,
+                Vagina,Órgão_sexual,Vulva,Hímen,Pênis,Sémen,Ejaculação,Hermes_e_Renato,Puberdade,Menstruação,Terror_(gênero),
+                Fantasia_(gênero),Jogo_eletrônico,Oseltamivir,Fenilefrina,Midríase,Receptor_adrenérgico_alfa_1,Pulp,
+                Western_(gênero),Velho_Oeste,Evolução_territorial_dos_Estados_Unidos,Orfenadrina,Clorfeniramina,Influenzavirus_A_subtipo_H1N1,
+                Gripe_espanhola,Agente_patogénico,Protozoário,Pandemia_de_gripe_A_de_2009,Paciente_zero,Síndrome_da_imunodeficiência_adquirida
                 """.split(
                     ","
                 )

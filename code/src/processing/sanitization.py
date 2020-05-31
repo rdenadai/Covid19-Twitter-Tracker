@@ -1,3 +1,4 @@
+import os
 import sys
 
 sys.path.append("..")  # Adds higher directory to python modules path.
@@ -6,6 +7,8 @@ import asyncio
 import time
 import re
 
+from joblib import load
+
 import uvloop
 from peewee import SQL
 from aiomultiprocess import Pool
@@ -13,41 +16,50 @@ from multiprocessing import cpu_count
 
 from ..database.conn import db
 from ..database.models import RawHashtagComments
-from .utils import tokenizer, clean_up
+from .utils import CleanUp, SNOWBALL_STEMMER
 
 
-async def run_model_update(model):
-    # run filter?? .where(SQL('length(clean_comment) = 0'))
-    N = 50
-    total = int(model.select().count() / N) + 2
-    print(f"Total pag para {model.__name__}: {total-1}")
+clean_up = CleanUp(stemmer=SNOWBALL_STEMMER)
+clf = load(f"{os.getcwd()}/src/ai/models/tfidf_sgd_classifier.model")
+
+
+async def run_model_update(md_table):
+    # run filter?? .where(SQL('length(sanitized_comment) = 0'))
+    N = 5000
+    total = int(md_table.select().count() / N) + 2
+    print(f"Total pag para {md_table.__name__}: {total-1}")
     for tt in range(total):
         start_time = time.time()
         with db.atomic() as txn:
             rows = [
-                (row.hash, row.comment) for row in model.select().paginate(tt, N) if row
+                (row.hash, row.comment)
+                for row in md_table.select().paginate(tt, N)
+                if row
             ]
             for hashy, comment in rows:
-                clean_comment = clean_up(comment)
-                sanitized_comment = tokenizer(clean_comment, clean=False)
-                query = model.update(
-                    sanitized_comment=sanitized_comment, clean_comment=clean_comment
-                ).where(model.hash == hashy)
+                sanitized_comment = clean_up.fit(comment)
+                pred = clf.predict([sanitized_comment])
+                pred = "positivo" if pred == 1 else "negativo"
+                query = md_table.update(
+                    sanitized_comment=sanitized_comment, classify=pred
+                ).where(md_table.hash == hashy)
                 query.execute()
             txn.commit()
         print(
-            f"{model.__name__} pag. {tt} - {total-1} --- {round(time.time() - start_time, 2)}s ---"
+            f"{md_table.__name__} pag. {tt} de {total-1} --- {round(time.time() - start_time, 2)}s ---"
         )
-        await asyncio.sleep(0.05)
+        await asyncio.sleep(0.01)
 
 
 async def main():
-    models = (RawHashtagComments,)
+    md_tables = (RawHashtagComments,)
 
-    async with Pool(processes=cpu_count() * 2) as pool:
-        await pool.map(run_model_update, models)
-    # for model in models:
-    #     run_model_update(model)
+    start = time.time()
+    # async with Pool(processes=cpu_count() * 2) as pool:
+    #     await pool.map(run_model_update, md_tables)
+    for md_table in md_tables:
+        await run_model_update(md_table)
+    print(f"Total : {round(time.time() - start, 2)}")
 
 
 if __name__ == "__main__":

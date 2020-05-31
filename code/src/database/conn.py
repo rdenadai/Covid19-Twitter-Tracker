@@ -7,7 +7,7 @@ from playhouse.pool import PooledSqliteExtDatabase  # , PooledPostgresqlExtDatab
 
 db_name = config("DATABASE_PATH", default="covid19_tracker.db")
 path = os.getcwd().split("code")[0]
-path = f"{path}/code"
+path = f"{path}code"
 
 # db = SqliteDatabase(config('DATABASE_PATH', default='covid19_tracker.db'))
 db = PooledSqliteExtDatabase(

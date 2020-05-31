@@ -38,18 +38,6 @@ def remover_acentos(txt):
     return normalize("NFKD", txt).encode("ASCII", "ignore").decode("ASCII")
 
 
-def tokenizer(phrase, clean=False):
-    if not clean:
-        phrase = CleanUp(return_tokens=True).fit(phrase)
-    clean_frase = []
-    clfa = clean_frase.append
-    for palavra in phrase:
-        palavra = "".join([word.lemma_ for word in NLP(palavra)])
-        # clfa(STEMMER.stem(palavra))
-        clfa(palavra)
-    return " ".join(clean_frase).strip()
-
-
 def normalizar(phrase, sort=True):
     if phrase:
         phrase = remover_acentos(phrase.lower())

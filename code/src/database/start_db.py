@@ -14,5 +14,9 @@ if __name__ == "__main__":
     # with db.atomic():
     #     migrator = SqliteMigrator(db)
     #     migrate(
-    #         migrator.add_column('raw_hashtag_comments', 'clean_comment', TextField(default='')),
+    #         migrator.add_column(
+    #             "raw_hashtag_comments",
+    #             "classify",
+    #             CharField(max_length=50, default="", index=True),
+    #         ),
     #     )
