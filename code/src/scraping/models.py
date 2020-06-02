@@ -59,6 +59,28 @@ class TwitterTagsClient:
             comment = comment[:-strip_pos]
         return comment
 
+    def treat_data(self, dt):
+        # Old way
+        # Tratamento de data
+        # tm = (
+        #     dt.get_attribute("title")
+        #     .replace(" de ", "/")
+        #     .replace(" · ", " ")
+        # ).lower()
+        # for key, value in months.items():
+        #     if key in tm:
+        #         tm = tm.replace(key, value.title())
+        #         break
+        # Chrome
+        # dt = arrow.get(tm, "h:mm A MMM D, YYYY")
+        # Firefox
+        # dt = arrow.get(tm, "h:mm A D/MMM/YYYY")
+
+        # <time datetime="2020-06-02T06:25:18.000Z">8 h</time>
+        tm = dt.get_attribute("datetime")
+        dt = arrow.get(tm)
+        return dt
+
     def load_tags(self, hashtag):
         # Using Firefox driver NO WINDOW MODE
         # os.environ["MOZ_HEADLESS"] = "1"
@@ -106,27 +128,18 @@ class TwitterTagsClient:
                     )
                     comment = tweet.find_element_by_xpath("./div/div[2]/div[2]/div[2]")
                     dt = tweet.find_element_by_xpath(
-                        "./div/div[2]/div[2]/div[1]/div/div/div[1]/a"
+                        "./div/div[2]/div[2]/div[1]/div/div/div[1]/a/time"
                     )
+
+                    # Old way
+                    # dt = tweet.find_element_by_xpath(
+                    #     "./div/div[2]/div[2]/div[1]/div/div/div[1]/a"
+                    # ).strip()
 
                     if username and comment:
                         username = username.text.strip()
                         comment = self.treat_comment(comment.text.strip())
-
-                        # Tratamento de data
-                        tm = (
-                            dt.get_attribute("title")
-                            .replace(" de ", "/")
-                            .replace(" · ", " ")
-                        ).lower()
-                        for key, value in months.items():
-                            if key in tm:
-                                tm = tm.replace(key, value.title())
-                                break
-                        # Chrome
-                        # dt = arrow.get(tm, "h:mm A MMM D, YYYY")
-                        # Firefox
-                        dt = arrow.get(tm, "h:mm A D/MMM/YYYY")
+                        dt = self.treat_data(dt)
 
                         data["comments"].append(
                             {
