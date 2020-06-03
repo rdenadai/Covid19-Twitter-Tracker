@@ -19,6 +19,7 @@ def carregar_sentencas(filename):
 if __name__ == "__main__":
 
     start = time.time()
+
     print("Carregando sentenças...")
 
     normalizar = CleanUp(return_tokens=True)
@@ -38,3 +39,5 @@ if __name__ == "__main__":
         for filename in filenames:
             for sentence in carregar_sentencas(filename):
                 np.savetxt(fh, [f"{' '.join(sentence)}"], fmt="%s")
+
+    print(f"Tempo total da compressao: {round(time.time() - start, 2)}s")

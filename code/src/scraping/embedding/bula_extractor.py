@@ -11,7 +11,7 @@ from concurrent.futures import ProcessPoolExecutor
 
 
 urls = []
-for p in range(5, 35):
+for p in range(2, 54):
     for w in [w for w in "abcdefghijklmnopqrstuvwxyz"]:
         if p == 1:
             urls += [f"https://consultaremedios.com.br/bulas/{w}"]
@@ -57,10 +57,9 @@ if __name__ == "__main__":
             remedio = elem.find_element_by_tag_name("a")
             bulas += [remedio.get_attribute("href")]
 
-        time.sleep(0.5)
+        time.sleep(1.5)
 
         for bula in random.sample(bulas, len(bulas)):
-            print(bula)
             driver.get(bula)
 
             contents = None

@@ -23,34 +23,40 @@ main_urls = [
 urls = []
 for url in main_urls:
     urls += [url]
-    for i in range(2, 9):
+    for i in range(2, 50):
         urls += [f"{url}page/{i}/"]
 
 
 async def get_link_content(url):
     phrases = []
-    async with httpx.AsyncClient() as client:
-        r = await client.get(url)
-        if r.status_code == 200:
-            html = BeautifulSoup(r.content, "lxml")
-            posts = html.findAll("div", {"class": "post-content"})
-            for post in posts:
-                phrases += post.get_text().split(".")
+    try:
+        async with httpx.AsyncClient() as client:
+            r = await client.get(url, timeout=240)
+            if r.status_code == 200:
+                html = BeautifulSoup(r.content, "lxml")
+                posts = html.findAll("div", {"class": "post-content"})
+                for post in posts:
+                    phrases += post.get_text().split(".")
+    except Exception as e:
+        print(f"2. Erro ao carregar frases: {url}, {str(e)}")
     return phrases
 
 
 async def get_links(url):
     links = []
-    async with httpx.AsyncClient() as client:
-        r = await client.get(url)
-        if r.status_code == 200:
-            html = BeautifulSoup(r.content, "lxml")
-            try:
-                post = html.findAll("div", {"class": "posts"})[0]
-                for dd in post.findAll("div"):
-                    links += [dd.find("a").get("href")]
-            except:
-                print(f"Erro ao carregar posts: {url}")
+    try:
+        async with httpx.AsyncClient() as client:
+            r = await client.get(url, timeout=60)
+            if r.status_code == 200:
+                html = BeautifulSoup(r.content, "lxml")
+                try:
+                    post = html.findAll("div", {"class": "posts"})[0]
+                    for dd in post.findAll("div"):
+                        links += [dd.find("a").get("href")]
+                except:
+                    print(f"Erro ao carregar posts: {url}")
+    except Exception as e:
+        print(f"1. Erro ao carregar pagina: {url}, {str(e)}")
     return links
 
 
