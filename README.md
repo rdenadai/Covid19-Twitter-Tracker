@@ -67,7 +67,12 @@ Você pode usar o [pyenv](https://github.com/pyenv/pyenv) para instalar várias 
     $> python -m src.scraping.extractor
     $> python -m src.scraping.geo_extractor
     ```
- 5. Limpeza dos dados extraídos do Twitter:
+ 6. Testar e criar o classificador para classificar a base de dados do Twitter:
+    ```bash
+    $> cd code
+    $> python -m src.ai.classifier
+    ```
+ 7. Limpeza dos dados extraídos do Twitter e classificação:
     ```bash
     $> cd code
     $> python -m src.processing.sanitization

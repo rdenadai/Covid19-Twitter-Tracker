@@ -2,6 +2,7 @@ import os
 import sys
 import time
 import pickle
+import argparse
 from itertools import chain
 from multiprocessing import cpu_count
 from concurrent.futures import ProcessPoolExecutor
@@ -30,45 +31,57 @@ class LoadCorpus(object):
 
 
 if __name__ == "__main__":
-    start = time.time()
-    print("-" * 20)
-    print("Iniciando treinamento do Word2Vec...")
-    w2v = Word2Vec(
-        # sentences=LoadCorpus(f"{os.getcwd()}/data/embedding/corpus.txt"),
-        corpus_file=f"{os.getcwd()}/data/embedding/corpus.txt",
-        size=300,
-        window=30,
-        min_count=5,
-        workers=cpu_count() * 2,
-        sg=1,
-        hs=0,
-        negative=5,
-        iter=20,
+    parser = argparse.ArgumentParser(description="Run word embedding models")
+    parser.add_argument(
+        "--model",
+        dest="model_type",
+        default=0,
+        help="Word Embedding model to run: 0 = Word2Vec ; 1 = Doc2Vec ; 2 = Both",
     )
-    w2v.save(f"{os.getcwd()}/src/ai/models/w2v.model")
-    print(f"Treinamento Word2Vec demorou: {round(time.time() - start, 2)}")
-    print()
+    args = parser.parse_args()
+    model_type = int(args.model_type)
 
-    start = time.time()
-    print("-" * 20)
-    print("Iniciando treinamento do Doc2Vec...")
-    d2v = Doc2Vec(
-        # documents=[
-        #     TaggedDocument(sentence, [k])
-        #     for k, sentence in enumerate(
-        #         LoadCorpus(f"{os.getcwd()}/data/embedding/corpus.txt")
-        #     )
-        # ],
-        corpus_file=f"{os.getcwd()}/data/embedding/corpus.txt",
-        vector_size=300,
-        window=30,
-        min_count=5,
-        workers=cpu_count() * 2,
-        dm=1,
-        hs=0,
-        negative=5,
-        dbow_words=1,
-        epochs=20,
-    )
-    d2v.save(f"{os.getcwd()}/src/ai/models/d2v.model")
-    print(f"Treinamento Doc2Vec demorou: {round(time.time() - start, 2)}")
+    if model_type == 0 or model_type == 2:
+        start = time.time()
+        print("-" * 20)
+        print("Iniciando treinamento do Word2Vec...")
+        w2v = Word2Vec(
+            # sentences=LoadCorpus(f"{os.getcwd()}/data/embedding/corpus.txt"),
+            corpus_file=f"{os.getcwd()}/data/embedding/corpus.txt",
+            size=300,
+            window=5,
+            min_count=2,
+            workers=cpu_count() * 2,
+            sg=0,
+            hs=0,
+            negative=5,
+            iter=30,
+        )
+        w2v.save(f"{os.getcwd()}/src/ai/models/w2v.model")
+        print(f"Treinamento Word2Vec demorou: {round(time.time() - start, 2)}")
+        print()
+
+    if model_type == 1 or model_type == 2:
+        start = time.time()
+        print("-" * 20)
+        print("Iniciando treinamento do Doc2Vec...")
+        d2v = Doc2Vec(
+            # documents=[
+            #     TaggedDocument(sentence, [k])
+            #     for k, sentence in enumerate(
+            #         LoadCorpus(f"{os.getcwd()}/data/embedding/corpus.txt")
+            #     )
+            # ],
+            corpus_file=f"{os.getcwd()}/data/embedding/corpus.txt",
+            vector_size=300,
+            window=5,
+            min_count=2,
+            workers=cpu_count() * 2,
+            dm=0,
+            hs=0,
+            negative=5,
+            dbow_words=1,
+            epochs=7,
+        )
+        d2v.save(f"{os.getcwd()}/src/ai/models/d2v.model")
+        print(f"Treinamento Doc2Vec demorou: {round(time.time() - start, 2)}")

@@ -22,7 +22,7 @@ async def get_link_content(url):
                 posts = html.findAll("section")
                 phrases += list(chain(*[post.get_text().split(".") for post in posts]))
     except Exception as e:
-        print(f"2. Erro ao carregar posts: {url}")
+        print(f"2. Erro ao carregar posts: {url}, {str(e)}")
     return phrases
 
 
@@ -36,7 +36,7 @@ async def get_links(url):
                 posts = html.findAll("h2", {"class": "list-item-title"})
                 links = [dd.find("a").get("href") for dd in posts]
     except Exception as e:
-        print(f"1. Erro ao carregar posts: {url}, {e}")
+        print(f"1. Erro ao carregar posts: {url}, {str(e)}")
     return links
 
 

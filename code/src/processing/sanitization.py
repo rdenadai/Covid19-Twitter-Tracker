@@ -19,7 +19,8 @@ from ..database.models import RawHashtagComments
 from .utils import CleanUp, SNOWBALL_STEMMER
 
 
-clean_up = CleanUp(stemmer=SNOWBALL_STEMMER)
+clean_up = CleanUp(remove_stopwords=True)
+sanitization = CleanUp(stemmer=SNOWBALL_STEMMER)
 clf = load(f"{os.getcwd()}/src/ai/models/tweets_classifier.model")
 
 
@@ -37,11 +38,14 @@ async def run_model_update(md_table):
                 if row
             ]
             for hashy, comment in rows:
-                sanitized_comment = clean_up.fit(comment)
+                clean_up_comment = clean_up.fit(comment)
+                sanitized_comment = sanitization.fit(comment)
                 pred = clf.predict([sanitized_comment])
                 pred = "positivo" if pred == 1 else "negativo"
                 query = md_table.update(
-                    sanitized_comment=sanitized_comment, classify=pred
+                    clean_comment=clean_up_comment,
+                    sanitized_comment=sanitized_comment,
+                    classify=pred,
                 ).where(md_table.hash == hashy)
                 query.execute()
             txn.commit()

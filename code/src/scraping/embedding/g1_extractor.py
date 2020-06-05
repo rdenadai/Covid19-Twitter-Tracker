@@ -48,7 +48,7 @@ async def get_link_content(url):
             for item in d["entries"]
         ]
     except Exception as e:
-        print(f"1. Erro ao carregar posts: {url}, {e}")
+        print(f"1. Erro ao carregar posts: {url}, {str(e)}")
     return phrases
 
 

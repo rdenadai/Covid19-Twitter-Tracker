@@ -33,7 +33,7 @@ async def get_link_content(url):
                 for post in posts:
                     phrases += post.get_text().split(".")
     except Exception as e:
-        print(f"2. Erro ao carregar posts: {url}")
+        print(f"2. Erro ao carregar posts: {url}, {str(e)}")
     return phrases
 
 
@@ -43,7 +43,7 @@ async def get_links(url):
         d = feedparser.parse(url)
         links = [item["link"] for item in d["entries"]]
     except Exception as e:
-        print(f"1. Erro ao carregar posts: {url}, {e}")
+        print(f"1. Erro ao carregar posts: {url}, {str(e)}")
     return links
 
 

@@ -50,7 +50,7 @@ if __name__ == "__main__":
                 not_found = False
                 time.sleep(0.1)
             except Exception as e:
-                print(f"ERROR: Not found : {e}")
+                print(f"ERROR: Not found : {str(e)}")
 
         bulas = []
         for elem in elems:
@@ -70,7 +70,7 @@ if __name__ == "__main__":
                     not_found = False
                     time.sleep(0.1)
                 except Exception as e:
-                    print(f"ERROR: Not found : {e}")
+                    print(f"ERROR: Not found : {str(e)}")
 
             phrases = []
             for content in contents:

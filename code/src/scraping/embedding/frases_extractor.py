@@ -109,6 +109,27 @@ main_urls = list(
             ("https://www.pensador.com/medicina/", 1),
             ("https://www.pensador.com/farmacia/", 1),
             ("https://www.pensador.com/saude/", 1),
+            ("https://www.pensador.com/rancor/", 1),
+            ("https://www.pensador.com/sentimentos/", 1),
+            ("https://www.pensador.com/intensidade/", 1),
+            ("https://www.pensador.com/tortura/", 1),
+            ("https://www.pensador.com/animal/", 1),
+            ("https://www.pensador.com/homem/", 1),
+            ("https://www.pensador.com/mulher/", 1),
+            ("https://www.pensador.com/preguica/", 1),
+            ("https://www.pensador.com/sarcasmo/", 1),
+            ("https://www.pensador.com/poesia/", 1),
+            ("https://www.pensador.com/estado/", 1),
+            ("https://www.pensador.com/esquerda/", 1),
+            ("https://www.pensador.com/direita/", 1),
+            ("https://www.pensador.com/presidente/", 1),
+            ("https://www.pensador.com/ditador/", 1),
+            ("https://www.pensador.com/consciencia/", 1),
+            ("https://www.pensador.com/poder/", 1),
+            ("https://www.pensador.com/chefe/", 1),
+            ("https://www.pensador.com/politico/", 1),
+            ("https://www.pensador.com/preto/", 1),
+            ("https://www.pensador.com/severo/", 1),
         ]
     )
 )
@@ -138,8 +159,8 @@ async def get_link_content(url):
                         .replace("\n", ".")
                         .split(".")
                     )
-        except:
-            pass
+        except Exception as e:
+            print(f"1. Erro ao carregar frases: {url}, {str(e)}")
     return phrases
 
 
@@ -152,5 +173,13 @@ async def carregar(func, urls):
 if __name__ == "__main__":
     phrases = filter(None, chain(*asyncio.run(carregar(get_link_content, urls))))
     phrases = list(set([phrase.strip() for phrase in phrases if len(phrase) > 10]))
+
+    sentences = []
+    try:
+        with open(f"{os.getcwd()}/data/embedding/frases.pkl", "rb") as fh:
+            sentences = pickle.load(fh)
+    except:
+        pass
     with open(f"{os.getcwd()}/data/embedding/frases.pkl", "wb") as fh:
-        pickle.dump(phrases, fh)
+        sents = set(sentences + phrases)
+        pickle.dump(list(sents), fh)

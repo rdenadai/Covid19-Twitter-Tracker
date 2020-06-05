@@ -28,10 +28,13 @@ def is_number(s):
 @lru_cache(maxsize=256)
 def get_stopwords():
     stpwords = stopwords.words("portuguese")
+    punkt = [pk for pk in punctuation]
     rms = ["um", "não", "mais", "muito", "sem", "estou", "sou"]
     for rm in rms:
         del stpwords[stpwords.index(rm)]
-    return stpwords, punctuation
+    for rm in ["?"]:
+        del punkt[punkt.index(rm)]
+    return stpwords, punkt
 
 
 def remover_acentos(txt):
@@ -68,7 +71,7 @@ class CleanUp:
         self.RM = [
             (r"(http[s]*?:\/\/)+[0-9a-zA-Z.-_\/?=]*\s*", r""),  # urls
             # (r"(Em resposta)", ""),  # Reply
-            (r"\b(@)[0-9a-zA-Z_]+", r""),  # Username
+            (r"\b(@[0-9a-zA-Z_]+)\b", r""),  # Username
             (r"\n+", r" . "),
             (r'"', r" "),
             (r"\'", r" "),
@@ -78,9 +81,10 @@ class CleanUp:
             (r"“", r""),
             (r"”", ""),
             (r"\s+", r" "),
-            (r"([aeiouqwtyupdfghjklçzxcvbnm|!@$%&\.\[\]\(\)+-_=<>,;:])\1+", r"\1"),
+            (r"([aeiouqwtyupdfghjklçzxcvbnm|?!@$%&\.\[\]\(\)+-_=<>,;:])\1+", r"\1"),
+            (r"[?]+", r" duvida"),
             (r"\b(RT)\b", r""),
-            (r"(\bñ\n)", "não"),
+            (r"\b(ñ)\b", "não"),
             (r"\b(nã)\b", "não"),
             (r"\b(nãoo)\b", "não"),
             (r"\b(vc)\b", "voce"),
@@ -88,7 +92,9 @@ class CleanUp:
             (r"\b(vzs)\b", "voces"),
             (r"\b(crlh)\b", "caralho"),
             (r"\b(crl)\b", "caralho"),
+            (r"\b(carai)\b", "caralho"),
             (r"\b(to)\b", "estou"),
+            (r"\b(tô)\b", "estou"),
             (r"\b(ta)\b", "esta"),
             (r"\b(cu)\b", "anus"),
             (r"\b(mds)\b", "meu deus"),
@@ -103,6 +109,8 @@ class CleanUp:
             (r"\b(loko)\b", "louco"),
             (r"\b(mlk)\b", "moleque"),
             (r"\b(nmrl)\b", "na moral"),
+            (r"\b(mt)\b", "muito"),
+            (r"\b(falta de ar)\b", "nao consigo respirar"),
         ]
 
     def remover_acentos(self, phrase):
@@ -119,10 +127,13 @@ class CleanUp:
     @lru_cache(maxsize=256)
     def get_stopwords(self):
         stpwords = stopwords.words("portuguese")
+        punkt = [pk for pk in punctuation]
         rms = ["um", "não", "mais", "muito", "sem", "estou", "sou"]
         for rm in rms:
             del stpwords[stpwords.index(rm)]
-        return stpwords, punctuation
+        for rm in ["?"]:
+            del punkt[punkt.index(rm)]
+        return stpwords, punkt
 
     def fit(self, phrase):
         # Transforma as hashtags em palavras
