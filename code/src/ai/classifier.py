@@ -106,6 +106,7 @@ if __name__ == "__main__":
         "Cross Validation accuracy: %0.2f (+/- %0.2f)"
         % (scores.mean(), scores.std() * 2)
     )
+    print(scores)
     print("-" * 20)
 
     # Predict the test data and show others metrics
