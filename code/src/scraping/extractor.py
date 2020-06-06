@@ -38,6 +38,10 @@ if __name__ == "__main__":
         '"dor de garganta" covid19',
         '"dor de garganta"',
         '"tosse, febre e coriza"',
+        '"testei positivo" covid',
+        '"testei positivo" corona',
+        '"testei negativo" covid',
+        '"testei negativo" corona',
     ]
     if n_posts_part == 1:
         hashtags += [

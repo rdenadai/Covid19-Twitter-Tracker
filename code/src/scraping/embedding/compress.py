@@ -4,6 +4,7 @@ import pickle
 
 import numpy as np
 import pandas as pd
+from nltk.corpus import machado, mac_morpho, floresta
 
 from ...processing.utils import CleanUp
 
@@ -16,6 +17,14 @@ def carregar_sentencas(filename):
             yield frase
 
 
+def corpus_nltk(model):
+    with open(f"{os.getcwd()}/data/embedding/corpus.txt", "ab") as fh:
+        for fileid in model.fileids():
+            for sent in model.sents(fileid):
+                sentence = normalizar.fit(" ".join(sent))
+                np.savetxt(fh, [f"{' '.join(sentence)}"], fmt="%s")
+
+
 if __name__ == "__main__":
 
     start = time.time()
@@ -23,6 +32,9 @@ if __name__ == "__main__":
     print("Carregando sentenças...")
 
     normalizar = CleanUp(return_tokens=True)
+
+    for md in [machado, mac_morpho, floresta]:
+        corpus_nltk(md)
 
     filenames = [
         f"{os.getcwd()}/data/embedding/uol.pkl",

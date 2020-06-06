@@ -110,6 +110,14 @@ class CleanUp:
             (r"\b(mlk)\b", "moleque"),
             (r"\b(nmrl)\b", "na moral"),
             (r"\b(mt)\b", "muito"),
+            (r"\b(mta)\b", "muita"),
+            (r"\b(sdd)\b", "saudade"),
+            (r"\b(sds)\b", "saudades"),
+            (r"\b(qm)\b", "quem"),
+            (r"\b(dps)\b", "depois"),
+            (r"\b(pqp)\b", "puta que pariu"),
+            (r"\b(vtnc)\b", "vai tomar no anus"),
+            (r"\b(tmnc)\b", "vai tomar no anus"),
             (r"\b(falta de ar)\b", "nao consigo respirar"),
         ]
 

@@ -16,7 +16,7 @@ if __name__ == "__main__":
         list(
             set(
                 """
-                Doença,febre,Cefaleia,tosse,coriza,covid-19,pandemia,epidemia,economia,presidente,parlamento,
+                Doença,febre,Cefaleia,tosse,coriza,covid-19,pandemia,epidemia,Economia,presidente,parlamento,
                 medicina,medico,diarreia,virus,influenza,gripe,sistema imunitário,imunologia,dengue,Célula,coração,
                 pulmão,rim,remédio,medicamento,cloroquina,hidroxicloroquina,medicação antimalárica,anvisa,parlamento,
                 presidencialismo,deputado,ministro,infusão,xarope,alquimia,farmacologia,carbocisteína,náuseas,doutor,
@@ -53,7 +53,13 @@ if __name__ == "__main__":
                 Vagina,Órgão_sexual,Vulva,Hímen,Pênis,Sémen,Ejaculação,Hermes_e_Renato,Puberdade,Menstruação,Terror_(gênero),
                 Fantasia_(gênero),Jogo_eletrônico,Oseltamivir,Fenilefrina,Midríase,Receptor_adrenérgico_alfa_1,Pulp,
                 Western_(gênero),Velho_Oeste,Evolução_territorial_dos_Estados_Unidos,Orfenadrina,Clorfeniramina,Influenzavirus_A_subtipo_H1N1,
-                Gripe_espanhola,Agente_patogénico,Protozoário,Pandemia_de_gripe_A_de_2009,Paciente_zero,Síndrome_da_imunodeficiência_adquirida
+                Gripe_espanhola,Agente_patogénico,Protozoário,Pandemia_de_gripe_A_de_2009,Paciente_zero,Síndrome_da_imunodeficiência_adquirida,
+                Anarcocapitalismo,Astronomia,América_Latina,Anarquismo,Aquecimento_global,Agricultura,Algoritmo,Abacaxi,Aipim,
+                Arqueologia,Antropologia,Alemanha,Arte,América_do_Norte,Ateísmo,Artesanato,Administração,Agnóstico,Rei_Artur,
+                Agrofloresta,Brasil,Biologia,Bioquímica,Bromelaína,Biologia_celular,Barroco,Bíblia,Cânon_bíblico,Beato,Bom_Despacho,
+                Geociência,Computação,Canadá,Criador,Cristianismo,Cientologia,Computador_quântico,China,Cinema,Cinética_química,Carnívoros,
+                Conscienciologia,Computadores,Ciência,Célula_Combustível,Cerveja,Criptografia,Cidadania,Clima_Polar,Urso-polar,
+                Caribe,Capitalismo,Clima,Cometa,Zoologia,Deus,Darwinismo,Damas,Dante_Alighieri,Desenho,Esperanto,Estatística,Fascismo
                 """.split(
                     ","
                 )

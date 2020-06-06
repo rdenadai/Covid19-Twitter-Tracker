@@ -8,7 +8,6 @@ from multiprocessing import cpu_count
 from concurrent.futures import ProcessPoolExecutor
 
 import pandas as pd
-from nltk.corpus import machado, mac_morpho, floresta
 from gensim.models import Word2Vec
 from gensim.models.doc2vec import Doc2Vec, TaggedDocument
 
@@ -49,13 +48,16 @@ if __name__ == "__main__":
             # sentences=LoadCorpus(f"{os.getcwd()}/data/embedding/corpus.txt"),
             corpus_file=f"{os.getcwd()}/data/embedding/corpus.txt",
             size=300,
-            window=5,
-            min_count=2,
+            alpha=1e-3,
+            window=7,
+            min_count=2,  # IGNORES WORD WITH FREQUENCY BELLOW
             workers=cpu_count() * 2,
-            sg=0,
-            hs=0,
-            negative=5,
-            iter=30,
+            sg=1,  # 0 CBOW, 1 SKIP_GRAM
+            cbow_mean=0,  # 0 SUM, 1 MEAN
+            hs=0,  # 1 HIERARQUICAL SOFTMAX, 0 NEGATIVE
+            negative=7,
+            sample=1e-4,
+            iter=20,
         )
         w2v.save(f"{os.getcwd()}/src/ai/models/w2v.model")
         print(f"Treinamento Word2Vec demorou: {round(time.time() - start, 2)}")
@@ -75,7 +77,7 @@ if __name__ == "__main__":
             corpus_file=f"{os.getcwd()}/data/embedding/corpus.txt",
             vector_size=300,
             window=5,
-            min_count=2,
+            min_count=5,
             workers=cpu_count() * 2,
             dm=0,
             hs=0,

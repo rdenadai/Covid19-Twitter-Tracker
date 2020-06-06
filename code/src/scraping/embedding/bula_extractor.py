@@ -11,7 +11,7 @@ from concurrent.futures import ProcessPoolExecutor
 
 
 urls = []
-for p in range(2, 54):
+for p in range(10, 54):
     for w in [w for w in "abcdefghijklmnopqrstuvwxyz"]:
         if p == 1:
             urls += [f"https://consultaremedios.com.br/bulas/{w}"]
