@@ -76,14 +76,16 @@ if __name__ == "__main__":
             # ],
             corpus_file=f"{os.getcwd()}/data/embedding/corpus.txt",
             vector_size=300,
-            window=5,
-            min_count=5,
+            alpha=1e-3,
+            window=7,
+            min_count=2,
             workers=cpu_count() * 2,
             dm=0,
             hs=0,
-            negative=5,
+            negative=7,
+            sample=1e-4,
             dbow_words=1,
-            epochs=7,
+            epochs=20,
         )
         d2v.save(f"{os.getcwd()}/src/ai/models/d2v.model")
         print(f"Treinamento Doc2Vec demorou: {round(time.time() - start, 2)}")

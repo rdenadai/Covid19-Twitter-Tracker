@@ -71,13 +71,13 @@ class CleanUp:
         self.RM = [
             (r"(http[s]*?:\/\/)+[0-9a-zA-Z.-_\/?=]*\s*", r""),  # urls
             # (r"(Em resposta)", ""),  # Reply
-            (r"\b(@[0-9a-zA-Z_]+)\b", r""),  # Username
+            (r"(@[0-9a-zA-Z_]+)", r""),  # Username
             (r"\n+", r" . "),
             (r'"', r" "),
             (r"\'", r" "),
             (r"#", r""),
             (r"[…]", " . "),
-            (r"[0-9]*", r""),
+            # (r"[0-9]*", r""),
             (r"“", r""),
             (r"”", ""),
             (r"\s+", r" "),
@@ -87,9 +87,10 @@ class CleanUp:
             (r"\b(coronga)\b", r"corona"),
             (r"\b(vairus)\b", r"virus"),
             (r"\b(hcq)\b", r"hidroxicloroquina"),
-            (r"\b(ñ)\b", "não"),
-            (r"\b(nã)\b", "não"),
-            (r"\b(nãoo)\b", "não"),
+            (r"\b(n)\b", "nao"),
+            (r"\b(ñ)\b", "nao"),
+            (r"\b(nã)\b", "nao"),
+            (r"\b(nãoo)\b", "nao"),
             (r"\b(vc)\b", "voce"),
             (r"\b(vcs)\b", "voces"),
             (r"\b(vzs)\b", "voces"),
@@ -130,6 +131,9 @@ class CleanUp:
             (r"\b(sdd)\b", "saudade"),
             (r"\b(sds)\b", "saudades"),
             (r"\b(qm)\b", "quem"),
+            (r"\b(vo)\b", "vou"),
+            (r"\b(tb)\b", "tambem"),
+            (r"\b(agr)\b", "agora"),
             (r"\b(obg)\b", "obrigado"),
             (r"\b(miga)\b", "amiga"),
             (r"\b(migo)\b", "amigo"),
@@ -138,7 +142,9 @@ class CleanUp:
             (r"\b(pqp)\b", "puta que pariu"),
             (r"\b(vtnc)\b", "vai tomar no anus"),
             (r"\b(tmnc)\b", "vai tomar no anus"),
+            (r"\b(vtmnc)\b", "vai tomar no anus"),
             (r"\b(tossi)\b", "tosse"),
+            (r"\b(fé)\b", "deus"),
             (r"\b(falta de ar)\b", "nao consigo respirar"),
         ]
 
