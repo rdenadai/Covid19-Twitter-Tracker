@@ -43,6 +43,7 @@ if __name__ == "__main__":
     filenames = [
         f"{os.getcwd()}/data/embedding/uol.pkl",
         f"{os.getcwd()}/data/embedding/g1.pkl",
+        f"{os.getcwd()}/data/embedding/ministerio.pkl",
         f"{os.getcwd()}/data/embedding/frases.pkl",
         f"{os.getcwd()}/data/embedding/livros.pkl",
         f"{os.getcwd()}/data/embedding/wikipedia.pkl",

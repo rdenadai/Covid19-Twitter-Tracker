@@ -18,7 +18,7 @@ class LoadCorpus(object):
     """An interator that yields sentences (lists of str)."""
 
     def __init__(self, filename):
-        self.normalizar = CleanUp(return_tokens=True)
+        self.normalizar = CleanUp(remove_accentuation=False, return_tokens=True)
         self.file_it = pd.read_csv(
             filename, header=None, iterator=True, names=["sentence"], chunksize=30000,
         )
@@ -49,7 +49,7 @@ if __name__ == "__main__":
             corpus_file=f"{os.getcwd()}/data/embedding/corpus.txt",
             size=300,
             alpha=1e-3,
-            window=7,
+            window=10,
             min_count=2,  # IGNORES WORD WITH FREQUENCY BELLOW
             workers=cpu_count() * 2,
             sg=1,  # 0 CBOW, 1 SKIP_GRAM
@@ -57,7 +57,7 @@ if __name__ == "__main__":
             hs=0,  # 1 HIERARQUICAL SOFTMAX, 0 NEGATIVE
             negative=7,
             sample=1e-4,
-            iter=20,
+            iter=25,
         )
         w2v.save(f"{os.getcwd()}/src/ai/models/w2v.model")
         print(f"Treinamento Word2Vec demorou: {round(time.time() - start, 2)}")

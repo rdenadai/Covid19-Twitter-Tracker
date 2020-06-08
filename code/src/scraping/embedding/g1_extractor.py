@@ -36,6 +36,14 @@ rss = [
     "https://g1.globo.com/rss/g1/goias/",
     "https://g1.globo.com/rss/g1/minas-gerais/",
     "https://g1.globo.com/rss/g1/ma/maranhao/",
+    "http://revistagalileu.globo.com/Revista/Common/Rss/0,,DMI0-17579,00-MATERIAS.xml",
+    "http://revistaepoca.globo.com/Revista/Epoca/Rss/0,,DMI0-15210,00.xml",
+    "http://revistaepoca.globo.com/Revista/Epoca/Rss/0,,EDT0-15224,00.xml",
+    "http://revistapegn.globo.com/Revista/Common/Rss/0,,DMI0-17148,00.xml",
+    "http://revistacriativa.globo.com/Revista/Common/Rss/0,,DMS0-17111,00.xml",
+    "http://revistacriativa.globo.com/Revista/Common/Rss/0,,DMS0-17111,00.xml",
+    "http://revistacasaejardim.globo.com/Revista/Common/Rss/0,,DMS0-16802,00-GIRO.xml",
+    "http://revistaepoca.globo.com/Revista/Epoca/Rss/0,,EDT0-15257,00.xml",
 ]
 
 
