@@ -58,12 +58,14 @@ class CleanUp:
         self,
         remove_stopwords=False,
         remove_emojis=True,
+        remove_accentuation=True,
         stemmer=None,
         lemmatizer=None,
         return_tokens=False,
     ) -> None:
         self.remove_stopwords = remove_stopwords
         self.remove_emojis = remove_emojis
+        self.remove_accentuation = remove_accentuation
         self.stemmer = stemmer
         self.lemmatizer = lemmatizer
         self.return_tokens = return_tokens
@@ -78,6 +80,7 @@ class CleanUp:
             (r"#", r""),
             (r"[…]", " . "),
             # (r"[0-9]*", r""),
+            (r"(kkk)+", " rir "),
             (r"“", r""),
             (r"”", ""),
             (r"\s+", r" "),
@@ -105,6 +108,7 @@ class CleanUp:
             (r"\b(ta)\b", "esta"),
             (r"\b(cu)\b", "anus"),
             (r"\b(mds)\b", "meu deus"),
+            (r"\b(plmdds)\b", "pelo amor de deus"),
             (r"\b(meudeus)\b", "meu deus"),
             (r"\b(dms)\b", "demais"),
             (r"\b(cm)\b", "com"),
@@ -112,6 +116,7 @@ class CleanUp:
             (r"\b(ctz)\b", "certeza"),
             (r"\b(crtz)\b", "certeza"),
             (r"\b(fd)\b", "foda"),
+            (r"\b(sfd)\b", "foda"),
             (r"\b(fodase)\b", "foda"),
             (r"\b(blz)\b", "beleza"),
             (r"\b(muie)\b", "mulher"),
@@ -132,6 +137,7 @@ class CleanUp:
             (r"\b(sds)\b", "saudades"),
             (r"\b(qm)\b", "quem"),
             (r"\b(vo)\b", "vou"),
+            (r"\b(hj)\b", "hoje"),
             (r"\b(tb)\b", "tambem"),
             (r"\b(agr)\b", "agora"),
             (r"\b(obg)\b", "obrigado"),
@@ -145,6 +151,8 @@ class CleanUp:
             (r"\b(vtmnc)\b", "vai tomar no anus"),
             (r"\b(tossi)\b", "tosse"),
             (r"\b(fé)\b", "deus"),
+            (r"\b(dnv)\b", "de novo"),
+            (r"\b(kct)\b", "cacete"),
             (r"\b(falta de ar)\b", "nao consigo respirar"),
         ]
 
@@ -192,7 +200,8 @@ class CleanUp:
         # Remove pontuação
         for punct in self.PUNCT:
             phrase = phrase.replace(punct, " ")
-        phrase = self.remover_acentos(phrase)
+        if self.remove_accentuation:
+            phrase = self.remover_acentos(phrase)
 
         # Limpeza extra
         phrase = word_tokenize(phrase)

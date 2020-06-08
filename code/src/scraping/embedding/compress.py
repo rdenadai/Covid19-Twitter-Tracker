@@ -1,6 +1,7 @@
 import os
 import time
 import pickle
+import codecs
 
 import numpy as np
 import pandas as pd
@@ -18,7 +19,9 @@ def carregar_sentencas(filename):
 
 
 def corpus_nltk(model):
-    with open(f"{os.getcwd()}/data/embedding/corpus.txt", "ab") as fh:
+    with codecs.open(
+        f"{os.getcwd()}/data/embedding/corpus.txt", "ab", encoding="utf-8"
+    ) as fh:
         for fileid in model.fileids():
             for sent in model.sents(fileid):
                 sentence = normalizar.fit(" ".join(sent))
@@ -31,8 +34,9 @@ if __name__ == "__main__":
 
     print("Carregando sentenças...")
 
-    normalizar = CleanUp(return_tokens=True)
+    normalizar = CleanUp(remove_accentuation=False, return_tokens=True)
 
+    print("Carregando sentenças dos corpus da NLTK...")
     for md in [machado, mac_morpho, floresta]:
         corpus_nltk(md)
 
@@ -47,8 +51,12 @@ if __name__ == "__main__":
         f"{os.getcwd()}/data/embedding/bulas.pkl",
     ]
 
-    with open(f"{os.getcwd()}/data/embedding/corpus.txt", "ab") as fh:
+    print("Carregando sentenças dos corpus criados...")
+    with codecs.open(
+        f"{os.getcwd()}/data/embedding/corpus.txt", "ab", encoding="utf-8"
+    ) as fh:
         for filename in filenames:
+            print(f"Carregando sentenças: {filename}")
             for sentence in carregar_sentencas(filename):
                 np.savetxt(fh, [f"{' '.join(sentence)}"], fmt="%s")
 
