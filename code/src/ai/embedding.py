@@ -18,7 +18,12 @@ class LoadCorpus(object):
     """An interator that yields sentences (lists of str)."""
 
     def __init__(self, filename):
-        self.normalizar = CleanUp(remove_accentuation=False, return_tokens=True)
+        self.normalizar = CleanUp(
+            remove_accentuation=False,
+            remove_4_comment=False,
+            remove_numbers=False,
+            return_tokens=True,
+        )
         self.file_it = pd.read_csv(
             filename, header=None, iterator=True, names=["sentence"], chunksize=30000,
         )
@@ -77,15 +82,15 @@ if __name__ == "__main__":
             corpus_file=f"{os.getcwd()}/data/embedding/corpus.txt",
             vector_size=300,
             alpha=1e-3,
-            window=7,
+            window=10,
             min_count=2,
             workers=cpu_count() * 2,
-            dm=0,
+            dm=1,
             hs=0,
             negative=7,
             sample=1e-4,
             dbow_words=1,
-            epochs=20,
+            epochs=25,
         )
         d2v.save(f"{os.getcwd()}/src/ai/models/d2v.model")
         print(f"Treinamento Doc2Vec demorou: {round(time.time() - start, 2)}")

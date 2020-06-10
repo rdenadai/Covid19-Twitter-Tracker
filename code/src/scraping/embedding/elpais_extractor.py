@@ -12,13 +12,16 @@ import feedparser
 
 
 rss = [
-    "http://rss.uol.com.br/feed/tecnologia.xml",
-    "http://rss.home.uol.com.br/index.xml",
-    "https://www.uol.com.br/esporte/ultimas/index.xml",
-    "http://rss.uol.com.br/feed/jogos.xml",
-    "http://rss.uol.com.br/feed/cinema.xml",
-    "http://rss.uol.com.br/feed/economia.xml",
-    "http://rss.uol.com.br/feed/noticias.xml",
+    "https://brasil.elpais.com/rss/brasil/portada_completo.xml",
+]
+
+urls = [
+    "https://brasil.elpais.com/",
+    "https://brasil.elpais.com/seccion/economia/",
+    "https://brasil.elpais.com/seccion/ciencia/",
+    "https://brasil.elpais.com/seccion/tecnologia/",
+    "https://brasil.elpais.com/seccion/internacional/",
+    "https://brasil.elpais.com/seccion/cultura/",
 ]
 
 
@@ -26,15 +29,32 @@ async def get_link_content(url):
     phrases = []
     try:
         async with httpx.AsyncClient() as client:
-            r = await client.get(url, timeout=60)
+            r = await client.get(url, timeout=120)
             if r.status_code == 200:
                 html = BeautifulSoup(r.content, "lxml")
-                posts = html.findAll("div", {"class": "text"})
+                posts = html.findAll("div", {"class": "article_body"})
                 for post in posts:
                     phrases += post.get_text().split(".")
     except Exception as e:
         print(f"2. Erro ao carregar posts: {url}, {str(e)}")
     return phrases
+
+
+async def get_links_pagina_inicial(url):
+    links = []
+    try:
+        async with httpx.AsyncClient() as client:
+            r = await client.get(url, timeout=60)
+            if r.status_code == 200:
+                html = BeautifulSoup(r.content, "lxml")
+                links_ = html.findAll("h2", {"class": "headline"})
+                for link in links_:
+                    links.append(
+                        f"https://brasil.elpais.com{link.find('a').get('href')}"
+                    )
+    except Exception as e:
+        print(f"2. Erro ao carregar posts: {url}, {str(e)}")
+    return links
 
 
 async def get_links(url):
@@ -55,17 +75,21 @@ async def carregar(func, urls):
 
 if __name__ == "__main__":
     links = list(filter(None, chain(*asyncio.run(carregar(get_links, rss)))))
+    links += list(
+        filter(None, chain(*asyncio.run(carregar(get_links_pagina_inicial, urls))),)
+    )
+
     print(f"Links carregados... {len(links)}")
     phrases = filter(None, chain(*asyncio.run(carregar(get_link_content, links))))
     phrases = [phrase.strip() for phrase in phrases if len(phrase) > 10]
 
     sentences = []
     try:
-        with open(f"{os.getcwd()}/data/embedding/uol.pkl", "rb") as fh:
+        with open(f"{os.getcwd()}/data/embedding/elpais.pkl", "rb") as fh:
             sentences = pickle.load(fh)
             sentences = [sent.strip() for sent in sentences]
     except:
         pass
-    with open(f"{os.getcwd()}/data/embedding/uol.pkl", "wb") as fh:
+    with open(f"{os.getcwd()}/data/embedding/elpais.pkl", "wb") as fh:
         sents = set(sentences + phrases)
         pickle.dump(list(sents), fh)

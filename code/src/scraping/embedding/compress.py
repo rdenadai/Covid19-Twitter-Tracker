@@ -34,7 +34,12 @@ if __name__ == "__main__":
 
     print("Carregando sentenças...")
 
-    normalizar = CleanUp(remove_accentuation=False, return_tokens=True)
+    normalizar = CleanUp(
+        remove_accentuation=False,
+        remove_4_comment=False,
+        remove_numbers=False,
+        return_tokens=True,
+    )
 
     print("Carregando sentenças dos corpus da NLTK...")
     for md in [machado, mac_morpho, floresta]:
@@ -43,6 +48,8 @@ if __name__ == "__main__":
     filenames = [
         f"{os.getcwd()}/data/embedding/uol.pkl",
         f"{os.getcwd()}/data/embedding/g1.pkl",
+        f"{os.getcwd()}/data/embedding/r7.pkl",
+        f"{os.getcwd()}/data/embedding/elpais.pkl",
         f"{os.getcwd()}/data/embedding/ministerio.pkl",
         f"{os.getcwd()}/data/embedding/frases.pkl",
         f"{os.getcwd()}/data/embedding/livros.pkl",

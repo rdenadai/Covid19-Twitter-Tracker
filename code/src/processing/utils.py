@@ -59,6 +59,8 @@ class CleanUp:
         remove_stopwords=False,
         remove_emojis=True,
         remove_accentuation=True,
+        remove_numbers=True,
+        remove_4_comment=True,
         stemmer=None,
         lemmatizer=None,
         return_tokens=False,
@@ -66,6 +68,8 @@ class CleanUp:
         self.remove_stopwords = remove_stopwords
         self.remove_emojis = remove_emojis
         self.remove_accentuation = remove_accentuation
+        self.remove_numbers = remove_numbers
+        self.remove_4_comment = remove_4_comment
         self.stemmer = stemmer
         self.lemmatizer = lemmatizer
         self.return_tokens = return_tokens
@@ -79,13 +83,10 @@ class CleanUp:
             (r"\'", r" "),
             (r"#", r""),
             (r"[…]", " . "),
-            # (r"[0-9]*", r""),
             (r"(kkk)+", " rir "),
             (r"“", r""),
             (r"”", ""),
             (r"\s+", r" "),
-            (r"([aeiouqwtyupdfghjklçzxcvbnm|?!@$%&\.\[\]\(\)+-_=<>,;:])\1+", r"\1"),
-            (r"[?]+", r" duvida"),
             (r"\b(RT)\b", r""),
             (r"\b(coronga)\b", r"corona"),
             (r"\b(vairus)\b", r"virus"),
@@ -155,6 +156,17 @@ class CleanUp:
             (r"\b(kct)\b", "cacete"),
             (r"\b(falta de ar)\b", "nao consigo respirar"),
         ]
+
+        if self.remove_4_comment:
+            self.RM += [
+                (r"([aeiouqwtyupdfghjklçzxcvbnm|?!@$%&\.\[\]\(\)+-_=<>,;:])\1+", r"\1"),
+                (r"[?]+", r" duvida"),
+            ]
+
+        if self.remove_numbers:
+            self.RM += [
+                (r"[0-9]*", r""),
+            ]
 
     def remover_acentos(self, phrase):
         return normalize("NFKD", phrase).encode("ASCII", "ignore").decode("ASCII")
