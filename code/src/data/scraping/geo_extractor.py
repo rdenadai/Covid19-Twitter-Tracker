@@ -1,4 +1,8 @@
 import os
+import sys
+
+sys.path.append("../..")  # Adds higher directory to python modules path.
+
 import time
 import json
 from multiprocessing import cpu_count
@@ -8,17 +12,17 @@ import pandas as pd
 from peewee import JOIN
 from decouple import config
 
-from ..database.conn import db
-from ..database.models import RawHashtagComments, UserLocation
-from .utils import run_user_geo, run_save_user_location
+from ...database.conn import db
+from ...database.models import RawHashtagComments, UserLocation
 from ..processing.utils import normalizar, divide_chunks
+from .utils import run_user_geo, run_save_user_location
 
 
 if __name__ == "__main__":
 
-    json_file = f"{os.getcwd()}/src/scraping/collected_users.json"
+    json_file = f"{os.getcwd()}/src/data/scraping/collected_users.json"
 
-    cidades = pd.read_csv(f"{os.getcwd()}/data/brazil_cities_final.csv")
+    cidades = pd.read_csv(f"{os.getcwd()}/data/processed/brazil_cities_final.csv")
     cidades["nome_norm"] = cidades["nome"].apply(
         lambda nome: normalizar(nome, sort=False)
     )
@@ -52,7 +56,7 @@ if __name__ == "__main__":
 
     k = 10
     procs = cpu_count() * 2
-    chunk = int(k / procs)
+    chunk = int(k / procs) + 1
     # Realizar o processo de pesquisa no twitter, extração e gravação na base de dados
     with ProcessPoolExecutor(max_workers=procs) as executor:
         start_time_t = time.time()

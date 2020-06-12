@@ -1,7 +1,13 @@
+import os
+import sys
+
+sys.path.append("../..")  # Adds higher directory to python modules path.
+
+
 from peewee import DoesNotExist
 
 from .models import TwitterTagsClient, TwitterGeoClient
-from ..database.models import RawHashtagComments, UserLocation
+from ...database.models import RawHashtagComments, UserLocation
 
 
 def run_hashtag(n_posts_2_extract, hashtag):

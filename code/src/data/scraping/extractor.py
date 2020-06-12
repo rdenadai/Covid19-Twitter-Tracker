@@ -1,4 +1,8 @@
 import os
+import sys
+
+sys.path.append("../..")  # Adds higher directory to python modules path.
+
 from functools import partial
 from multiprocessing import cpu_count
 from concurrent.futures import ProcessPoolExecutor
@@ -6,7 +10,7 @@ import time
 
 from decouple import config
 
-from ..database.conn import db
+from ...database.conn import db
 from ..processing.utils import divide_chunks
 from .utils import run_hashtag, run_save_hashtag
 
@@ -77,7 +81,7 @@ if __name__ == "__main__":
             "tosse febre coriza",
         ]
 
-    qtd = cpu_count() * 2
+    qtd = 1  # cpu_count() * 2
     n_posts_2_extract = int(config("N_POSTS_TO_EXTRACT", default=1))
     with ProcessPoolExecutor(max_workers=qtd) as executor:
         for hashtags_ in divide_chunks(hashtags, qtd):
@@ -87,8 +91,8 @@ if __name__ == "__main__":
                     partial(run_hashtag, n_posts_2_extract), hashtags_, chunksize=1
                 )
             )
-            os.system("pkill chrome")
-            os.system("pkill chromedriver")
+            # os.system("pkill chrome")
+            # os.system("pkill chromedriver")
             print(f"--- Load tweets took {round(time.time() - start_time, 2)}s ---")
             start_time = time.time()
             with db.atomic() as txn:

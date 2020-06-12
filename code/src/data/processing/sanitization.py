@@ -1,7 +1,7 @@
 import os
 import sys
 
-sys.path.append("..")  # Adds higher directory to python modules path.
+sys.path.append("../..")  # Adds higher directory to python modules path.
 
 import asyncio
 import time
@@ -14,14 +14,14 @@ from peewee import SQL
 from aiomultiprocess import Pool
 from multiprocessing import cpu_count
 
-from ..database.conn import db
-from ..database.models import RawHashtagComments
+from ...database.conn import db
+from ...database.models import RawHashtagComments
 from .utils import CleanUp, SNOWBALL_STEMMER
 
 
 clean_up = CleanUp(remove_stopwords=True)
 sanitization = CleanUp(stemmer=SNOWBALL_STEMMER)
-clf = load(f"{os.getcwd()}/src/ai/models/tweets_classifier.model")
+clf = load(f"{os.getcwd()}/models/tweets_classifier.model")
 
 
 async def run_model_update(md_table):

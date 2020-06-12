@@ -24,7 +24,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 
 from sklearn.svm import SVC
 
-from ..processing.utils import CleanUp, SNOWBALL_STEMMER, RSLP_STEMMER
+from ..data.processing.utils import CleanUp, SNOWBALL_STEMMER, RSLP_STEMMER
 
 
 if __name__ == "__main__":
@@ -35,7 +35,7 @@ if __name__ == "__main__":
 
     # Load dataset
     print("Loading dataset...")
-    df = pd.read_csv(f"{os.getcwd()}/data/dataset.csv", sep="|")
+    df = pd.read_csv(f"{os.getcwd()}/data/processed/dataset.csv", sep="|")
     df["x"] = df["comentario"].apply(lambda comment: clean_up.fit(str(comment)))
     df["y"] = df["classificacao"].apply(lambda clasf: 0 if clasf == "negativo" else 1)
     textos = df[["x", "y"]].to_numpy()
@@ -119,8 +119,8 @@ if __name__ == "__main__":
     print(confusion_matrix(pred, y_test))
 
     # Rebuild the classifier, build a new pipeline (equal as above), fit and save the model
-    print(f"Saving model in: {os.getcwd()}/src/ai/models/tweets_classifier.model")
+    print(f"Saving model in: {os.getcwd()}/models/tweets_classifier.model")
     clf = SVC(kernel="linear", C=5, random_state=0)
     pipe = make_pipeline(tfidf, clf)
     pipe.fit(X, y)
-    joblib.dump(pipe, f"{os.getcwd()}/src/ai/models/tweets_classifier.model")
+    joblib.dump(pipe, f"{os.getcwd()}/models/tweets_classifier.model")

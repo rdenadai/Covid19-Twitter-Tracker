@@ -49,9 +49,10 @@ async def get_links_pagina_inicial(url):
                 html = BeautifulSoup(r.content, "lxml")
                 links_ = html.findAll("h2", {"class": "headline"})
                 for link in links_:
-                    links.append(
-                        f"https://brasil.elpais.com{link.find('a').get('href')}"
-                    )
+                    href = link.find("a").get("href")
+                    if "https://brasil.elpais.com" not in href:
+                        href = f"https://brasil.elpais.com{href}"
+                    links.append(href)
     except Exception as e:
         print(f"2. Erro ao carregar posts: {url}, {str(e)}")
     return links

@@ -11,7 +11,7 @@ import pandas as pd
 from gensim.models import Word2Vec
 from gensim.models.doc2vec import Doc2Vec, TaggedDocument
 
-from ..processing.utils import CleanUp
+from ..data.processing.utils import CleanUp
 
 
 class LoadCorpus(object):
@@ -64,7 +64,7 @@ if __name__ == "__main__":
             sample=1e-4,
             iter=25,
         )
-        w2v.save(f"{os.getcwd()}/src/ai/models/w2v.model")
+        w2v.save(f"{os.getcwd()}/models/w2v.model")
         print(f"Treinamento Word2Vec demorou: {round(time.time() - start, 2)}")
         print()
 
@@ -92,5 +92,5 @@ if __name__ == "__main__":
             dbow_words=1,
             epochs=25,
         )
-        d2v.save(f"{os.getcwd()}/src/ai/models/d2v.model")
+        d2v.save(f"{os.getcwd()}/models/d2v.model")
         print(f"Treinamento Doc2Vec demorou: {round(time.time() - start, 2)}")

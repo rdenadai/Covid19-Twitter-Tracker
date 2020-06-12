@@ -91,7 +91,7 @@ class TwitterTagsClient:
 
         driver = webdriver.Chrome(
             options=chrome_options(),
-            executable_path=f"{os.getcwd()}/src/scraping/driver/chromedriver",
+            executable_path=f"{os.getcwd()}/src/data/scraping/driver/chromedriver",
         )
 
         # f"https://twitter.com/search?q={hashtag}&src=typed_query&f=live"
@@ -170,7 +170,7 @@ class TwitterGeoClient:
 
         driver = webdriver.Chrome(
             options=chrome_options(),
-            executable_path=f"{os.getcwd()}/src/scraping/driver/chromedriver",
+            executable_path=f"{os.getcwd()}/src/data/scraping/driver/chromedriver",
         )
 
         driver.get(f"https://twitter.com/{username}")
