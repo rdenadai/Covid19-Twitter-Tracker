@@ -1,53 +1,69 @@
-    Index(['date', 'country', 'state', 'city', 'ibgeID', 'newDeaths', 'deaths',
-           'newCases', 'totalCases', 'deaths_per_100k_inhabitants',
-           'totalCases_per_100k_inhabitants', 'deaths_by_totalCases', '_source'],
-          dtype='object')
+## Informações da base de dados
 
-
-    Index(['hashtag', 'username', 'comment', 'data', 'timestamp', 'clean_comment',
-           'sanitized_comment', 'classify'],
-          dtype='object')
-    Index(['id', 'username', 'city', 'state', 'region', 'geo'], dtype='object')
-
-
-    Qtde. de Comentarios            : 205870
-    Qtde. de Comentarios positivos  : 97400
-    Qtde. de Comentarios negativos  : 108441
+    Qtde. de Comentários            : 244456
+    Qtde. de Comentários positivos  : 85785
+    Qtde. de Comentários negativos  : 158671
     ----------------------------------------
-    Qtde. de Usuarios geolocalizados: 49144
-    Qtde. de Usuarios em SP         : 9672
-    Qtde. de Usuarios em RJ         : 10267
+    Qtde. de Usuários geolocalizados: 60148
+    Qtde. de Usuários em SP         : 11883
+    Qtde. de Usuários em RJ         : 12479
 
 
-Exemplos de comentarios com suas classificacoes:
+Exemplos de comentários com suas classificações:
 
-    negativo|Nossa querida  @fabianesecches  esta no Uol falando sobre a Febre Ferrante e seu livro, "Elena Ferrante: Uma longa experiência de ausência". Vem! Livro discute os best-sellers da 'Febre Ferrante' pelo olhar da psicanálise A psicanalista Fabiane Secches estava folheando um livro qualquer, em uma livraria, quando... tab.uol.com.br
-    negativo|Em resposta a  @itskurdt n sejamos radical, n seja radical ! frio so da dor de garganta e resfriado, e quando você vai toma banho     PIOR AINDA, morro
-    positivo|Tô com dor de cabeça, febre e tô ficando resfriado tnc
-    negativo|Cada dia uma coisa ruim acontece não basta essa merda do corona vírus agora o preconceito resolveu atacar aff , cada vez o mundo me decepciona mais quando mais eu tenho esperança mais elas ficam para trás #VidasPretasImportam Estou com vcs vidas pretas importam
-    positivo|Queria ter ido pra BC com as meninas mas fiquei com medo por conta do corona :/ só que eu estou trabalhando todos os dias já vsfd
-
-
-
-![png](EDA_files/EDA_7_0.png)
+    positivo|Vim passar dias na casa da minha avo dai ontem falta de ar e hoje dor de barriga hm
+    negativo|começo do video me deu uma falta de ar do caralho, achei q ele ia cair, ai terminei o video rachando o bico kkkkkkkkkkk vtnc Citar Tweet Rolê Aleatório @rolealeatorio  · 3 h rapaiz
+    negativo|Só de pensar em fumar um rosh já da falta de ar
+    positivo|Em resposta a  @antesdadesgra Comecei a trabalhar desde cedo para ajudar minha familia mas com o corona perdi o emprego então to trabalhando na Hotmart e estou tendo um retorno bom em menos de 1 semana, quem Puder me ajudar dando  RT e FAV no meu fixado vai me ajudar mt, dê uma olhada no post vc vai gostar
+    positivo|Dor de cabeça, febre, cansaço e tosse seca hmmmmm
 
 
+## Nuvens de palavras
 
-![png](EDA_files/EDA_8_0.png)
-
+Nuvem de palavras de todos os comentários na base de dados.
 
 
 ![png](EDA_files/EDA_9_0.png)
 
 
-
-![png](EDA_files/EDA_10_0.png)
-
+Nuvens de palavras apenas de comentários classificados como positivos.
 
 
 ![png](EDA_files/EDA_11_0.png)
 
 
+## Visualizações dos dados
 
-![png](EDA_files/EDA_12_0.png)
+
+![png](EDA_files/EDA_13_0.png)
+
+
+
+![png](EDA_files/EDA_14_0.png)
+
+
+
+![png](EDA_files/EDA_15_0.png)
+
+
+
+![png](EDA_files/EDA_16_0.png)
+
+
+    ADF Statistic: 0.397990
+    p-value: 0.981420
+    Critical Values:
+    	1%: -3.496
+    	5%: -2.890
+    	10%: -2.582
+    ADF Statistic: -1.638714
+    p-value: 0.462933
+    Critical Values:
+    	1%: -3.493
+    	5%: -2.889
+    	10%: -2.581
+
+
+
+![png](EDA_files/EDA_18_0.png)
 
