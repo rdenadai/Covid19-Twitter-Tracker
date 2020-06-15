@@ -6,8 +6,6 @@ import warnings
 from multiprocessing import cpu_count
 from itertools import chain
 
-warnings.filterwarnings("ignore")
-
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -15,16 +13,19 @@ import seaborn as sn
 import joblib
 import ray
 
-from sklearn.pipeline import make_pipeline
+from sklearn.pipeline import make_pipeline, Pipeline
 from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix, f1_score, accuracy_score
 from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
-
 from sklearn.svm import SVC
+from sklearn.model_selection import GridSearchCV
 
 from ..data.processing.utils import CleanUp, SNOWBALL_STEMMER, RSLP_STEMMER
+
+
+warnings.filterwarnings("ignore")
 
 
 if __name__ == "__main__":
@@ -44,62 +45,37 @@ if __name__ == "__main__":
     X = textos[:, 0]
     y = textos[:, 1].astype(np.int).ravel()
 
-    print("Running best TF-IDF ngram value...")
-    # Check to see which variation of TF-IDF is good enough for SVM
-    validacoes, N = [], 6
-    for ngram_range in zip(np.ones((N), dtype=np.int), range(1, N)):
-        acc, f1 = [], []
-        tfidf = TfidfVectorizer(ngram_range=ngram_range, lowercase=False).fit(corpus)
-        for _ in range(5):
-            clf = SVC(kernel="linear", C=5, random_state=0)
-            pipe = make_pipeline(tfidf, clf)
-
-            Xc = textos[:, 0]
-            yc = textos[:, 1].astype(np.int).ravel()
-
-            X_train, X_test, y_train, y_test = train_test_split(Xc, yc, test_size=0.2)
-
-            pipe.fit(X_train, y_train)
-            pred = pipe.predict(X_test)
-
-            acc.append(round(accuracy_score(pred, y_test) * 100, 2))
-            f1.append(round(f1_score(pred, y_test) * 100, 2))
-
-        validacoes.append(
-            (
-                ngram_range,
-                round(np.mean(acc), 2),
-                np.max(acc),
-                round(np.mean(f1), 2),
-                np.max(f1),
-            )
-        )
-
-    # Choose the best variation which has the highest F1 score
-    columns = ["NGram", "Accuracy", "Acc Max.", "F1", "F1 Max."]
-    df = pd.DataFrame(validacoes, columns=columns)
-    df = df.sort_values(by=["F1 Max.", "Acc Max.", "NGram"], ascending=False)
-    ngram_range = df.reset_index().loc[0]["NGram"]
-
-    # Print the choosen ngram and start a TF-IDF
-    print(f"Choosen ngram: {ngram_range}")
-    tfidf = TfidfVectorizer(ngram_range=ngram_range, lowercase=False).fit(corpus)
-
-    # Create SVM classifier
-    clf = SVC(kernel="linear", C=5, random_state=0)
-
-    # Build a pipeline
-    pipe = make_pipeline(tfidf, clf)
-
     # Split the dataset with fixed state to validate
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.2, random_state=0
     )
 
+    print("Starting grid search...")
+    # Build a pipeline
+    parameters = {
+        "tfidf__ngram_range": [(1, 1), (2, 2), (3, 3), (1, 2), (1, 3), (1, 4), (1, 5)],
+        "tfidf__lowercase": [False],
+        "svm__kernel": ["linear", "rbf"],
+        "svm__C": [1, 5, 7, 15],
+        "svm__random_state": [0, 10, 100, 1000],
+        "svm__shrinking": [True, False],
+    }
+    pipe = Pipeline(steps=[("tfidf", TfidfVectorizer()), ("svm", SVC())])
+    pipe = GridSearchCV(pipe, parameters, n_jobs=-1)
+
     # Fit the dataset to pipeline
     pipe.fit(X_train, y_train)
+    print("Best parameter (CV score=%0.3f):" % pipe.best_score_)
+    print(pipe.best_params_)
 
-    print("Validating TF-IDF + Linear SVM")
+    # Best params for each step of pipeline
+    tfidf_params = pipe.best_estimator_.named_steps["tfidf"].get_params()
+    svm_params = pipe.best_estimator_.named_steps["svm"].get_params()
+
+    # After run GridSearchCV
+    print("Validating TF-IDF + SVM")
+    pipe = make_pipeline(TfidfVectorizer(**tfidf_params), SVC(**svm_params))
+
     # Verify cross validation ... above 0.75 is good enough
     scores = cross_val_score(pipe, X_train, y_train, cv=5)
     print(
@@ -110,6 +86,7 @@ if __name__ == "__main__":
     print("-" * 20)
 
     # Predict the test data and show others metrics
+    pipe.fit(X_train, y_train)
     pred = pipe.predict(X_test)
     print("Classification Report")
     print("-" * 20)
@@ -120,7 +97,6 @@ if __name__ == "__main__":
 
     # Rebuild the classifier, build a new pipeline (equal as above), fit and save the model
     print(f"Saving model in: {os.getcwd()}/models/tweets_classifier.model")
-    clf = SVC(kernel="linear", C=5, random_state=0)
-    pipe = make_pipeline(tfidf, clf)
+    pipe = make_pipeline(TfidfVectorizer(**tfidf_params), SVC(**svm_params))
     pipe.fit(X, y)
     joblib.dump(pipe, f"{os.getcwd()}/models/tweets_classifier.model")

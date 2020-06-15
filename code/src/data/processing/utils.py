@@ -152,6 +152,7 @@ class CleanUp:
             (r"\b(vtmnc)\b", "vai tomar no anus"),
             (r"\b(tossi)\b", "tosse"),
             (r"\b(fé)\b", "deus"),
+            (r"\b(scrr)\b", "socorro"),
             (r"\b(dnv)\b", "de novo"),
             (r"\b(kct)\b", "cacete"),
             (r"\b(falta de ar)\b", "nao consigo respirar"),
