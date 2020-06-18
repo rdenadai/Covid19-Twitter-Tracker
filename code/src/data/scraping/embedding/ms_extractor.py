@@ -52,16 +52,19 @@ async def carregar(func, urls):
 
 
 if __name__ == "__main__":
+    print("Iniciando Ministerio da Saude:")
     links = filter(None, chain(*asyncio.run(carregar(get_links, [url]))))
     phrases = filter(None, chain(*asyncio.run(carregar(get_content_from_links, links))))
     phrases = list(set([phrase.strip() for phrase in phrases if len(phrase) > 10]))
 
-    sentences = []
     try:
+        sentences = []
         with open(f"{os.getcwd()}/data/embedding/ministerio.pkl", "rb") as fh:
             sentences = pickle.load(fh)
+        with open(f"{os.getcwd()}/data/embedding/ministerio.pkl", "wb") as fh:
+            sents = set(sentences + phrases)
+            pickle.dump(list(sents), fh)
     except:
-        pass
-    with open(f"{os.getcwd()}/data/embedding/ministerio.pkl", "wb") as fh:
-        sents = set(sentences + phrases)
-        pickle.dump(list(sents), fh)
+        with open(f"{os.getcwd()}/data/embedding/ministerio.pkl", "wb") as fh:
+            sents = set(phrases)
+            pickle.dump(list(sents), fh)

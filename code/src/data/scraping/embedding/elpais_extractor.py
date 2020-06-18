@@ -44,7 +44,7 @@ async def get_links_pagina_inicial(url):
     links = []
     try:
         async with httpx.AsyncClient() as client:
-            r = await client.get(url, timeout=60)
+            r = await client.get(url, timeout=120)
             if r.status_code == 200:
                 html = BeautifulSoup(r.content, "lxml")
                 links_ = html.findAll("h2", {"class": "headline"})
@@ -75,22 +75,27 @@ async def carregar(func, urls):
 
 
 if __name__ == "__main__":
+    print("Iniciando El Pais")
+    print("-" * 30)
     links = list(filter(None, chain(*asyncio.run(carregar(get_links, rss)))))
     links += list(
         filter(None, chain(*asyncio.run(carregar(get_links_pagina_inicial, urls))),)
     )
 
-    print(f"Links carregados... {len(links)}")
+    print(f"links carregados... {len(links)}")
     phrases = filter(None, chain(*asyncio.run(carregar(get_link_content, links))))
     phrases = [phrase.strip() for phrase in phrases if len(phrase) > 10]
 
-    sentences = []
     try:
+        sentences = []
         with open(f"{os.getcwd()}/data/embedding/elpais.pkl", "rb") as fh:
             sentences = pickle.load(fh)
             sentences = [sent.strip() for sent in sentences]
-    except:
-        pass
-    with open(f"{os.getcwd()}/data/embedding/elpais.pkl", "wb") as fh:
-        sents = set(sentences + phrases)
-        pickle.dump(list(sents), fh)
+        with open(f"{os.getcwd()}/data/embedding/elpais.pkl", "wb") as fh:
+            sents = set(sentences + phrases)
+            pickle.dump(list(sents), fh)
+        print("termino")
+    except Exception as e:
+        with open(f"{os.getcwd()}/data/embedding/elpais_sec.pkl", "wb") as fh:
+            sents = set(phrases)
+            pickle.dump(list(sents), fh)

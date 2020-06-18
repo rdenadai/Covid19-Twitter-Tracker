@@ -67,18 +67,22 @@ async def carregar(func, urls):
 
 
 if __name__ == "__main__":
+    print("Iniciando G1")
+    print("-" * 30)
     phrases = list(
         filter(None, chain(*chain(*asyncio.run(carregar(get_link_content, rss)))),)
     )
     phrases = [phrase.strip() for phrase in phrases if len(phrase) > 10]
 
-    sentences = []
     try:
+        sentences = []
         with open(f"{os.getcwd()}/data/embedding/g1.pkl", "rb") as fh:
             sentences = pickle.load(fh)
             sentences = [sent.strip() for sent in sentences]
+        with open(f"{os.getcwd()}/data/embedding/g1.pkl", "wb") as fh:
+            sents = set(sentences + phrases)
+            pickle.dump(list(sents), fh)
     except:
-        pass
-    with open(f"{os.getcwd()}/data/embedding/g1.pkl", "wb") as fh:
-        sents = set(sentences + phrases)
-        pickle.dump(list(sents), fh)
+        with open(f"{os.getcwd()}/data/embedding/g1_sec.pkl", "wb") as fh:
+            sents = set(phrases)
+            pickle.dump(list(sents), fh)

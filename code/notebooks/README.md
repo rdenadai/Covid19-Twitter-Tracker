@@ -1,21 +1,21 @@
 ## Informações da base de dados
 
-    Qtde. de Comentários            : 278694
-    Qtde. de Comentários positivos  : 107571
-    Qtde. de Comentários negativos  : 136368
+    Qtde. de Comentários            : 283392
+    Qtde. de Comentários positivos  : 109490
+    Qtde. de Comentários negativos  : 139147
     ----------------------------------------
-    Qtde. de Usuários geolocalizados: 64026
-    Qtde. de Usuários em SP         : 12630
-    Qtde. de Usuários em RJ         : 13223
+    Qtde. de Usuários geolocalizados: 64899
+    Qtde. de Usuários em SP         : 12763
+    Qtde. de Usuários em RJ         : 13513
 
 
 Exemplos de comentários com suas classificações:
 
-    negativo|O peito dói, o olho enche d'água, a falta de ar vem ...  olá ansiedade
-    positivo|só entrar no meu quarto pra começar essa tosse seca chata
-    positivo|Só me faltava essa Pietro com febre.
-    negativo|E foi assim que eu peguei corona Citar Tweet Débora @deborakjj  · 1 h minha irmã resolveu fazer uma festa aqui em casa hj e como protesto por essa palhaçada não vou limpar um banheiro sequer dessa casa
-    positivo|Em resposta a  @ExposedAnonyBra Eu to c falta de ar real
+    negativo|Minha mãe vai começar a fazer aula de zumba amanhã, se eu não peguei corona até agora, agora eu pego
+    positivo|Uma falta de ar
+    positivo|EU NUNCA TINHA VISTO ESSE VÍDEO INTEIRO. EU TO COM FALTA DE AR
+    negativo|Em resposta a  @carolinaprivv1 vamos as duas mana , febre não está a passar :(
+    positivo|Rafa com febre parte meu coração
 
 
 ## Nuvens de palavras
@@ -23,20 +23,16 @@ Exemplos de comentários com suas classificações:
 Nuvem de palavras de todos os comentários na base de dados.
 
 
-![png](EDA_files/EDA_9_0.png)
+![png](EDA_files/EDA_10_0.png)
 
 
 Nuvens de palavras apenas de comentários classificados como positivos.
 
 
-![png](EDA_files/EDA_11_0.png)
+![png](EDA_files/EDA_12_0.png)
 
 
 ## Visualizações dos dados
-
-
-![png](EDA_files/EDA_13_0.png)
-
 
 
 ![png](EDA_files/EDA_14_0.png)
@@ -44,6 +40,10 @@ Nuvens de palavras apenas de comentários classificados como positivos.
 
 
 ![png](EDA_files/EDA_15_0.png)
+
+
+
+![png](EDA_files/EDA_16_0.png)
 
 
 ## Verificação de Causalidade
@@ -87,7 +87,7 @@ Como primeira análise, será aplicado o mencionado acima, na série temporal to
 #### Novos Casos x Comentários Positivos
 
 
-![png](EDA_files/EDA_18_0.png)
+![png](EDA_files/EDA_19_0.png)
 
 
     Augmented Dickey-Fuller Test:
@@ -95,8 +95,8 @@ Como primeira análise, será aplicado o mencionado acima, na série temporal to
     
     Comentarios:
     ------------------------------
-    ADF Statistic: -1.519582
-    p-value: 0.523803
+    ADF Statistic: -1.430894
+    p-value: 0.567379
     Critical Values:
      - 1%: -3.497
      - 5%: -2.891
@@ -117,8 +117,8 @@ Como primeira análise, será aplicado o mencionado acima, na série temporal to
     Engle-Granger Test:
     ------------------------------
     
-    ADF Statistic: -1.623023
-    p-value: 0.711075
+    ADF Statistic: -1.678707
+    p-value: 0.686558
     Critical Values:
      - 1%: -3.997
      - 5%: -3.391
@@ -139,8 +139,8 @@ Devido a ambas as séries não serem estacionárias, transforma-se ambas as sér
     
     Comentarios:
     ------------------------------
-    ADF Statistic: -2.905280
-    p-value: 0.044737
+    ADF Statistic: -3.043767
+    p-value: 0.031004
     Critical Values:
      - 1%: -3.496
      - 5%: -2.890
@@ -161,8 +161,8 @@ Devido a ambas as séries não serem estacionárias, transforma-se ambas as sér
     Engle-Granger Test:
     ------------------------------
     
-    ADF Statistic: -2.906760
-    p-value: 0.134064
+    ADF Statistic: -3.025488
+    p-value: 0.104271
     Critical Values:
      - 1%: -3.997
      - 5%: -3.391
@@ -175,7 +175,7 @@ Devido a ambas as séries não serem estacionárias, transforma-se ambas as sér
     ===============================================
     Test statistic Critical value p-value     df   
     -----------------------------------------------
-             1.305          1.816   0.221 (12, 152)
+             1.338          1.816   0.203 (12, 152)
     -----------------------------------------------
     
     
@@ -183,12 +183,12 @@ Devido a ambas as séries não serem estacionárias, transforma-se ambas as sér
     ========================================
     Test statistic Critical value p-value df
     ----------------------------------------
-             7.461          3.841   0.006  1
+             7.474          3.841   0.006  1
     ----------------------------------------
 
 
 
-![png](EDA_files/EDA_25_0.png)
+![png](EDA_files/EDA_23_1.png)
 
 
 #### Mortes x Comentários Positivos
@@ -196,7 +196,7 @@ Devido a ambas as séries não serem estacionárias, transforma-se ambas as sér
 Dando sequência as validações, faz-se a verificação se os comentários no Twitter possuem uma relação causal na quantidade de mortes que ocorrem.
 
 
-![png](EDA_files/EDA_28_0.png)
+![png](EDA_files/EDA_25_0.png)
 
 
     Augmented Dickey-Fuller Test:
@@ -204,8 +204,8 @@ Dando sequência as validações, faz-se a verificação se os comentários no T
     
     Comentarios:
     ------------------------------
-    ADF Statistic: -1.519582
-    p-value: 0.523803
+    ADF Statistic: -1.430894
+    p-value: 0.567379
     Critical Values:
      - 1%: -3.497
      - 5%: -2.891
@@ -226,8 +226,8 @@ Dando sequência as validações, faz-se a verificação se os comentários no T
     Engle-Granger Test:
     ------------------------------
     
-    ADF Statistic: -1.787845
-    p-value: 0.635607
+    ADF Statistic: -1.876285
+    p-value: 0.591985
     Critical Values:
      - 1%: -3.997
      - 5%: -3.391
@@ -240,13 +240,23 @@ Dando sequência as validações, faz-se a verificação se os comentários no T
 Da mesma maneira, ambas as séries são não estacionárias, portanto serão transformadas com o atraso de 1 dia.
 
 
-![png](EDA_files/EDA_33_0.png)
+![png](EDA_files/EDA_28_0.png)
 
 
     Augmented Dickey-Fuller Test:
     ------------------------------
     
     Comentarios:
+    ------------------------------
+    ADF Statistic: -3.043767
+    p-value: 0.031004
+    Critical Values:
+     - 1%: -3.496
+     - 5%: -2.890
+     - 10%: -2.582
+    Is the time series stationary? True
+    
+    Mortes:
     ------------------------------
     ADF Statistic: -1.869122
     p-value: 0.346723
@@ -256,22 +266,12 @@ Da mesma maneira, ambas as séries são não estacionárias, portanto serão tra
      - 10%: -2.583
     Is the time series stationary? False
     
-    Mortes:
-    ------------------------------
-    ADF Statistic: -2.905280
-    p-value: 0.044737
-    Critical Values:
-     - 1%: -3.496
-     - 5%: -2.890
-     - 10%: -2.582
-    Is the time series stationary? True
-    
     
     Engle-Granger Test:
     ------------------------------
     
-    ADF Statistic: -1.974767
-    p-value: 0.541667
+    ADF Statistic: -3.037122
+    p-value: 0.101643
     Critical Values:
      - 1%: -3.997
      - 5%: -3.391
@@ -281,6 +281,8 @@ Da mesma maneira, ambas as séries são não estacionárias, portanto serão tra
     !!! Can find a model that could fit the series, please make the series stationary !!!
 
 
+---
+
 ### Período Parcial
 
 Conforme mencionado será analisado parte do período (a partir de 05/05).
@@ -288,7 +290,7 @@ Conforme mencionado será analisado parte do período (a partir de 05/05).
 #### Novos Casos x Comentários Positivos
 
 
-![png](EDA_files/EDA_37_0.png)
+![png](EDA_files/EDA_32_0.png)
 
 
     Augmented Dickey-Fuller Test:
@@ -296,8 +298,8 @@ Conforme mencionado será analisado parte do período (a partir de 05/05).
     
     Comentarios:
     ------------------------------
-    ADF Statistic: -2.487780
-    p-value: 0.118476
+    ADF Statistic: -2.681546
+    p-value: 0.077286
     Critical Values:
      - 1%: -3.601
      - 5%: -2.935
@@ -318,8 +320,8 @@ Conforme mencionado será analisado parte do período (a partir de 05/05).
     Engle-Granger Test:
     ------------------------------
     
-    ADF Statistic: -3.536000
-    p-value: 0.029335
+    ADF Statistic: -3.640100
+    p-value: 0.021837
     Critical Values:
      - 1%: -4.184
      - 5%: -3.489
@@ -332,7 +334,7 @@ Conforme mencionado será analisado parte do período (a partir de 05/05).
     =============================================
     Test statistic Critical value p-value    df  
     ---------------------------------------------
-            0.4114          3.136   0.664 (2, 66)
+            0.4253          3.136   0.655 (2, 66)
     ---------------------------------------------
     
     
@@ -340,12 +342,12 @@ Conforme mencionado será analisado parte do período (a partir de 05/05).
     ========================================
     Test statistic Critical value p-value df
     ----------------------------------------
-            0.6537          3.841   0.419  1
+            0.4558          3.841   0.500  1
     ----------------------------------------
 
 
 
-![png](EDA_files/EDA_39_0.png)
+![png](EDA_files/EDA_33_1.png)
 
 
 #### Mortes x Comentários Positivos
@@ -353,7 +355,7 @@ Conforme mencionado será analisado parte do período (a partir de 05/05).
 Dando sequência as validações, faz-se a verificação se os comentários no Twitter possuem uma relação causal na quantidade de mortes que ocorrem.
 
 
-![png](EDA_files/EDA_42_0.png)
+![png](EDA_files/EDA_35_0.png)
 
 
     Augmented Dickey-Fuller Test:
@@ -361,8 +363,8 @@ Dando sequência as validações, faz-se a verificação se os comentários no T
     
     Comentarios:
     ------------------------------
-    ADF Statistic: -2.487780
-    p-value: 0.118476
+    ADF Statistic: -2.681546
+    p-value: 0.077286
     Critical Values:
      - 1%: -3.601
      - 5%: -2.935
@@ -383,13 +385,189 @@ Dando sequência as validações, faz-se a verificação se os comentários no T
     Engle-Granger Test:
     ------------------------------
     
-    ADF Statistic: -2.638459
-    p-value: 0.222488
+    ADF Statistic: -2.803613
+    p-value: 0.164538
     Critical Values:
      - 1%: -4.184
      - 5%: -3.489
      - 10%: -3.15
     Is time series cointegrate? False
+    
+    !!! Can find a model that could fit the series, please make the series stationary !!!
+
+
+---
+
+### Período completo por estados
+
+#### Novos Casos x Comentários Positivos (Sao Paulo)
+
+
+![png](EDA_files/EDA_39_0.png)
+
+
+    Augmented Dickey-Fuller Test:
+    ------------------------------
+    
+    Comentarios:
+    ------------------------------
+    ADF Statistic: -1.892616
+    p-value: 0.335543
+    Critical Values:
+     - 1%: -3.498
+     - 5%: -2.891
+     - 10%: -2.583
+    Is the time series stationary? False
+    
+    Casos:
+    ------------------------------
+    ADF Statistic: 3.792974
+    p-value: 1.000000
+    Critical Values:
+     - 1%: -3.499
+     - 5%: -2.892
+     - 10%: -2.583
+    Is the time series stationary? False
+    
+    
+    Engle-Granger Test:
+    ------------------------------
+    
+    ADF Statistic: -1.533570
+    p-value: 0.748096
+    Critical Values:
+     - 1%: -3.998
+     - 5%: -3.392
+     - 10%: -3.083
+    Is time series cointegrate? False
+    
+    !!! Can find a model that could fit the series, please make the series stationary !!!
+
+
+
+![png](EDA_files/EDA_41_0.png)
+
+
+    Augmented Dickey-Fuller Test:
+    ------------------------------
+    
+    Comentarios:
+    ------------------------------
+    ADF Statistic: -1.970795
+    p-value: 0.299524
+    Critical Values:
+     - 1%: -3.498
+     - 5%: -2.891
+     - 10%: -2.582
+    Is the time series stationary? False
+    
+    Casos:
+    ------------------------------
+    ADF Statistic: -3.044906
+    p-value: 0.030908
+    Critical Values:
+     - 1%: -3.499
+     - 5%: -2.892
+     - 10%: -2.583
+    Is the time series stationary? True
+    
+    
+    Engle-Granger Test:
+    ------------------------------
+    
+    ADF Statistic: -1.875808
+    p-value: 0.592225
+    Critical Values:
+     - 1%: -3.998
+     - 5%: -3.392
+     - 10%: -3.083
+    Is time series cointegrate? False
+    
+    !!! Can find a model that could fit the series, please make the series stationary !!!
+
+
+#### Novos Casos x Comentários Positivos (Rio de Janeiro)
+
+
+![png](EDA_files/EDA_45_0.png)
+
+
+    Augmented Dickey-Fuller Test:
+    ------------------------------
+    
+    Comentarios:
+    ------------------------------
+    ADF Statistic: -1.592265
+    p-value: 0.487478
+    Critical Values:
+     - 1%: -3.500
+     - 5%: -2.892
+     - 10%: -2.583
+    Is the time series stationary? False
+    
+    Casos:
+    ------------------------------
+    ADF Statistic: -0.234108
+    p-value: 0.934332
+    Critical Values:
+     - 1%: -3.503
+     - 5%: -2.893
+     - 10%: -2.584
+    Is the time series stationary? False
+    
+    
+    Engle-Granger Test:
+    ------------------------------
+    
+    ADF Statistic: -1.777962
+    p-value: 0.640364
+    Critical Values:
+     - 1%: -4.007
+     - 5%: -3.397
+     - 10%: -3.086
+    Is time series cointegrate? False
+    
+    !!! Can find a model that could fit the series, please make the series stationary !!!
+
+
+
+![png](EDA_files/EDA_47_0.png)
+
+
+    Augmented Dickey-Fuller Test:
+    ------------------------------
+    
+    Comentarios:
+    ------------------------------
+    ADF Statistic: -5.342789
+    p-value: 0.000004
+    Critical Values:
+     - 1%: -3.499
+     - 5%: -2.892
+     - 10%: -2.583
+    Is the time series stationary? True
+    
+    Casos:
+    ------------------------------
+    ADF Statistic: -1.528960
+    p-value: 0.519140
+    Critical Values:
+     - 1%: -3.506
+     - 5%: -2.895
+     - 10%: -2.584
+    Is the time series stationary? False
+    
+    
+    Engle-Granger Test:
+    ------------------------------
+    
+    ADF Statistic: -5.588451
+    p-value: 0.000012
+    Critical Values:
+     - 1%: -4.007
+     - 5%: -3.397
+     - 10%: -3.086
+    Is time series cointegrate? True
     
     !!! Can find a model that could fit the series, please make the series stationary !!!
 
