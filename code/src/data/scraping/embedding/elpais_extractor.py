@@ -22,6 +22,8 @@ urls = [
     "https://brasil.elpais.com/seccion/tecnologia/",
     "https://brasil.elpais.com/seccion/internacional/",
     "https://brasil.elpais.com/seccion/cultura/",
+    "https://brasil.elpais.com/seccion/estilo/",
+    "https://brasil.elpais.com/seccion/esportes/",
 ]
 
 
@@ -36,7 +38,8 @@ async def get_link_content(url):
                 for post in posts:
                     phrases += post.get_text().split(".")
     except Exception as e:
-        print(f"2. Erro ao carregar posts: {url}, {str(e)}")
+        # print(f"2. Erro ao carregar posts: {url}, {str(e)}")
+        pass
     return phrases
 
 
@@ -54,7 +57,8 @@ async def get_links_pagina_inicial(url):
                         href = f"https://brasil.elpais.com{href}"
                     links.append(href)
     except Exception as e:
-        print(f"2. Erro ao carregar posts: {url}, {str(e)}")
+        # print(f"2. Erro ao carregar posts: {url}, {str(e)}")
+        pass
     return links
 
 
@@ -64,7 +68,8 @@ async def get_links(url):
         d = feedparser.parse(url)
         links = [item["link"] for item in d["entries"]]
     except Exception as e:
-        print(f"1. Erro ao carregar posts: {url}, {str(e)}")
+        # print(f"1. Erro ao carregar posts: {url}, {str(e)}")
+        pass
     return links
 
 
@@ -92,10 +97,10 @@ if __name__ == "__main__":
             sentences = pickle.load(fh)
             sentences = [sent.strip() for sent in sentences]
         with open(f"{os.getcwd()}/data/embedding/elpais.pkl", "wb") as fh:
-            sents = set(sentences + phrases)
-            pickle.dump(list(sents), fh)
-        print("termino")
+            sents = list(set(sentences + phrases))
+            pickle.dump(sents, fh)
     except Exception as e:
         with open(f"{os.getcwd()}/data/embedding/elpais_sec.pkl", "wb") as fh:
             sents = set(phrases)
             pickle.dump(list(sents), fh)
+    print()
