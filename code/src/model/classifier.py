@@ -56,7 +56,7 @@ if __name__ == "__main__":
         "tfidf__ngram_range": [(1, 1), (2, 2), (3, 3), (1, 2), (1, 3), (1, 4), (1, 5)],
         "tfidf__lowercase": [False],
         "svm__kernel": ["linear", "rbf"],
-        "svm__C": [1, 5, 7, 15],
+        "svm__C": [1, 5, 7, 9, 15],
         "svm__random_state": [0, 10, 100, 1000],
         "svm__shrinking": [True, False],
     }

@@ -68,3 +68,4 @@ if __name__ == "__main__":
         with open(f"{os.getcwd()}/data/embedding/r7_sec.pkl", "wb") as fh:
             sents = set(phrases)
             pickle.dump(list(sents), fh)
+    print()
