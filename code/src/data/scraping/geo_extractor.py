@@ -6,7 +6,7 @@ sys.path.append("../..")  # Adds higher directory to python modules path.
 import time
 import json
 from multiprocessing import cpu_count
-from concurrent.futures import ProcessPoolExecutor
+from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
 
 import pandas as pd
 from peewee import JOIN
@@ -26,30 +26,36 @@ if __name__ == "__main__":
     cidades["nome_norm"] = cidades["nome"].apply(
         lambda nome: normalizar(nome, sort=False)
     )
+    print("Load cidades...")
 
     with open(json_file) as fh:
-        collected_users = json.load(fh)
+        collected_users = list(set(json.load(fh)))
+    print("Load usuario ja encontrados...")
 
     N_USER_GEO = int(config("N_USER_GEO", default=100))
 
     # Carregar todos os usuários que ainda não foram geolocalizados
-    results = (
-        RawHashtagComments.select(RawHashtagComments.username)
-        .distinct()
-        .join(
-            UserLocation,
-            JOIN.LEFT_OUTER,
-            on=(RawHashtagComments.username == UserLocation.username),
-        )
-        .where(UserLocation.username.is_null())
-        .order_by(RawHashtagComments.timestamp.asc())
-    )
+    # results = (
+    #     RawHashtagComments.select(RawHashtagComments.username)
+    #     .distinct()
+    #     .join(
+    #         UserLocation,
+    #         JOIN.LEFT_OUTER,
+    #         on=(RawHashtagComments.username == UserLocation.username),
+    #     )
+    #     .where(UserLocation.username.is_null())
+    #     .order_by(RawHashtagComments.timestamp.asc())
+    # )
+    # usernames_d = [
+    #     result.username.replace("@", "")
+    #     for result in results
+    #     if result.username not in collected_users
+    # ]
 
-    usernames_d = [
-        result.username.replace("@", "")
-        for result in results
-        if result.username not in collected_users
-    ]
+    results = pd.read_csv(f"{os.getcwd()}/src/data/scraping/usuarios_sem_geo.csv")
+    results = results[~results["username"].isin(collected_users)]
+    usernames_d = [row["username"].replace("@", "") for idx, row in results.iterrows()]
+
     print(f"# of Users without geolocation: {len(usernames_d)}")
     # Carregar apenas uma parcela
     usernames_d = usernames_d[:N_USER_GEO]
@@ -63,7 +69,7 @@ if __name__ == "__main__":
         for usernames in divide_chunks(usernames_d, k):
             start_time = time.time()
             contents = list(
-                filter(None, executor.map(run_user_geo, usernames, chunksize=1))
+                filter(None, executor.map(run_user_geo, usernames, chunksize=2))
             )
             os.system("pkill chrome")
             os.system("pkill chromedriver")

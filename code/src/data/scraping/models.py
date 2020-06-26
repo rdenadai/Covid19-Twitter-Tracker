@@ -98,22 +98,19 @@ class TwitterTagsClient:
         # https://twitter.com/hashtag/febre?f=live
         # https://twitter.com/search?q=%22falta%20de%20ar%22%20lang%3Apt&src=typed_query&f=live
         driver.get(
-            f"https://twitter.com/search?q=%22{urllib.parse.quote(hashtag)}%22%20lang%3Apt&src=typed_query&f=live"
+            f"https://twitter.com/search?q=%22{urllib.parse.quote(hashtag)}%22%20lang%3Apt&src=typed_query&f=live"  # &since=2020-06-24&until=2020-06-25"
         )
 
-        not_found = False
+        not_found = True
         while not_found:
             try:
-                login = driver.find_element_by_class_name("dropdown-signin")
-                login.click()
-                ultimas = driver.find_elements_by_class_name(
-                    "AdaptiveFiltersBar-target"
-                )
-                ultimas[1].click()
-                not_found = True
+                tweets = driver.find_elements_by_tag_name("article")
+                if len(tweets) > 0:
+                    not_found = False
                 time.sleep(0.1)
             except Exception as e:
-                print(f"ERROR: AdaptiveFiltersBar-target not found : {e}")
+                # print(f"ERROR: AdaptiveFiltersBar-target not found : {e}")
+                pass
 
         data = {"hashtag": hashtag, "comments": []}
         for _ in range(self.n_posts_2_extract + 1):
@@ -124,11 +121,13 @@ class TwitterTagsClient:
             for tweet in tweets:
                 try:
                     username = tweet.find_element_by_xpath(
-                        "./div/div[2]/div[2]/div[1]/div/div/div[1]/div[1]/a/div/div[2]/div/span"
+                        "./div/div/div/div[2]/div[2]/div[1]/div/div/div[1]/div[1]/a/div/div[2]/div/span"
                     )
-                    comment = tweet.find_element_by_xpath("./div/div[2]/div[2]/div[2]")
+                    comment = tweet.find_element_by_xpath(
+                        "./div/div/div/div[2]/div[2]/div[2]"
+                    )
                     dt = tweet.find_element_by_xpath(
-                        "./div/div[2]/div[2]/div[1]/div/div/div[1]/a/time"
+                        "./div/div/div/div[2]/div[2]/div[1]/div/div/div[1]/a/time"
                     )
 
                     # Old way
@@ -174,7 +173,7 @@ class TwitterGeoClient:
         )
 
         driver.get(f"https://twitter.com/{username}")
-        counter, not_found = 10, False
+        counter, not_found = 15, False
         while not not_found:
             try:
                 nome = driver.find_element_by_xpath(
