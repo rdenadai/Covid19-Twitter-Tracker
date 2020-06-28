@@ -3,6 +3,7 @@ import sys
 
 sys.path.append("../..")  # Adds higher directory to python modules path.
 
+import math
 import asyncio
 import time
 import re
@@ -25,17 +26,15 @@ clf = load(f"{os.getcwd()}/models/tweets_classifier.model")
 
 
 async def run_model_update(md_table):
-    # run filter?? .where(SQL('length(sanitized_comment) = 0'))
+    # run filter?? .where(SQL("length(sanitized_comment) = 0"))
     N = 5000
-    total = int(md_table.select().count() / N) + 2
+    total = math.ceil(md_table.select().count() / N) + 1
     print(f"Total pag para {md_table.__name__}: {total-1}")
     for tt in range(total):
         start_time = time.time()
         with db.atomic() as txn:
             rows = [
-                (row.hash, row.comment)
-                for row in md_table.select().paginate(tt, N)
-                if row
+                (row.hash, row.comment) for row in md_table.select().paginate(tt, N)
             ]
             for hashy, comment in rows:
                 clean_up_comment = clean_up.fit(comment)
@@ -52,7 +51,6 @@ async def run_model_update(md_table):
         print(
             f"{md_table.__name__} pag. {tt} de {total-1} --- {round(time.time() - start_time, 2)}s ---"
         )
-        await asyncio.sleep(0.01)
 
 
 async def main():

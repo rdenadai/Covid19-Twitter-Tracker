@@ -94,11 +94,9 @@ class TwitterTagsClient:
             executable_path=f"{os.getcwd()}/src/data/scraping/driver/chromedriver",
         )
 
-        # f"https://twitter.com/search?q={hashtag}&src=typed_query&f=live"
-        # https://twitter.com/hashtag/febre?f=live
-        # https://twitter.com/search?q=%22falta%20de%20ar%22%20lang%3Apt&src=typed_query&f=live
+        # f"https://twitter.com/search?q={urllib.parse.quote(hashtag)}%20lang%3Apt%20until%3A2020-03-15%20since%3A2020-03-10&src=typed_query&f=live"
         driver.get(
-            f"https://twitter.com/search?q=%22{urllib.parse.quote(hashtag)}%22%20lang%3Apt&src=typed_query&f=live"  # &since=2020-06-24&until=2020-06-25"
+            f"https://twitter.com/search?q={urllib.parse.quote(hashtag)}%20lang%3Apt&src=typed_query&f=live"
         )
 
         not_found = True
@@ -115,7 +113,7 @@ class TwitterTagsClient:
         data = {"hashtag": hashtag, "comments": []}
         for _ in range(self.n_posts_2_extract + 1):
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
-            time.sleep(3)
+            time.sleep(1)
 
             tweets = driver.find_elements_by_tag_name("article")
             for tweet in tweets:
