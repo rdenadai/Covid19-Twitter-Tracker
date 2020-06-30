@@ -31,8 +31,8 @@ The final results do not allow a direct inference of such relationship between t
 
 ## Vídeo
 
- - [Link do video]()
-Aqui um teste
+ - [Link do video](https://www.youtube.com/watch?v=qRRtS3g1nGw&fbclid=IwAR3IJ0us0Y9PeuHyP7r9ccZVtphJWtxnmV6k9Dd1CXbi2ECWfd9wirct1rE)
+
 
 ## Introdução e Motivação
 
