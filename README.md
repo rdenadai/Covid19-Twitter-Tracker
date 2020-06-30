@@ -198,6 +198,22 @@ Exemplos de comentários classificados:
 
 ### Evolução do Projeto
 
+*Primeira Etapa*
+
+- Definimos os termos inicias de pesquisa de comentarios.
+- Coletamos os dados do twitter das datas ... 
+-  Procesamento dos dados usando tecnicas de NLP
+
+*Segunda Etapa*
+
+- Definição dos algoritmos não supervicionados para a classificação.
+- Análise temporal dos dados e comparação com os dados oficiais de disseminação da doença.
+
+*Terceira Etapa*
+
+- Criação do Relatório final/apresentação e disponibilização no github
+
+
 
 ## Resultados e Discussão
 
