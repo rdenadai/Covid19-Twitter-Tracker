@@ -7,19 +7,19 @@
 
 ## Descrição
 
-O uso das redes sociais no últimos anos efetivamente se espalhou na sociedade moderna, permitindo que diversas pessoas possam ter voz e expressar seus sentimentos (tanto para o bem quanto para o mal). Tendo em vista a quantidade de informações disponíveis nas redes sociais e o momento atual que a sociedade passa (vive-se uma pandemia causada pelo novo Corona Vírus descoberto na China no começo de 2020), levanta-se a ideia da possibilidade de se vincular um aumento na quantidade de comentários nas redes sociais (em especial no Twitter) com o aumento na quantidade de casos confirmados de COVID-19.
+O uso das redes sociais no últimos anos efetivamente se espalhou na sociedade moderna, permitindo que diversas pessoas possam ter voz e expressar seus sentimentos. Tendo em vista a quantidade de informações disponíveis nas redes sociais e a atual crise sanitária causada pela pandemia do novo Coronavírus, descoberto na China no começo de 2020, levanta-se a possibilidade de que um aumento na quantidade de comentários nas redes sociais (em especial no Twitter), relacionados à doença, esteja vinculado a um aumento na quantidade de casos confirmados de COVID-19.
 
-Para realizar tal análise, se fez necessário a coleta dos comentários de usuários da rede social Twitter, bem como o posterior pré-processamento e classificação destes comentários, para só então observar através de validações estatísticas, se existe alguma "causalidade" inerente e / ou relação entre o aumento de usuários comunicando que estão doentes (ou possuem sintomas da doença), com um aumento nos casos reportados oficialmente.
+Para realizar tal análise, foi realizada a coleta dos comentários de usuários da rede social Twitter. A partir desta coleta, realizou-se a classificação destes comentários, para só então observar, através de validações estatísticas, se existe alguma "causalidade" inerente ou relação entre o aumento de usuários comunicando que estão doentes (ou que possuem sintomas da doença), com um aumento nos casos reportados oficialmente.
 
-Por fim, os resultados apresentados não permitem uma inferência direta de tal relação entre os comentários e os casos, tendo em vista o período estudado e os dados utilizados.
+Os resultados apresentados não permitem uma inferência direta de tal relação entre os comentários e os casos, tendo em vista o período estudado e os dados utilizados.
 
 ## Abstract
 
-The use of social networks in recent years has effectively spread in modern society, allowing a diversity of people to have a voice and express their feelings (for both good and bad). Given the amount of information available on social networks and the current moment that society is going through (a pandemic caused by the new Corona Virus discovered in China in early 2020), arises the ideia of the possibility of linking a increase in the amount of comments on social networks (especially on Twitter) with the increase in the number of confirmed cases of COVID-19.
+The use of social networks in recent years has effectively spread in modern society, allowing a diversity of people to have a voice and express their feelings. Given the amount of information available on social networks and the current health crisis caused by the new Coronavirus pandemic, discovered in China in early 2020, the idea of linking an increase in the amount of comments on social networks (especially on Twitter) with the increase in the number of confirmed cases of COVID-19 arises.
 
-In order to carry out such an analysis, it was necessary to collect the comments of users of the social network Twitter, as well as the subsequent pre-processing and classification of those comments, and then to observe through statistical validations, if there is any inherent "causality" and / or relationship between the increase in users reporting that they are sick (or have symptoms of the disease), with an increase in officially reported cases.
+In order to carry out such analysis, it was necessary to collect the comments of Twitter users. All those comments were processed and labeled, making possible to observe, through statistical validations, if there is any inherent "causality" or relationship between the increase in users reporting that they are sick (or have symptoms of the disease), with an increase in officially reported cases.
 
-Finally, the results presented do not allow a direct inference of such a relationship between the comments and the cases, given the period studied and the data used.
+The final results do not allow a direct inference of such relationship between the comments and the cases, given the period studied and the data used.
 
 ## Equipe
 
