@@ -213,7 +213,7 @@ Exemplos de comentários classificados:
 
 - Criação do Relatório final/apresentação e disponibilização no github
 
-
+![Figure1. Evolução do Projeto](imagens/Covid19-Twitter-Tracker.png)
 
 ## Resultados e Discussão
 
