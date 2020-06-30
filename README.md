@@ -80,6 +80,7 @@ Para esta análise, foi criada uma base de dados com os comentários realizados 
 Base de Dados | Endereço na Web | Resumo descritivo e uso
 ----- | ----- | -----
 Comentários Twitter | <não disponível online> | Base de dados com os comentários do Twitter, processados e classificados.
+Comentários Positivos/Negativos | <não disponível online> | Dataset com comentários classificados como positivo / negativo para a doença ou sintomas dela.
 Covid-19 : Dados Brasil[[4]](https://preprints.scielo.org/index.php/scielo/preprint/view/362/version/371) | https://github.com/wcota/covid19br | Informações sobre a evolução diária da COVID-19 no Brasil, com os números de casos e óbitos em todas as cidades
 Covid-19 : Ministério da Saúde | https://covid.saude.gov.br/ | Informações oficiais sobre a evolução diária da COVID-19 no Brasil, com os números de casos e óbitos em todas as cidades
 
@@ -167,13 +168,15 @@ Optou-se ainda por restringir os resultados da busca a partir do dia 01/01/2020,
 #### Coleta dos comentários
 A coleta dos comentários foi feita realizada de duas formas, a primeira e que permite uma busca mais ampla, foi fazendo uso da ferramenta Selenium WebDriver, a qual permite a abertura de um site (no caso o Twitter) e a "raspagem" das informações contidas na página. A outra forma, foi utilizando-se da API do Twitter, processo esse que possui limitações, como por exemplo, a pesquisa de comentários de até 7 dias antes da data atual e restrição na quantidade de requisições a API.
 
-Usando ambas as formas foi possível coletar comentários da rede social Twitter de acordo com as palavras chaves mencionadas no tópico anterior, e consequentemente gravados na base de dados do SQLite.
+Usando ambas as formas foi possível coletar comentários da rede social Twitter de acordo com as palavras chaves mencionadas no tópico anterior, e consequentemente todos os comentários foram gravados na base de dados do SQLite.
 
-Devido ao questionamento do projeto se seria possível identificar essa disseminação usando geolocalização, além dos comentários, quando possível e viável (essa é uma informação opcional) foi coletada a informação da cidade onde o usuário mora. O processo de coleta dessa informação de geolocalização, foi o mesmo que o dos comentários (usando o Selenium e a API do Twitter).
+Devido a um dos questionamentos do projeto ser se seria possível identificar essa disseminação usando geolocalização, além dos comentários, quando possível e viável (essa é uma informação opcional no Twitter) foi coletada a informação da cidade onde o usuário mora. O processo de coleta dessa informação de geolocalização, foi o mesmo utilizado na coleta dos comentários (usando o Selenium e a API do Twitter).
 
 
 #### Classificação dos comentários
+Tendo em vista o grande volume de comentários coletados (ao todo foram coletados mais de 400 mil), optou-se pela classificação dos mesmos como comentários positivos (aqueles comentários que efetivamente tem relação com a doença ou sintomas causados por ela) e comentários negativas (comentários que possuem as palavras chaves mas que não possuem qualquer relevância com o estudo), tendo em vista estudo voltado para a classificação de comentários positivos/negativos voltado para a disseminação da gripe, também usando o Twitter [[5]](https://ieeexplore.ieee.org/document/6424743)[[6]](https://dl.acm.org/doi/pdf/10.1145/1964858.1964874).
 
+Conforme mencionado no estudo, fora utilizado um classificador binário (no caso do estudo a Regressão Logística) com um dataset de poucas centenas de comentários. Tendo essa necessidade a equipe se dispos a criar um dataset com 2756 comentários classificados como positivo / negativo.
 
 #### Análise temporal dos dados
 
