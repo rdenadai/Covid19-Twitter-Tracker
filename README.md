@@ -36,13 +36,23 @@ The final results do not allow a direct inference of such relationship between t
 
 ## Introdução e Motivação
 
-As redes sociais exercem um papel fundamental na sociedade hoje, e principalmente através delas que as pessoas se informam e discutem sobre notícias. Estudo conduzido com alunos de graduação Social Media as Information Source: Undergraduates Use and Evaluation Behavior[1] mostrou que 97% dos entrevistados usa as redes sociais como fonte de informação.
+As redes sociais exercem um papel fundamental na sociedade hoje, e é principalmente através delas que as pessoas se informam e discutem sobre notícias. Estudo conduzido com alunos de graduação (Social Media as Information Source: Undergraduates Use and Evaluation Behavior[1]) mostrou que 97% dos entrevistados usa as redes sociais como fonte de informação.
 
 É também nas redes sociais que as pessoas compartilham informações sobre seu cotidiano. É fácil encontrar comentários sobre o trânsito, problemas no trabalho, dificuldades em alguma tarefa, sintomas de alguma doença. E é especialmente neste último item que está o objeto deste trabalho.
 
 Com o avanço da COVID-19 no mundo (e consequentemente com sua rápida proliferação), várias análises sobre a doença surgem a cada momento. Estas análises vão desde a simples contagem dos casos e óbitos até previsões do aumento nestes números. Como exposto, as pessoas possuem uma tendência a expor nas redes sociais comentários diversos sobre seu cotidiano e possivelmente sobre seu estado de saúde. Dada a atual situação mundial de pandemia de COVID-19, presume-se que comentários relacionados aos principais sintomas de COVID-19 apareçam com maior frequência nas redes sociais.
 
-Tendo em vista essa maior interação das redes sociais e a exposição cada maior de informações dos usuários, questiona-se se existe uma relação entre o número de casos de COVID-19 efetivamente identificado pelas autoridades em saúde do Brasil, com os comentários feitos na rede social Twitter.
+Tendo em vista essa maior interação das redes sociais e a exposição cada maior de informações dos usuários, questiona-se a existência de uma relação entre o número de casos de COVID-19 efetivamente identificado pelas autoridades em saúde do Brasil, com os comentários feitos na rede social Twitter.
+
+Este trabalho se inspira em outras tentativas de analisar comentários realizados em redes sociais e eventuais epidemias, especialmente as de Gripe. Um dos trabalhos mais conhecidos nesse sentido é o realizado pela Google, que criou a plataforma *Google Flu Trends*, cujo objetivo era prever o número de casos de Gripe nos Estados Unidos com base nas pesquisas com termos relacionados a Gripe, realizadas pelos usuários. Há de se observar que essa plataforma, entretanto, não foi capaz de fazer as previsões corretamente, por diversos motivos, e acabou sendo desativada pela empresa.
+
+Este trabalho está organizado na seguinte forma:
+1. Objetivo: elicita o objetivo da análise realizada sobre os comentários relacionados à COVID-19;
+2. Recursos e métodos: elenca as bases de dados e as ferramentas utilizadas;
+3. Metodologia: detalha os métodos de classificação dos comentários, bem como as análises estatísticas realizadas;
+4. Resultados e discussão: apresenta os resultados encontrados com as análises estatísticas;
+5. Conclusões: explicita as conclusões com bases nos resultados;
+6. Trabalhos futuros: sugere novas análises e formas de tratar o problema em questão.
 
 
 ### Perguntas de Pesquisa
@@ -58,13 +68,21 @@ Tendo em vista essa maior interação das redes sociais e a exposição cada mai
 
 O projeto tem como principal objetivo avaliar a possibilidade de se identificar, através das redes sociais, a disseminação de doenças, especificamente a COVID-19 no Brasil.
 
-A identificação baseia-se na extração e análise de comentários de usuários das redes sociais (mais especificamente do Twitter), que utilizaram termos relacionados aos sintomas da doenças, tais como “dor de cabeça”, “febre” e entre outros. O conteúdo desta extração, pré processado (usando técnicas de NLP [*Natural Language Processing*]) e classificado como comentário positivo para a doença ou não (usando técnicas convencionais de ML [*Machine Learning*]), será comparado com os dados oficiais de andamento da doença (quantidade de novos casos / mortes). Com isso, procura-se verificar a possibilidade de se melhor prever a disseminação da doença.
+A identificação baseia-se na extração e análise de comentários de usuários das redes sociais (mais especificamente do Twitter), que utilizaram termos relacionados aos sintomas da doenças, tais como “dor de cabeça”, “febre”, entre outros. O conteúdo desta extração, pré processado (usando técnicas de NLP - *Natural Language Processing*) e classificado como comentário positivo para a doença ou não (usando técnicas convencionais de ML - *Machine Learning*), será comparado com os dados oficiais de andamento da doença (quantidade de novos casos / mortes). Com isso, procura-se verificar a possibilidade de prever a disseminação da doença.
 
-A análise, leva em conta a evolução da quantidade de comentários e novos casos da doença ao longo do tempo, e dessa maneira foram inicialmente avaliados como séries temportais. Sendo os resultados sejam concretos, poderia fornecer insumos de possíveis casos ainda não registrados oficialmente nas estatísticas elaboradas pelos órgãos oficiais, melhorando a visão de como a doença está disseminada na sociedade.
+A análise leva em conta a evolução da quantidade de comentários e novos casos da doença ao longo do tempo, e dessa maneira foram inicialmente avaliados como séries temporais. Sendo os resultados concretos, isso forneceria informações sobre possíveis casos ainda não registrados oficialmente nas estatísticas elaboradas pelos órgãos oficiais, melhorando a visão de como a doença está disseminada na sociedade.
 
 ## Recursos e Métodos
 
 ### Bases de Dados:
+Para esta análise, foi criada uma base de dados com os comentários realizados no Twitter. Juntamente a esta base, foram utilizadas bases de dados oficiais sobre os casos de COVID-19 no Brasil.
+
+Base de Dados | Endereço na Web | Resumo descritivo e uso
+----- | ----- | -----
+Comentários Twitter | <não disponível online> | Base de dados com os comentários do Twitter, processados e classificados.
+Covid-19 : Dados Brasil | https://github.com/wcota/covid19br | Informações sobre a evolução diária da COVID-19 no Brasil, com os números de casos e óbitos em todas as cidades
+
+
  - [Covid-19 : Dados Mundo](https://github.com/CSSEGISandData/COVID-19)
  - [Covid-19 : Ministério da Saúde](https://covid.saude.gov.br/)
  - [Covid-19 : Dados Brasil](https://github.com/wcota/covid19br)
@@ -74,13 +92,86 @@ A análise, leva em conta a evolução da quantidade de comentários e novos cas
 
 
 ### Ferramentas
-
+Ferramenta | Endereço na Web | Resumo descritivo e uso
+----- | ----- | -----
+Python | https://www.python.org/ | Linguagem de Programação Python, usada para os scripts de análise
+SQLite | https://www.sqlite.org/index.html | Sistema Gerenciador de Banco de Dados simples, usado para armazenamento dos comentários do Twitter
+Scikit-Learn | https://scikit-learn.org/stable/ | Biblioteca com algoritmos de Machine Learning, utilizada na tarefa de classificação dos comentários
+Statsmodels | https://www.statsmodels.org/stable/index.html | Biblioteca com modelos e testes estatísticos, utilizados nas análises estatísticas entre comentários e casos
+Selenium WebDriver | https://www.selenium.dev/ | Biblioteca para automatização de tarefas em navegadores web. Utilizada para automação da coleta de comentários do Twitter
+NTLK | https://www.nltk.org/ | Biblioteca com funções específicas para processamento de texto. Utilizada para classificação dos comentários
 
 ## Metodologia
+Como já especificado, o objetivo deste trabalho está em tentar correlacionar comentários relacionados à COVID-19 com o número de casos da doença no Brasil. Para tanto, faz-se necessária a coleta de tais comentários, o processamento destes comentários, de forma que sejam contabilizados, dentro do possível, apenas os comentários efetivamente relacionados a doença, e a posterior análise estatística com os dados oficiais sobre a COVID-19 no país.
 
+Dado o alto número de comentários, optou-se pela classificação destes através de um algoritmo de *Machine Learning*. Feita esta classificação, o problema passou a ser tratado como uma série temporal: tanto o número de comentários como de casos variavam em função do tempo. Portanto, as análises foram feitas considerando essa especificidade.
 
 ### Detalhamento do Projeto
+Nesta seção é detalhado todo o processo, desde a definição dos termos de pesquisa, classficação dos comentários e análises estatísticas.
 
+#### Definição dos termos de busca
+Para a coleta dos comentários do Twitter, havia a necessidade de se definir os termos para os quais seria feita a busca. A rede social possui um mecanismo de busca avançada que permite que apenas textos contendo tais termos sejam retornados. Por exemplo, pode-se definir a busca pelo termo "COVID" de forma que apenas comentários contendo "COVID" sejam retornados.
+
+Para este trabalho, optou-se por, além dos termos que especificam a doença, utilizar termos de sintomas da doença, especificados pela Organização Mundial da Saúde. A lista de termos utilizada é a seguinte:
+- peguei covid,
+- peguei covid19,
+- peguei corona,
+- estou com covid,
+- estou com covid19,
+- estou com corona,
+- estou doente covid,
+- estou doente covid19,
+- estou doente corona,
+- dor de cabeça febre,
+- dor de cabeça corona,
+- dor de cabeça covid,
+- dor de cabeça covid19,
+- falta de ar corona,
+- falta de ar covid,
+- falta de ar covid19,
+- falta de ar,
+- dor de garganta corona,
+- dor de garganta covid,
+- dor de garganta covid19,
+- dor de garganta,
+- tosse, febre e coriza,
+- testei positivo covid,
+- testei positivo corona,
+- testei negativo covid,
+- testei negativo corona,
+- dor de cabeça febre,
+- dor de cabeça corona,
+- dor de cabeça covid,
+- dor de cabeça covid19,
+- diarréia corona,
+- diarréia covid,
+- diarréia covid19,
+- febre corona,
+- febre covid,
+- febre covid19,
+- falta de ar corona,
+- falta de ar covid,
+- falta de ar covid19,
+- tosse corona,
+- tosse covid,
+- tosse covid19,
+- coriza corona,
+- coriza covid,
+- coriza covid19,
+- dor de garganta corona,
+- dor de garganta covid,
+- dor de garganta covid19,
+- febre,
+- falta de ar,
+- tosse,
+- coriza,
+- dor de garganta,
+- tosse febre coriza
+
+Optou-se ainda por restringir os resultados da busca a partir do dia 01/01/2020, de forma que apenas comentários feitos a partir desta data fossem coletados. Isso foi feito considerando que a doença teve maior conhecimento mundial no início de 2020.
+
+#### Coleta dos comentários
+A coleta dos comentários foi feita fazendo uso da ferramenta Selenium WebDriver, que permite a automação de tarefas feitas em um navegador web.
 
 ### Evolução do Projeto
 
