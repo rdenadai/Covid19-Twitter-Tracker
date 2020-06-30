@@ -44,7 +44,7 @@ Com o avanço da COVID-19 no mundo (e consequentemente com sua rápida prolifera
 
 Tendo em vista essa maior interação das redes sociais e a exposição cada maior de informações dos usuários, questiona-se a existência de uma relação entre o número de casos de COVID-19 efetivamente identificado pelas autoridades em saúde do Brasil, com os comentários feitos na rede social Twitter.
 
-Este trabalho se inspira em outras tentativas de analisar comentários realizados em redes sociais e eventuais epidemias, especialmente as de Gripe. Um dos trabalhos mais conhecidos nesse sentido é o realizado pela Google, que criou a plataforma *Google Flu Trends*, cujo objetivo era prever o número de casos de Gripe nos Estados Unidos com base nas pesquisas com termos relacionados a Gripe, realizadas pelos usuários. Há de se observar que essa plataforma, entretanto, não foi capaz de fazer as previsões corretamente, por diversos motivos, e acabou sendo desativada pela empresa.
+Este trabalho se inspira em outras tentativas de analisar comentários realizados em redes sociais e eventuais epidemias, especialmente as de Gripe. Um dos trabalhos mais conhecidos nesse sentido é o realizado pela Google, que criou a plataforma *Google Flu Trends*[2], cujo objetivo era prever o número de casos de Gripe nos Estados Unidos com base nas pesquisas com termos relacionados a Gripe, realizadas pelos usuários. Há de se observar que essa plataforma, entretanto, não foi capaz de fazer as previsões corretamente, por diversos motivos[3], e acabou sendo desativada pela empresa.
 
 Este trabalho está organizado na seguinte forma:
 1. Objetivo: elicita o objetivo da análise realizada sobre os comentários relacionados à COVID-19;
@@ -75,27 +75,20 @@ A análise leva em conta a evolução da quantidade de comentários e novos caso
 ## Recursos e Métodos
 
 ### Bases de Dados:
-Para esta análise, foi criada uma base de dados com os comentários realizados no Twitter. Juntamente a esta base, foram utilizadas bases de dados oficiais sobre os casos de COVID-19 no Brasil.
+Para esta análise, foi criada uma base de dados com os comentários realizados no Twitter. Juntamente a esta base, foram utilizadas outras bases de dados sobre os casos de COVID-19 no Brasil inclusive as oficiais do Ministério da Saúde, entretanto, devido ao apagão de dados que ocorreram recentemente no Ministério, optou-se por não utilizar a mesma como base para as análises.
 
 Base de Dados | Endereço na Web | Resumo descritivo e uso
 ----- | ----- | -----
 Comentários Twitter | <não disponível online> | Base de dados com os comentários do Twitter, processados e classificados.
-Covid-19 : Dados Brasil | https://github.com/wcota/covid19br | Informações sobre a evolução diária da COVID-19 no Brasil, com os números de casos e óbitos em todas as cidades
-
-
- - [Covid-19 : Dados Mundo](https://github.com/CSSEGISandData/COVID-19)
- - [Covid-19 : Ministério da Saúde](https://covid.saude.gov.br/)
- - [Covid-19 : Dados Brasil](https://github.com/wcota/covid19br)
- - [Covid-19 : Dados Brasil : prof. Paula](https://github.com/pdpcosta/COVID-19_Brazil)
- - [IBGE : Dados populacionais](https://www.ibge.gov.br/estatisticas/sociais/populacao.html)
- - [Coronavirus (covid19) Tweets](https://www.kaggle.com/smid80/coronavirus-covid19-tweets#2020-03-00%20Coronavirus%20Tweets%20(pre%202020-03-12).CSV)
-
+Covid-19 : Dados Brasil[4] | https://github.com/wcota/covid19br | Informações sobre a evolução diária da COVID-19 no Brasil, com os números de casos e óbitos em todas as cidades
+Covid-19 : Ministério da Saúde | https://covid.saude.gov.br/ | Informações oficiais sobre a evolução diária da COVID-19 no Brasil, com os números de casos e óbitos em todas as cidades
 
 ### Ferramentas
 Ferramenta | Endereço na Web | Resumo descritivo e uso
 ----- | ----- | -----
 Python | https://www.python.org/ | Linguagem de Programação Python, usada para os scripts de análise
 SQLite | https://www.sqlite.org/index.html | Sistema Gerenciador de Banco de Dados simples, usado para armazenamento dos comentários do Twitter
+Peewee | https://github.com/coleifer/peewee | ORM para a linguagem python que se conecta em diversas bases de dados, inclusive SQLite.
 Scikit-Learn | https://scikit-learn.org/stable/ | Biblioteca com algoritmos de Machine Learning, utilizada na tarefa de classificação dos comentários
 Statsmodels | https://www.statsmodels.org/stable/index.html | Biblioteca com modelos e testes estatísticos, utilizados nas análises estatísticas entre comentários e casos
 Selenium WebDriver | https://www.selenium.dev/ | Biblioteca para automatização de tarefas em navegadores web. Utilizada para automação da coleta de comentários do Twitter
@@ -170,8 +163,20 @@ Para este trabalho, optou-se por, além dos termos que especificam a doença, ut
 
 Optou-se ainda por restringir os resultados da busca a partir do dia 01/01/2020, de forma que apenas comentários feitos a partir desta data fossem coletados. Isso foi feito considerando que a doença teve maior conhecimento mundial no início de 2020.
 
+
 #### Coleta dos comentários
-A coleta dos comentários foi feita fazendo uso da ferramenta Selenium WebDriver, que permite a automação de tarefas feitas em um navegador web.
+A coleta dos comentários foi feita realizada de duas formas, a primeira e que permite uma busca mais ampla, foi fazendo uso da ferramenta Selenium WebDriver, a qual permite a abertura de um site (no caso o Twitter) e a "raspagem" das informações contidas na página. A outra forma, foi utilizando-se da API do Twitter, processo esse que possui limitações, como por exemplo, a pesquisa de comentários de até 7 dias antes da data atual e restrição na quantidade de requisições a API.
+
+Usando ambas as formas foi possível coletar comentários da rede social Twitter de acordo com as palavras chaves mencionadas no tópico anterior, e consequentemente gravados na base de dados do SQLite.
+
+Devido ao questionamento do projeto se seria possível identificar essa disseminação usando geolocalização, além dos comentários, quando possível e viável (essa é uma informação opcional) foi coletada a informação da cidade onde o usuário mora. O processo de coleta dessa informação de geolocalização, foi o mesmo que o dos comentários (usando o Selenium e a API do Twitter).
+
+
+#### Classificação dos comentários
+
+
+#### Análise temporal dos dados
+
 
 ### Evolução do Projeto
 
@@ -187,16 +192,19 @@ A coleta dos comentários foi feita fazendo uso da ferramenta Selenium WebDriver
 
 ### Referências:
  - [1] [Social Media as Information Source: Undergraduates Use and Evaluation Behavior](https://asistdl.onlinelibrary.wiley.com/doi/full/10.1002/meet.2011.14504801283)
- - [2] [Prediction of Infectious Disease Spread Using Twitter: A Case of Influenza](https://ieeexplore.ieee.org/document/6424743)
- - [3] [Towards detecting influenza epidemics by analyzing Twitter messages](https://dl.acm.org/doi/pdf/10.1145/1964858.1964874)
- - [4] [Predicting Flu Trends using Twitter data](https://ieeexplore.ieee.org/abstract/document/5928903)
- - [5] [Forecasting Word Model: Twitter-based Influenza Surveillance and Prediction](https://www.aclweb.org/anthology/C16-1008.pdf)
- - [6] [Analysing Twitter and web queries for flu trend prediction](https://link.springer.com/article/10.1186/1742-4682-11-S1-S6)
- - [7] [Twitter Improves Seasonal Influenza Prediction](https://scitepress.org/papers/2012/37806/37806.pdf)
- - [8] [Real-time disease surveillance using Twitter data: demonstration on flu and cancer](https://dl.acm.org/doi/abs/10.1145/2487575.2487709)
- - [9] [Applying GIS and Machine Learning Methods to Twitter Data for Multiscale Surveillance of Influenza](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4959719/)
- - [10] [Mining Twitter data for influenza detection and surveillance](https://dl.acm.org/doi/abs/10.1145/2897683.2897693)
- - [11] [Defining Facets of Social Distancing during the COVID-19 Pandemic: Twitter Analysis](https://www.medrxiv.org/content/10.1101/2020.04.26.20080937v1)
- - [12] [Predicting crime using Twitter and kernel density estimation](https://www.sciencedirect.com/science/article/pii/S0167923614000268)
- - [13] [Opinion Mining on Twitter Data using Unsupervised Learning Technique](https://www.ijcaonline.org/archives/volume148/number12/unnisa-2016-ijca-911317.pdf)
- - [14] [On the limited memory BFGS method for large scale optimization](https://link.springer.com/article/10.1007/BF01589116)
+ - [2] [Google Flu Trends](https://www.google.org/flutrends/about/)
+ - [3] [The Parable of Google Flu: Traps in Big Data Analysis](https://science.sciencemag.org/content/343/6176/1203.full)
+ - [4] [Monitoring the number of COVID-19 cases and deaths in Brazil at municipal and federative units level](https://preprints.scielo.org/index.php/scielo/preprint/view/362/version/371)
+ - [5] [Prediction of Infectious Disease Spread Using Twitter: A Case of Influenza](https://ieeexplore.ieee.org/document/6424743)
+ - [6] [Towards detecting influenza epidemics by analyzing Twitter messages](https://dl.acm.org/doi/pdf/10.1145/1964858.1964874)
+ - [7] [Predicting Flu Trends using Twitter data](https://ieeexplore.ieee.org/abstract/document/5928903)
+ - [8] [Forecasting Word Model: Twitter-based Influenza Surveillance and Prediction](https://www.aclweb.org/anthology/C16-1008.pdf)
+ - [9] [Analysing Twitter and web queries for flu trend prediction](https://link.springer.com/article/10.1186/1742-4682-11-S1-S6)
+ - [10] [Twitter Improves Seasonal Influenza Prediction](https://scitepress.org/papers/2012/37806/37806.pdf)
+ - [11] [Real-time disease surveillance using Twitter data: demonstration on flu and cancer](https://dl.acm.org/doi/abs/10.1145/2487575.2487709)
+ - [12] [Applying GIS and Machine Learning Methods to Twitter Data for Multiscale Surveillance of Influenza](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4959719/)
+ - [13] [Mining Twitter data for influenza detection and surveillance](https://dl.acm.org/doi/abs/10.1145/2897683.2897693)
+ - [14] [Defining Facets of Social Distancing during the COVID-19 Pandemic: Twitter Analysis](https://www.medrxiv.org/content/10.1101/2020.04.26.20080937v1)
+ - [15] [Predicting crime using Twitter and kernel density estimation](https://www.sciencedirect.com/science/article/pii/S0167923614000268)
+ - [16] [Opinion Mining on Twitter Data using Unsupervised Learning Technique](https://www.ijcaonline.org/archives/volume148/number12/unnisa-2016-ijca-911317.pdf)
+ - [17] [On the limited memory BFGS method for large scale optimization](https://link.springer.com/article/10.1007/BF01589116)
