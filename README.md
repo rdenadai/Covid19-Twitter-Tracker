@@ -200,18 +200,19 @@ Exemplos de comentários classificados:
 
 *Primeira Etapa*
 
-- Definimos os termos inicias de pesquisa de comentarios.
-- Coletamos os dados do twitter das datas ... 
--  Procesamento dos dados usando tecnicas de NLP
+- Definimos os termos iniciais de pesquisa de comentários.
+- Coletamos os dados do twitter.
+- Processamento de dados usando tecnicas de Natural Language Processing.
 
 *Segunda Etapa*
 
-- Definição dos algoritmos não supervicionados para a classificação.
-- Análise temporal dos dados e comparação com os dados oficiais de disseminação da doença.
+- Definição do algoritmo para a classificação dos comentários.
+- Análise dos dados e comparação com informações de disseminação da doença.
+
 
 *Terceira Etapa*
 
-- Criação do Relatório final/apresentação e disponibilização no github
+- Criação do Relatório final/ apresentação e disponibilização no github.
 
 ![Figure1. Evolução do Projeto](imagens/Covid19-Twitter-Tracker.png)
 
