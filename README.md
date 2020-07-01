@@ -133,15 +133,21 @@ Optou-se ainda por restringir os resultados da busca a partir do dia 01/01/2020,
 
 
 #### Coleta dos comentários
-A coleta dos comentários foi feita realizada de duas formas, a primeira e que permite uma busca mais ampla, foi fazendo uso da ferramenta Selenium WebDriver, a qual permite a abertura de um site (no caso o Twitter) e a "raspagem" das informações contidas na página. A outra forma, foi utilizando-se da API do Twitter, processo esse que possui limitações, como por exemplo, a pesquisa de comentários de até 7 dias antes da data atual e restrição na quantidade de requisições a API.
+A coleta dos comentários foi realizada de duas formas; a primeira, que permite a coleta mais ampla de comentários, visto que não há limitações impostas pela plataforma, foi utilizando a ferramenta Selenium WebDriver, que permite a abertura de um site (no caso o Twitter) e a "raspagem" das informações contidas na página. Para tanto, utilizou-se a URL de busca do Twitter `https://twitter.com/search?q=covid%20lang%3Apt&src=typed_query&f=live`. O parâmetro *q* da URL recebe o texto de acordo com o qual serão buscados os comentários.
 
-Usando ambas as formas foi possível coletar comentários da rede social Twitter de acordo com as palavras chaves mencionadas no tópico anterior, e consequentemente todos os comentários foram gravados na base de dados do SQLite.
+A outra forma foi utilizando a API do Twitter, processo esse que possui limitações, como, por exemplo, o retorno de comentários de até 7 dias antes da data atual e a restrição na quantidade de requisições à API.
 
-Devido a um dos questionamentos do projeto ser se seria possível identificar essa disseminação usando geolocalização, além dos comentários, quando possível e viável (essa é uma informação opcional no Twitter) foi coletada a informação da cidade onde o usuário mora. O processo de coleta dessa informação de geolocalização, foi o mesmo utilizado na coleta dos comentários (usando o Selenium e a API do Twitter).
+Usando ambas as formas foi possível coletar comentários do Twitter de acordo com as palavras chaves mencionadas no tópico anterior e gravá-los em uma base de dados do SQLite.
+
+Considerando que um dos questionamentos do projeto é sobre a possibilidade da identificação dessa disseminação da doença usando geolocalização, foi coletada, ainda, a informação da cidade onde o usuário mora. Há de se observar, entretanto, que o usuário do Twitter tem a opção de não exibir essa informação, de forma que nem todos os comentários coletados possuem uma cidade associada. O procedimento de coleta dessa informação segue os mesmos métodos utilizados para coleta dos comentários.
 
 
 #### Classificação dos comentários
-Tendo em vista o grande volume de comentários coletados (ao todo foram coletados mais de 400 mil), optou-se pela classificação dos mesmos como comentários positivos (aqueles comentários que efetivamente tem relação com a doença ou sintomas causados por ela) e comentários negativas (comentários que possuem as palavras chaves mas que não possuem qualquer relevância com o estudo), tendo em vista estudo voltado para a classificação de comentários positivos/negativos voltado para a disseminação da gripe, também usando o Twitter [[5]](https://ieeexplore.ieee.org/document/6424743)[[6]](https://dl.acm.org/doi/pdf/10.1145/1964858.1964874).
+Tendo em vista o grande volume de comentários coletados (ao todo foram coletados mais de 400 mil), optou-se pela classificação dos mesmos como **positivos** (aqueles comentários que efetivamente tem relação com a doença ou sintomas causados por ela) ou **negativos** (comentários que possuem as palavras-chaves mas que não possuem qualquer relevância com o estudo). Essa classificação segue a metodologia exposta em estudo sobre a classificação de comentários positivos/negativos relacionados com a disseminação da gripe, também usando o Twitter [[5]](https://ieeexplore.ieee.org/document/6424743)[[6]](https://dl.acm.org/doi/pdf/10.1145/1964858.1964874).
+
+Esse processo de classifcação, também como exposto no estudo mencionado acima, faz uso de um classificador binário com um dataset de poucas centenas de comentários previamente rotulados. Portanto, dada essa demanda, a equipe se dispôs a criar um dataset com 2756 comentários classificados como positivo / negativo.
+
+É importante citar que a rotulação feita pela equipe é trivial: o comentário é considerado positivo se apresentar o termo em questão (tosse, febre, etc) e apresentar uma mensagem que aparente estar relacionada com a existência de sintomas. Caso contrário, o comentário foi rotulado como negativo. Não houve validação por parte de um profissional de saúde.
 
 Conforme mencionado no estudo de referência, fora utilizado um classificador binário (no caso do estudo a Regressão Logística) com um dataset de poucas centenas de comentários. Tendo essa necessidade a equipe se dispos a criar um dataset com 2756 comentários classificados como positivo / negativo.
 
@@ -179,7 +185,6 @@ weighted avg       0.76      0.76      0.76       539
 
 ![Figure 1. Matriz de confusão](imagens/confusion_matrix.png)
 
-
 Por conseguinte, com o classificador selecionado foi realizada a classificação de todos os comentários coletados na etapa anterior.
 
 *Exemplos de comentários classificados*:
@@ -199,9 +204,9 @@ Por conseguinte, com o classificador selecionado foi realizada a classificação
 
 
 #### Análise temporal dos dados
-Com todos os comentários coletados e classificados, a etapa final do projeto consiste na avaliação destes dados.
+Após a classificação dos comentários, e já considerando a variação dos casos de COVID-19 em função do tempo, evidenciou-se estarmos trabalhando com duas séries temporais. Sendo assim, as análises estatísticas teriam de ser feitas com testes e algoritmos próprios para este tipo de dado.
 
-Abaixo, são apresentados alguns dados agregados existentes na base de dados e suas porcentagens respectivas ao totais, assim como a nuvem de palavras (contendo as principais palavras) de todos os comentários.
+Abaixo, são apresentados alguns dados agregados existentes na base e suas porcentagens respectivas ao totais, assim como a nuvem de palavras (contendo as principais palavras) de todos os comentários.
 
 ```
 Comentários                : 398001   100%
@@ -219,7 +224,20 @@ Usuários em AM             :  1773      2%
 
 ![Figure 2. Nuvem de palavras dos comentários](imagens/nuvem_palavras.png)
 
+Uma análise exploratória inicial mostra a evolução dos comentários positivos ao longo do tempo, como pode ser visto na figura abaixo:
+![Figure1. Comentários positivos ao longo do tempo](imagens/comentarios_positivos.png)
 
+É possível observar um aumento no número de comentários positivos logo no início do mê
+
+Já a figura abaixo exibe o total de comentários classificados como positivos por estado. Os dois estados com mais comentários positivos são Rio de Janeiro e São Paulo, ambos com um alto número de casos da doença.
+![Figure2. Comentários positivos ao longo do tempo, por estado](imagens/comentarios_positivos_por_estado.png)
+
+Após a normalização dos totais de comentários e de casos (a fim de evitar a disparidade entre as informações), obtivemos a imagem abaixo. Ela mostra a evolução no número de casos de COVID-19 e de comentários positivos, junto com alguns eventos que ocorreram, especialmente no âmbito político, desde o início da pandemia no Brasil. Observa-se uma leve relação entre o número de comentários e de casos, muito embora, como será demonstrado na seção Resultados, isso não signifique que haja de fato uma causalidade entre as variáveis.
+![Figure3. Comentários positivos e casos ao longo do tempo, com eventos ocorridos neste intervalo](imagens/casos_vs_coment_normalizados.png)
+
+Após essa análise inicial, iniciou-se a análise estatística entre as variáveis, de forma a determinar se havia uma causalidade entre o número de comentários positivos escritos no Twitter e o número de casos de COVID-19. Para tanto, optou-se, inicialmente, pelo Teste de Causalidade de Granger, que permite validar se duas séries temporais apresentam causalidade entre si.
+
+Entretanto, como especificidade deste tipo de informação, o teste demandava que as séries temporais estivessem estacionárias, isto é, que as propriedades estatísticas das séries **não variassem em função do tempo**.
 
 ### Evolução do Projeto
 
@@ -234,12 +252,11 @@ Usuários em AM             :  1773      2%
 - Definição do algoritmo para a classificação dos comentários.
 - Análise dos dados e comparação com informações de disseminação da doença.
 
-
 *Terceira Etapa*
 
 - Criação do Relatório final/ apresentação e disponibilização no github.
 
-![Figure 2. Evolução do Projeto](imagens/Covid19-Twitter-Tracker.png)
+![Figure4. Evolução do Projeto](imagens/Covid19-Twitter-Tracker.png)
 
 ## Resultados e Discussão
 
@@ -268,3 +285,4 @@ Usuários em AM             :  1773      2%
  - [15] [Predicting crime using Twitter and kernel density estimation](https://www.sciencedirect.com/science/article/pii/S0167923614000268)
  - [16] [Opinion Mining on Twitter Data using Unsupervised Learning Technique](https://www.ijcaonline.org/archives/volume148/number12/unnisa-2016-ijca-911317.pdf)
  - [17] [On the limited memory BFGS method for large scale optimization](https://link.springer.com/article/10.1007/BF01589116)
+ - [18] [Symptoms of Coronavirus](https://www.cdc.gov/coronavirus/2019-ncov/symptoms-testing/symptoms.html)
