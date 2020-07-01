@@ -234,7 +234,7 @@ Uma análise exploratória inicial mostra a evolução dos comentários positivo
 
 ![Figure 3. Comentários positivos ao longo do tempo](imagens/comentarios_positivos.png)
 
-É possível observar um aumento no número de comentários positivos logo no início do mê
+É possível observar um aumento no número de comentários positivos logo no início do mês de Maio. Não foi possível determinar a causa desse aumento, muito embora existam, a princípio, duas possibilidades: 1. A coleta de comentários foi limitada de alguma forma, e não alcançou comentários feitos há mais tempo; 2. Os comentários do Twitter passaram a ser feitos com maior intensidade a partir do início de Maio. Essas possibilidades serão mencionadas na seção Trabalhos Futuros.
 
 Já a figura abaixo exibe o total de comentários classificados como positivos por estado. Os dois estados com mais comentários positivos são Rio de Janeiro e São Paulo, ambos com um alto número de casos da doença.
 
