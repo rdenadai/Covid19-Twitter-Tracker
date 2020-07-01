@@ -106,61 +106,27 @@ Nesta seção é detalhado todo o processo, desde a definição dos termos de pe
 #### Definição dos termos de busca
 Para a coleta dos comentários do Twitter, havia a necessidade de se definir os termos para os quais seria feita a busca. A rede social possui um mecanismo de busca avançada que permite que apenas textos contendo tais termos sejam retornados. Por exemplo, pode-se definir a busca pelo termo "COVID" de forma que apenas comentários contendo "COVID" sejam retornados.
 
-Para este trabalho, optou-se por, além dos termos que especificam a doença, utilizar termos de sintomas da doença, especificados pela Centro de Controle e Prevenção de Doenças dos Estados Unidos (CDC) [[18]](https://www.cdc.gov/coronavirus/2019-ncov/symptoms-testing/symptoms.html). A lista de termos utilizada é a seguinte:
-- peguei covid,
-- peguei covid19,
-- peguei corona,
-- estou com covid,
-- estou com covid19,
-- estou com corona,
-- estou doente covid,
-- estou doente covid19,
-- estou doente corona,
-- dor de cabeça febre,
-- dor de cabeça corona,
-- dor de cabeça covid,
-- dor de cabeça covid19,
-- falta de ar corona,
-- falta de ar covid,
-- falta de ar covid19,
-- falta de ar,
-- dor de garganta corona,
-- dor de garganta covid,
-- dor de garganta covid19,
-- dor de garganta,
-- tosse, febre e coriza,
-- testei positivo covid,
-- testei positivo corona,
-- testei negativo covid,
-- testei negativo corona,
-- dor de cabeça febre,
-- dor de cabeça corona,
-- dor de cabeça covid,
-- dor de cabeça covid19,
-- diarréia corona,
-- diarréia covid,
-- diarréia covid19,
-- febre corona,
-- febre covid,
-- febre covid19,
-- falta de ar corona,
-- falta de ar covid,
-- falta de ar covid19,
-- tosse corona,
-- tosse covid,
-- tosse covid19,
-- coriza corona,
-- coriza covid,
-- coriza covid19,
-- dor de garganta corona,
-- dor de garganta covid,
-- dor de garganta covid19,
-- febre,
-- falta de ar,
-- tosse,
-- coriza,
-- dor de garganta,
-- tosse febre coriza
+Para este trabalho, optou-se por, além dos termos que especificam a doença, utilizar termos de sintomas da doença, especificados pela Organização Mundial da Saúde. A lista de termos utilizada é a seguinte:
+
+peguei covid, | peguei covid19, | peguei corona,
+----- | ----- | ----- 
+estou com covid, | estou com covid19, | estou com corona,
+estou doente covid, | estou doente covid19, | estou doente corona,
+dor de cabeça febre, | dor de cabeça corona, | dor de cabeça covid,
+dor de cabeça covid19, | falta de ar corona, | falta de ar covid,
+falta de ar covid19, | falta de ar, | dor de garganta corona, 
+dor de garganta covid, | dor de garganta covid19, | dor de garganta,
+tosse, febre e coriza, | testei positivo covid, | testei positivo corona,
+testei negativo covid, | testei negativo corona, | dor de cabeça febre,
+dor de cabeça corona, | dor de cabeça covid, | dor de cabeça covid19,
+diarréia corona, | diarréia covid, | diarréia covid19,
+febre corona, | febre covid, | febre covid19,
+falta de ar corona, | falta de ar covid, | falta de ar covid19,
+tosse corona, | tosse covid, | tosse covid19,
+coriza corona, | coriza covid, | coriza covid19,
+dor de garganta corona, | dor de garganta covid, | dor de garganta covid19,
+febre, | falta de ar, | tosse,
+coriza, | dor de garganta, | tosse febre coriza
 
 Optou-se ainda por restringir os resultados da busca a partir do dia 01/01/2020, de forma que apenas comentários feitos a partir desta data fossem coletados. Isso foi feito considerando que a doença teve maior conhecimento mundial no início de 2020.
 
@@ -182,7 +148,7 @@ Esse processo de classifcação, também como exposto no estudo mencionado acima
 
 É importante citar que a rotulação feita pela equipe é trivial: o comentário é considerado positivo se apresentar o termo em questão (tosse, febre, etc) e apresentar uma mensagem que aparente estar relacionada com a existência de sintomas. Caso contrário, o comentário foi rotulado como negativo. Não houve validação por parte de um profissional de saúde.
 
-Exemplos de comentários classificados:
+*Exemplos de comentários classificados*:
 
 | Classificação | Comentário |
 |-|-|
@@ -196,6 +162,18 @@ Exemplos de comentários classificados:
 | negativo | Fala galera! Não peguei corona e nem to morto. Só dei um tempo pra estudar (as apostilas da foto) e adiantar umas coisas do Mestrado. Ai tive que dar um tempo pra colocar a vida em ordem. Desculpa o sumiço |
 | negativo | Meus amigos: uma enfermeira lutando pra trabalhar sem se contaminar e um jovem que está com os sintomas e até falta de ar. Hahaha AAMMOOOOO A VONTADE DE VIVER DESSES JOVENS Citar Tweet Jônatas @jonatas_maia12  · 1 h Efeitos da quarentena |
 | positivo | que falta de ar chata |
+
+*Informações da base de dados*:
+
+    Qtde. de Comentários               : 398001
+    Qtde. de Comentários positivos     : 132631, 33%
+    Qtde. de Comentários negativos     : 265370, 67%
+    Qtde. de Comentários geolocalizados: 124159, 31%
+    --------------------------------------------------
+    Qtde. de Usuários geolocalizados   : 88766
+    Qtde. de Usuários em SP            : 17539, 20%
+    Qtde. de Usuários em RJ            : 18260, 21%
+
 
 #### Análise temporal dos dados
 Após a classificação dos comentários, e já considerando a variação dos casos de COVID-19 em função do tempo, evidenciou-se estarmos trabalhando com duas séries temporais. Sendo assim, as análises estatísticas teriam de ser feitas com testes e algoritmos próprios para este tipo de dado.
