@@ -108,8 +108,9 @@ Para a coleta dos comentários do Twitter, havia a necessidade de se definir os 
 
 Para este trabalho, optou-se por, além dos termos que especificam a doença, utilizar termos de sintomas da doença, especificados pela Organização Mundial da Saúde. A lista de termos utilizada é a seguinte:
 
-peguei covid, | peguei covid19, | peguei corona,
+||||
 ----- | ----- | ----- 
+peguei covid, | peguei covid19, | peguei corona,
 estou com covid, | estou com covid19, | estou com corona,
 estou doente covid, | estou doente covid19, | estou doente corona,
 dor de cabeça febre, | dor de cabeça corona, | dor de cabeça covid,
@@ -128,7 +129,6 @@ dor de garganta corona, | dor de garganta covid, | dor de garganta covid19,
 febre, | falta de ar, | tosse,
 coriza, | dor de garganta, | tosse febre coriza
 
-
 Optou-se ainda por restringir os resultados da busca a partir do dia 01/01/2020, de forma que apenas comentários feitos a partir desta data fossem coletados. Isso foi feito considerando que a doença teve maior conhecimento mundial no início de 2020.
 
 
@@ -143,7 +143,44 @@ Devido a um dos questionamentos do projeto ser se seria possível identificar es
 #### Classificação dos comentários
 Tendo em vista o grande volume de comentários coletados (ao todo foram coletados mais de 400 mil), optou-se pela classificação dos mesmos como comentários positivos (aqueles comentários que efetivamente tem relação com a doença ou sintomas causados por ela) e comentários negativas (comentários que possuem as palavras chaves mas que não possuem qualquer relevância com o estudo), tendo em vista estudo voltado para a classificação de comentários positivos/negativos voltado para a disseminação da gripe, também usando o Twitter [[5]](https://ieeexplore.ieee.org/document/6424743)[[6]](https://dl.acm.org/doi/pdf/10.1145/1964858.1964874).
 
-Conforme mencionado no estudo, fora utilizado um classificador binário (no caso do estudo a Regressão Logística) com um dataset de poucas centenas de comentários. Tendo essa necessidade a equipe se dispos a criar um dataset com 2756 comentários classificados como positivo / negativo.
+Conforme mencionado no estudo de referência, fora utilizado um classificador binário (no caso do estudo a Regressão Logística) com um dataset de poucas centenas de comentários. Tendo essa necessidade a equipe se dispos a criar um dataset com 2756 comentários classificados como positivo / negativo.
+
+Com o dataset terminado, foi realizada uma etapa de análise de alguns algoritmos de *Machine Learning* verificando quais dos possíveise seria viável utilizar para a classificação do conteúdo.
+
+Conforme bastante explorado na literatura faz-se necessário, transformar palavras em representações numéricas para que algoritmos de *Machine Learning* possam aprender padrões representativos. Dessa maneira, foram avaliadas duas formas de criação de variáveis latentes, a contagem de termos por frase e TF-IDF. Para o pré-processamento foram realizadas algumas operações, como remoção de acentos e a stemização das palavras.
+
+Preparadas as frases para a classificação, foram analisados quatro implementações do pacote scikit-learn (LogisticRegression, SGDClassifier, SVM com kernel linear e rbf), para validar qual seria o melhor algoritmo a ser utilizado no projeto.
+
+Com resultados bem próximos, qualquer um dos métodos poderia ser utilizado. Entretanto, no top 10 dos melhores, a grande maioria das posições foi ocupada pelo SVM (com ambos os kernel), e dessa maneira este algoritmo fora o escolhido, juntamente com o TF-IDF.
+
+Terminada essa fase de avaliação, foi realizada uma busca exaustiva para encontrar os melhores parâmetros tanto para o algoritmo do TF-IDF quanto para o SVM, tendo como resultado final os parâmetros abaixo:
+
+```
+--------------------
+Best parameter (CV score=0.791):
+{'svm__C': 15, 'svm__kernel': 'rbf', 'svm__random_state': 0, 'svm__shrinking': True, 'tfidf__lowercase': False, 'tfidf__ngram_range': (1, 1)}
+
+--------------------
+Cross Validation accuracy: 0.79 (+/- 0.03)
+[0.79118329 0.79814385 0.80974478 0.76798144 0.78886311]
+
+--------------------
+Classification Report
+--------------------
+              precision    recall  f1-score   support
+
+           0       0.77      0.86      0.81       319
+           1       0.75      0.62      0.68       220
+
+    accuracy                           0.76       539
+   macro avg       0.76      0.74      0.74       539
+weighted avg       0.76      0.76      0.76       539
+```
+
+![Figure 1. Matriz de confusão](imagens/confusion_matrix.png)
+
+
+Por conseguinte, com o classificador selecionado foi realizada a classificação de todos os comentários coletados na etapa anterior.
 
 *Exemplos de comentários classificados*:
 
@@ -160,19 +197,28 @@ Conforme mencionado no estudo, fora utilizado um classificador binário (no caso
 | negativo | Meus amigos: uma enfermeira lutando pra trabalhar sem se contaminar e um jovem que está com os sintomas e até falta de ar. Hahaha AAMMOOOOO A VONTADE DE VIVER DESSES JOVENS Citar Tweet Jônatas @jonatas_maia12  · 1 h Efeitos da quarentena |
 | positivo | que falta de ar chata |
 
-*Informações da base de dados*:
-
-    Qtde. de Comentários               : 398001
-    Qtde. de Comentários positivos     : 132631, 33%
-    Qtde. de Comentários negativos     : 265370, 67%
-    Qtde. de Comentários geolocalizados: 124159, 31%
-    --------------------------------------------------
-    Qtde. de Usuários geolocalizados   : 88766
-    Qtde. de Usuários em SP            : 17539, 20%
-    Qtde. de Usuários em RJ            : 18260, 21%
-
 
 #### Análise temporal dos dados
+Com todos os comentários coletados e classificados, a etapa final do projeto consiste na avaliação destes dados.
+
+Abaixo, são apresentados alguns dados agregados existentes na base de dados e suas porcentagens respectivas ao totais, assim como a nuvem de palavras (contendo as principais palavras) de todos os comentários.
+
+```
+Comentários                : 398001   100%
+Comentários positivos      : 132631    33%
+Comentários negativos      : 265370    67%
+Comentários geolocalizados : 124159    31%
+--------------------------------------------------
+Usuários geolocalizados    : 88766    100%
+Usuários em SP             : 17539     20%
+Usuários em RJ             : 18260     21%
+Usuários em MG             :  6341      7%
+Usuários em BA             :  2311      3%
+Usuários em AM             :  1773      2%
+```
+
+![Figure 2. Nuvem de palavras dos comentários](imagens/nuvem_palavras.png)
+
 
 
 ### Evolução do Projeto
@@ -193,7 +239,7 @@ Conforme mencionado no estudo, fora utilizado um classificador binário (no caso
 
 - Criação do Relatório final/ apresentação e disponibilização no github.
 
-![Figure1. Evolução do Projeto](imagens/Covid19-Twitter-Tracker.png)
+![Figure 2. Evolução do Projeto](imagens/Covid19-Twitter-Tracker.png)
 
 ## Resultados e Discussão
 
