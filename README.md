@@ -215,17 +215,17 @@ Após a classificação dos comentários, e já considerando a variação dos ca
 Abaixo, são apresentados alguns dados agregados existentes na base e suas porcentagens respectivas ao totais, assim como a nuvem de palavras (contendo as principais palavras) de todos os comentários.
 
 ```
-Comentários                : 398001   100%
-Comentários positivos      : 132631    33%
-Comentários negativos      : 265370    67%
-Comentários geolocalizados : 124159    31%
+Qtde. de Comentários                : 384281  100%
+Qtde. de Comentários positivos      : 125135   33%
+Qtde. de Comentários negativos      : 259146   67%
+Qtde. de Comentários geolocalizados : 122268   32%
 --------------------------------------------------
-Usuários geolocalizados    : 88766    100%
-Usuários em SP             : 17539     20%
-Usuários em RJ             : 18260     21%
-Usuários em MG             :  6341      7%
-Usuários em BA             :  2311      3%
-Usuários em AM             :  1773      2%
+Qtde. de Usuários geolocalizados    : 88039   100%
+Qtde. de Usuários em SP             : 17349    20%
+Qtde. de Usuários em RJ             : 18145    21%
+Qtde. de Usuários em MG             :  6289     7%
+Qtde. de Usuários em BA             :  2289     3%
+Qtde. de Usuários em AM             :  1759     2%
 ```
 
 ![Figure 2. Nuvem de palavras dos comentários](imagens/nuvem_palavras.png)
@@ -234,7 +234,7 @@ Uma análise exploratória inicial mostra a evolução dos comentários positivo
 
 ![Figure 3. Comentários positivos ao longo do tempo](imagens/comentarios_positivos.png)
 
-É possível observar um aumento no número de comentários positivos logo no início do mês de Maio. Não foi possível determinar a causa desse aumento, muito embora existam, a princípio, duas possibilidades: 1. A coleta de comentários foi limitada de alguma forma, e não alcançou comentários feitos há mais tempo; 2. Os comentários do Twitter passaram a ser feitos com maior intensidade a partir do início de Maio. Essas possibilidades serão mencionadas na seção Trabalhos Futuros.
+É possível observar um aumento no número de comentários positivos logo no início do mês de Maio e um grande pico próximo ao final da análise. Não foi possível determinar as causas desses aumentos, muito embora existam, a princípio, duas possibilidades: 1. A coleta de comentários foi limitada de alguma forma, e não alcançou comentários feitos há mais tempo; 2. Os comentários do Twitter passaram a ser feitos com maior intensidade a partir do início de Maio. Essas possibilidades serão mencionadas na seção Trabalhos Futuros.
 
 Já a figura abaixo exibe o total de comentários classificados como positivos por estado. Os dois estados com mais comentários positivos são Rio de Janeiro e São Paulo, ambos com um alto número de casos da doença.
 
