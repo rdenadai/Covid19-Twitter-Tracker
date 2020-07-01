@@ -166,11 +166,13 @@ Optou-se ainda por restringir os resultados da busca a partir do dia 01/01/2020,
 
 
 #### Coleta dos comentários
-A coleta dos comentários foi feita realizada de duas formas, a primeira e que permite uma busca mais ampla, foi fazendo uso da ferramenta Selenium WebDriver, a qual permite a abertura de um site (no caso o Twitter) e a "raspagem" das informações contidas na página. A outra forma, foi utilizando-se da API do Twitter, processo esse que possui limitações, como por exemplo, a pesquisa de comentários de até 7 dias antes da data atual e restrição na quantidade de requisições a API.
+A coleta dos comentários foi realizada de duas formas; a primeira, que permite a coleta mais ampla de comentários, visto que não há limitações impostas pela plataforma, foi utilizando a ferramenta Selenium WebDriver, que permite a abertura de um site (no caso o Twitter) e a "raspagem" das informações contidas na página. Para tanto, utilizou-se a URL de busca do Twitter `https://twitter.com/search?q=covid%20lang%3Apt&src=typed_query&f=live`. O parâmetro *q* da URL recebe o texto de acordo com o qual serão buscados os comentários.
 
-Usando ambas as formas foi possível coletar comentários da rede social Twitter de acordo com as palavras chaves mencionadas no tópico anterior, e consequentemente todos os comentários foram gravados na base de dados do SQLite.
+A outra forma foi utilizando a API do Twitter, processo esse que possui limitações, como, por exemplo, o retorno de comentários de até 7 dias antes da data atual e a restrição na quantidade de requisições à API.
 
-Devido a um dos questionamentos do projeto ser se seria possível identificar essa disseminação usando geolocalização, além dos comentários, quando possível e viável (essa é uma informação opcional no Twitter) foi coletada a informação da cidade onde o usuário mora. O processo de coleta dessa informação de geolocalização, foi o mesmo utilizado na coleta dos comentários (usando o Selenium e a API do Twitter).
+Usando ambas as formas foi possível coletar comentários do Twitter de acordo com as palavras chaves mencionadas no tópico anterior e gravá-los em uma base de dados do SQLite.
+
+Considerando que um dos questionamentos do projeto é sobre a possibilidade da identificação dessa disseminação da doença usando geolocalização, foi coletada, ainda, a informação da cidade onde o usuário mora. Há de se observar, entretanto, que o usuário do Twitter tem a opção de não exibir essa informação, de forma que nem todos os comentários coletados possuem uma cidade associada. O procedimento de coleta dessa informação segue os mesmos métodos utilizados para coleta dos comentários.
 
 
 #### Classificação dos comentários
