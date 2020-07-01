@@ -178,7 +178,7 @@ Tendo em vista o grande volume de comentários coletados (ao todo foram coletado
 
 Conforme mencionado no estudo, fora utilizado um classificador binário (no caso do estudo a Regressão Logística) com um dataset de poucas centenas de comentários. Tendo essa necessidade a equipe se dispos a criar um dataset com 2756 comentários classificados como positivo / negativo.
 
-Exemplos de comentários classificados:
+*Exemplos de comentários classificados*:
 
 | Classificação | Comentário |
 |-|-|
@@ -192,6 +192,18 @@ Exemplos de comentários classificados:
 | negativo | Fala galera! Não peguei corona e nem to morto. Só dei um tempo pra estudar (as apostilas da foto) e adiantar umas coisas do Mestrado. Ai tive que dar um tempo pra colocar a vida em ordem. Desculpa o sumiço |
 | negativo | Meus amigos: uma enfermeira lutando pra trabalhar sem se contaminar e um jovem que está com os sintomas e até falta de ar. Hahaha AAMMOOOOO A VONTADE DE VIVER DESSES JOVENS Citar Tweet Jônatas @jonatas_maia12  · 1 h Efeitos da quarentena |
 | positivo | que falta de ar chata |
+
+*Informações da base de dados*:
+
+    Qtde. de Comentários               : 398001
+    Qtde. de Comentários positivos     : 132631, 33%
+    Qtde. de Comentários negativos     : 265370, 67%
+    Qtde. de Comentários geolocalizados: 124159, 31%
+    --------------------------------------------------
+    Qtde. de Usuários geolocalizados   : 88766
+    Qtde. de Usuários em SP            : 17539, 20%
+    Qtde. de Usuários em RJ            : 18260, 21%
+
 
 #### Análise temporal dos dados
 
