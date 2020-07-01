@@ -149,15 +149,15 @@ Esse processo de classifcação, também como exposto no estudo mencionado acima
 
 É importante citar que a rotulação feita pela equipe é trivial: o comentário é considerado positivo se apresentar o termo em questão (tosse, febre, etc) e apresentar uma mensagem que aparente estar relacionada com a existência de sintomas. Caso contrário, o comentário foi rotulado como negativo. Não houve validação por parte de um profissional de saúde.
 
-Com o dataset terminado, foi realizada uma etapa de análise de alguns algoritmos de *Machine Learning* verificando quais dos possíveise seria viável utilizar para a classificação do conteúdo.
+Com o dataset terminado, foi realizada uma etapa de análise de alguns algoritmos de *Machine Learning* verificando quais dos possíveis seria viável utilizar para a classificação do conteúdo.
 
 Para que os algoritmos de *Machine Learning* entendam frases ou palavras, é necessário transformar as mesmas em representações numéricas para que os algoritmos possam aprender padrões representativos. Dessa maneira, foram avaliadas duas formas de criação de variáveis latentes, a contagem de termos por frase e TF-IDF. Para o pré-processamento foram realizadas algumas operações, como remoção de acentos e a stemização das palavras.
 
 Preparadas as frases para a classificação, foram analisados quatro implementações do pacote scikit-learn (LogisticRegression, SGDClassifier, SVM com kernel linear e rbf), para validar qual seria o melhor algoritmo a ser utilizado no projeto.
 
-Com resultados bem próximos, qualquer um dos métodos poderia ser utilizado. Entretanto, no top 10 dos melhores, a grande maioria das posições foi ocupada pelo SVM (com ambos os kernel), e dessa maneira este algoritmo fora o escolhido, juntamente com o TF-IDF.
+Com resultados bem próximos, qualquer um dos métodos poderia ser utilizado. Entretanto, no top 10 dos melhores, a grande maioria das posições foi ocupada pelo SVM (com ambos os kernel e variação nos parâmetros), portanto este algoritmo foi escolhido, juntamente com o TF-IDF para a geração do espaço latente.
 
-Terminada essa fase de avaliação, foi realizada uma busca exaustiva para encontrar os melhores parâmetros tanto para o algoritmo do TF-IDF quanto para o SVM, tendo como resultado final os parâmetros abaixo:
+Ao fim dessa etapa de avaliação e com a definição do algoritmo, foi realizada uma busca exaustiva para encontrar os melhores parâmetros tanto para o TF-IDF quanto para o SVM, tendo como resultado final os parâmetros abaixo:
 
 ```
 --------------------
@@ -191,7 +191,7 @@ weighted avg       0.76      0.76      0.76       539
 
 ![Figure 1. Matriz de confusão](imagens/confusion_matrix.png)
 
-Por conseguinte, com o classificador selecionado foi realizada a classificação de todos os comentários coletados na etapa anterior.
+Por conseguinte, com o classificador treinado foi realizada a classificação de todos os comentários coletados na etapa anterior.
 
 *Exemplos de comentários classificados*:
 
@@ -210,9 +210,9 @@ Por conseguinte, com o classificador selecionado foi realizada a classificação
 
 
 #### Análise temporal dos dados
-Após a classificação dos comentários, e já considerando a variação dos casos de COVID-19 em função do tempo, evidenciou-se estarmos trabalhando com duas séries temporais. Sendo assim, as análises estatísticas teriam de ser feitas com testes e algoritmos próprios para este tipo de dado.
+Após a classificação dos comentários, e já considerando a variação dos casos de COVID-19 em função do tempo, evidenciou-se estarmos trabalhando com duas séries temporais. Sendo assim, as análises estatísticas foram realizadas com testes e algoritmos próprios para este tipo de dado.
 
-Abaixo, são apresentados alguns dados agregados existentes na base e suas porcentagens respectivas ao totais, assim como a nuvem de palavras (contendo as principais palavras) de todos os comentários.
+Abaixo, são apresentados alguns dados agregados existentes na base e suas porcentagens de acordo com os totais, assim como a nuvem de palavras (contendo as principais palavras) de todos os comentários.
 
 ```
 Qtde. de Comentários                : 384281  100%
@@ -234,19 +234,94 @@ Uma análise exploratória inicial mostra a evolução dos comentários positivo
 
 ![Figure 3. Comentários positivos ao longo do tempo](imagens/comentarios_positivos.png)
 
-É possível observar um aumento no número de comentários positivos logo no início do mês de Maio e um grande pico próximo ao final da análise. Não foi possível determinar as causas desses aumentos, muito embora existam, a princípio, duas possibilidades: 1. A coleta de comentários foi limitada de alguma forma, e não alcançou comentários feitos há mais tempo; 2. Os comentários do Twitter passaram a ser feitos com maior intensidade a partir do início de Maio. Essas possibilidades serão mencionadas na seção Trabalhos Futuros.
+É possível observar um aumento no número de comentários positivos logo no início do mês de Maio. Não foi possível determinar as causas desses aumentos, muito embora existam, a princípio, duas possibilidades: 1. A coleta de comentários foi limitada de alguma forma, e não alcançou comentários feitos há mais tempo; 2. Os comentários do Twitter passaram a ser feitos com maior intensidade a partir do início de Maio. Essas possibilidades serão mencionadas na seção Trabalhos Futuros.
 
 Já a figura abaixo exibe o total de comentários classificados como positivos por estado. Os dois estados com mais comentários positivos são Rio de Janeiro e São Paulo, ambos com um alto número de casos da doença.
 
 ![Figure 4. Comentários positivos ao longo do tempo, por estado](imagens/comentarios_positivos_por_estado.png)
 
-Após a normalização dos totais de comentários e de casos (a fim de evitar a disparidade entre as informações), obtivemos a imagem abaixo. Ela mostra a evolução no número de casos de COVID-19 e de comentários positivos, junto com alguns eventos que ocorreram, especialmente no âmbito político, desde o início da pandemia no Brasil. Observa-se uma leve relação entre o número de comentários e de casos, muito embora, como será demonstrado na seção Resultados, isso não signifique que haja de fato uma causalidade entre as variáveis.
+Após a normalização dos totais de comentários e de casos (a fim de evitar a disparidade entre as informações e trazê-los para uma base comum), obtivemos a imagem abaixo. Ela mostra a evolução no número de casos de COVID-19 e de comentários positivos, junto com alguns eventos que ocorreram, especialmente no âmbito político, desde o início da pandemia no Brasil. Observa-se uma leve relação entre o número de comentários e de casos, muito embora, como será demonstrado na seção Resultados, isso não signifique que haja de fato uma causalidade entre as variáveis.
 
 ![Figure 5. Comentários positivos e casos ao longo do tempo, com eventos ocorridos neste intervalo](imagens/casos_vs_coment_normalizados.png)
 
 Após essa análise inicial, iniciou-se a análise estatística entre as variáveis, de forma a determinar se havia uma causalidade entre o número de comentários positivos escritos no Twitter e o número de casos de COVID-19. Para tanto, optou-se, inicialmente, pelo Teste de Causalidade de Granger, que permite validar se duas séries temporais apresentam causalidade entre si.
 
 Entretanto, como especificidade deste tipo de informação, o teste demandava que as séries temporais estivessem estacionárias, isto é, que as propriedades estatísticas das séries **não variassem em função do tempo**.
+
+Levando em consideração tal informação sobre a séries temporais, foi realizado um estudo para avaliar se existe a possibilidade de verificar causalidade de Granger em séries não-estacionárias. Um modelo estatísico no qual é possível realizar a previsão de uma série temporal levando em consideração outras séries não estacionárias é conhecido como **Vector Error Correction Models (VECM)**, e sua implementação dentro do pacote *statsmodels* possui funcionalidades para verificar causalidade de Granger e causalidade instantânea entre séries temporais. Entretanto para o uso deste modelo é necessário que as séries testadas sejam cointegradas, ou seja, quando duas ou mais séries são integradas por uma mesma determinada ordem de integração (que é o número mínimo de diferenças [lags] para a série se tornar estacionária) e a combinação linear das séries é integrada por uma ordem menor que a calculadas para todas as séries.
+
+Para avaliar se as séries são estacionárias existem diversos métodos como o teste de Dickey-Fuller Aumentado, que é um teste bem conhecido na literatura e amplamente utilizado. Este teste foi selecionado para verificar a estacionariedade das séries.
+
+Com relação a cointegração das séries, existem dois testes pesquisados que são comumentes utilizados para isso, o teste de Engle-Granger e o teste de Johansen. Devido a existência de apenas duas séries temporais a serem verificadas a cointegração e por sua menor complexidade o teste de Engle-Granger foi o escolhido.
+
+Para realizar a validação de causalidade de Granger entre as séries, o fator de atraso, ou *lag*, entre elas deve ser levado em consideração, tendo isso em mente foram realizadas validações de atrasos variando entre 1 a 30 dias.
+
+Na comparação de causalidade de Granger entre comentários positivos e novos casos da doença, passado pela etapa de validação de estacionariedade das séries, cointegração entre elas e por fim a análise do modelo VECM, foram obtidos os seguintes resultados:
+
+```
+Augmented Dickey-Fuller Test:
+------------------------------
+Comentarios:
+------------------------------
+ADF Statistic: -1.520519
+p-value: 0.523337
+Critical Values:
+ - 1%: -3.489
+ - 5%: -2.887
+ - 10%: -2.580
+Is the time series stationary? False
+------------------------------
+Casos:
+------------------------------
+ADF Statistic: 2.494451
+p-value: 0.999048
+Critical Values:
+ - 1%: -3.491
+ - 5%: -2.888
+ - 10%: -2.581
+Is the time series stationary? False
+
+
+Engle-Granger Test:
+------------------------------
+Cointegration Statistic: -4.262600
+p-value: 0.002926
+Critical Values:
+ - 1%: -3.988
+ - 5%: -3.386
+ - 10%: -3.079
+Is time series cointegrate? True
+
+
+Vector Error Correction Models (VECM):
+------------------------------
+Lag: 15
+Trend: c
+Cointegration: 0
+
+Granger causality F-test.
+H_0: Comentarios does not Granger-cause Casos.
+Conclusion: reject H_0 at 5% significance level.
+===============================================
+Test statistic Critical value p-value     df   
+-----------------------------------------------
+         4.332          1.713   0.000 (16, 146)
+-----------------------------------------------
+
+
+Instantaneous causality Wald-test.
+H_0: Comentarios does not instantaneously cause Casos.
+Conclusion: fail to reject H_0 at 5% significance level.
+========================================
+Test statistic Critical value p-value df
+----------------------------------------
+        0.5529          3.841   0.457  1
+----------------------------------------
+```
+
+Como o modelo VECM pode fornecer também a predição futura da série temporal e não apenas verificar causalidade de Granger, aplicando o mesmo em ambas as séries obtem-se como retorno a seguinte previsão para os próximos 3 dias (no caso os dias 28, 29 e 30 de junho) com algum erro.
+
+![Figure 7. Forecast do número de comentários e novos casos](imagens/forecast.png)
 
 ### Evolução do Projeto
 
@@ -265,7 +340,7 @@ Entretanto, como especificidade deste tipo de informação, o teste demandava qu
 
 - Criação do Relatório final/ apresentação e disponibilização no github.
 
-![Figure 6. Evolução do Projeto](imagens/Covid19-Twitter-Tracker.png)
+![Figure 8. Evolução do Projeto](imagens/Covid19-Twitter-Tracker.png)
 
 ## Resultados e Discussão
 
