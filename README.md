@@ -149,11 +149,9 @@ Esse processo de classifcação, também como exposto no estudo mencionado acima
 
 É importante citar que a rotulação feita pela equipe é trivial: o comentário é considerado positivo se apresentar o termo em questão (tosse, febre, etc) e apresentar uma mensagem que aparente estar relacionada com a existência de sintomas. Caso contrário, o comentário foi rotulado como negativo. Não houve validação por parte de um profissional de saúde.
 
-Conforme mencionado no estudo de referência, fora utilizado um classificador binário (no caso do estudo a Regressão Logística) com um dataset de poucas centenas de comentários. Tendo essa necessidade a equipe se dispos a criar um dataset com 2756 comentários classificados como positivo / negativo.
-
 Com o dataset terminado, foi realizada uma etapa de análise de alguns algoritmos de *Machine Learning* verificando quais dos possíveise seria viável utilizar para a classificação do conteúdo.
 
-Conforme bastante explorado na literatura faz-se necessário, transformar palavras em representações numéricas para que algoritmos de *Machine Learning* possam aprender padrões representativos. Dessa maneira, foram avaliadas duas formas de criação de variáveis latentes, a contagem de termos por frase e TF-IDF. Para o pré-processamento foram realizadas algumas operações, como remoção de acentos e a stemização das palavras.
+Para que os algoritmos de *Machine Learning* entendam frases ou palavras, é necessário transformar as mesmas em representações numéricas para que os algoritmos possam aprender padrões representativos. Dessa maneira, foram avaliadas duas formas de criação de variáveis latentes, a contagem de termos por frase e TF-IDF. Para o pré-processamento foram realizadas algumas operações, como remoção de acentos e a stemização das palavras.
 
 Preparadas as frases para a classificação, foram analisados quatro implementações do pacote scikit-learn (LogisticRegression, SGDClassifier, SVM com kernel linear e rbf), para validar qual seria o melhor algoritmo a ser utilizado no projeto.
 
@@ -163,8 +161,16 @@ Terminada essa fase de avaliação, foi realizada uma busca exaustiva para encon
 
 ```
 --------------------
+Train size : 80%
+Test size  : 20%
+
+--------------------
 Best parameter (CV score=0.791):
-{'svm__C': 15, 'svm__kernel': 'rbf', 'svm__random_state': 0, 'svm__shrinking': True, 'tfidf__lowercase': False, 'tfidf__ngram_range': (1, 1)}
+{
+  'tfidf__lowercase': False, 'tfidf__ngram_range': (1, 1),
+  'svm__C': 15, 'svm__kernel': 'rbf',
+  'svm__random_state': 0, 'svm__shrinking': True, 
+}
 
 --------------------
 Cross Validation accuracy: 0.79 (+/- 0.03)
@@ -225,15 +231,18 @@ Usuários em AM             :  1773      2%
 ![Figure 2. Nuvem de palavras dos comentários](imagens/nuvem_palavras.png)
 
 Uma análise exploratória inicial mostra a evolução dos comentários positivos ao longo do tempo, como pode ser visto na figura abaixo:
-![Figure1. Comentários positivos ao longo do tempo](imagens/comentarios_positivos.png)
+
+![Figure 3. Comentários positivos ao longo do tempo](imagens/comentarios_positivos.png)
 
 É possível observar um aumento no número de comentários positivos logo no início do mê
 
 Já a figura abaixo exibe o total de comentários classificados como positivos por estado. Os dois estados com mais comentários positivos são Rio de Janeiro e São Paulo, ambos com um alto número de casos da doença.
-![Figure2. Comentários positivos ao longo do tempo, por estado](imagens/comentarios_positivos_por_estado.png)
+
+![Figure 4. Comentários positivos ao longo do tempo, por estado](imagens/comentarios_positivos_por_estado.png)
 
 Após a normalização dos totais de comentários e de casos (a fim de evitar a disparidade entre as informações), obtivemos a imagem abaixo. Ela mostra a evolução no número de casos de COVID-19 e de comentários positivos, junto com alguns eventos que ocorreram, especialmente no âmbito político, desde o início da pandemia no Brasil. Observa-se uma leve relação entre o número de comentários e de casos, muito embora, como será demonstrado na seção Resultados, isso não signifique que haja de fato uma causalidade entre as variáveis.
-![Figure3. Comentários positivos e casos ao longo do tempo, com eventos ocorridos neste intervalo](imagens/casos_vs_coment_normalizados.png)
+
+![Figure 5. Comentários positivos e casos ao longo do tempo, com eventos ocorridos neste intervalo](imagens/casos_vs_coment_normalizados.png)
 
 Após essa análise inicial, iniciou-se a análise estatística entre as variáveis, de forma a determinar se havia uma causalidade entre o número de comentários positivos escritos no Twitter e o número de casos de COVID-19. Para tanto, optou-se, inicialmente, pelo Teste de Causalidade de Granger, que permite validar se duas séries temporais apresentam causalidade entre si.
 
@@ -256,7 +265,7 @@ Entretanto, como especificidade deste tipo de informação, o teste demandava qu
 
 - Criação do Relatório final/ apresentação e disponibilização no github.
 
-![Figure4. Evolução do Projeto](imagens/Covid19-Twitter-Tracker.png)
+![Figure 6. Evolução do Projeto](imagens/Covid19-Twitter-Tracker.png)
 
 ## Resultados e Discussão
 
