@@ -106,7 +106,7 @@ Nesta seção é detalhado todo o processo, desde a definição dos termos de pe
 #### Definição dos termos de busca
 Para a coleta dos comentários do Twitter, havia a necessidade de se definir os termos para os quais seria feita a busca. A rede social possui um mecanismo de busca avançada que permite que apenas textos contendo tais termos sejam retornados. Por exemplo, pode-se definir a busca pelo termo "COVID" de forma que apenas comentários contendo "COVID" sejam retornados.
 
-Para este trabalho, optou-se por, além dos termos que especificam a doença, utilizar termos de sintomas da doença, especificados pela Organização Mundial da Saúde. A lista de termos utilizada é a seguinte:
+Para este trabalho, optou-se por, além dos termos que especificam a doença, utilizar termos de sintomas da doença, especificados pela Centro de Controle e Prevenção de Doenças dos Estados Unidos (CDC) [[18]](https://www.cdc.gov/coronavirus/2019-ncov/symptoms-testing/symptoms.html). A lista de termos utilizada é a seguinte:
 - peguei covid,
 - peguei covid19,
 - peguei corona,
@@ -176,9 +176,9 @@ Considerando que um dos questionamentos do projeto é sobre a possibilidade da i
 
 
 #### Classificação dos comentários
-Tendo em vista o grande volume de comentários coletados (ao todo foram coletados mais de 400 mil), optou-se pela classificação dos mesmos como comentários positivos (aqueles comentários que efetivamente tem relação com a doença ou sintomas causados por ela) e comentários negativas (comentários que possuem as palavras chaves mas que não possuem qualquer relevância com o estudo), tendo em vista estudo voltado para a classificação de comentários positivos/negativos voltado para a disseminação da gripe, também usando o Twitter [[5]](https://ieeexplore.ieee.org/document/6424743)[[6]](https://dl.acm.org/doi/pdf/10.1145/1964858.1964874).
+Tendo em vista o grande volume de comentários coletados (ao todo foram coletados mais de 400 mil), optou-se pela classificação dos mesmos como **positivos** (aqueles comentários que efetivamente tem relação com a doença ou sintomas causados por ela) ou **negativos** (comentários que possuem as palavras-chaves mas que não possuem qualquer relevância com o estudo). Essa classificação segue a metodologia exposta em estudo sobre a classificação de comentários positivos/negativos relacionados com a disseminação da gripe, também usando o Twitter [[5]](https://ieeexplore.ieee.org/document/6424743)[[6]](https://dl.acm.org/doi/pdf/10.1145/1964858.1964874).
 
-Conforme mencionado no estudo, fora utilizado um classificador binário (no caso do estudo a Regressão Logística) com um dataset de poucas centenas de comentários. Tendo essa necessidade a equipe se dispos a criar um dataset com 2756 comentários classificados como positivo / negativo.
+Esse processo de classifcação, também como exposto no estudo mencionado acima, faz uso de um classificador binário com um dataset de poucas centenas de comentários previamente rotulados. Portanto, dada essa demanda, a equipe se dispôs a criar um dataset com 2756 comentários classificados como positivo / negativo.
 
 Exemplos de comentários classificados:
 
@@ -194,6 +194,8 @@ Exemplos de comentários classificados:
 | negativo | Fala galera! Não peguei corona e nem to morto. Só dei um tempo pra estudar (as apostilas da foto) e adiantar umas coisas do Mestrado. Ai tive que dar um tempo pra colocar a vida em ordem. Desculpa o sumiço |
 | negativo | Meus amigos: uma enfermeira lutando pra trabalhar sem se contaminar e um jovem que está com os sintomas e até falta de ar. Hahaha AAMMOOOOO A VONTADE DE VIVER DESSES JOVENS Citar Tweet Jônatas @jonatas_maia12  · 1 h Efeitos da quarentena |
 | positivo | que falta de ar chata |
+
+É importante citar que a classificação é feita de forma trivial: o comentário é considerado positivo se apresentar o termo em questão (tosse, febre, etc) e apresentar uma mensagem que aparente estar relacionada com a existência de sintomas. Não houve validação por parte de um profissional de saúde.
 
 #### Análise temporal dos dados
 
@@ -245,3 +247,4 @@ Exemplos de comentários classificados:
  - [15] [Predicting crime using Twitter and kernel density estimation](https://www.sciencedirect.com/science/article/pii/S0167923614000268)
  - [16] [Opinion Mining on Twitter Data using Unsupervised Learning Technique](https://www.ijcaonline.org/archives/volume148/number12/unnisa-2016-ijca-911317.pdf)
  - [17] [On the limited memory BFGS method for large scale optimization](https://link.springer.com/article/10.1007/BF01589116)
+ - [18] [Symptoms of Coronavirus](https://www.cdc.gov/coronavirus/2019-ncov/symptoms-testing/symptoms.html)
