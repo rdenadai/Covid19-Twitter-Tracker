@@ -108,8 +108,9 @@ Para a coleta dos comentários do Twitter, havia a necessidade de se definir os 
 
 Para este trabalho, optou-se por, além dos termos que especificam a doença, utilizar termos de sintomas da doença, especificados pela Organização Mundial da Saúde. A lista de termos utilizada é a seguinte:
 
-peguei covid, | peguei covid19, | peguei corona,
+||||
 ----- | ----- | ----- 
+peguei covid, | peguei covid19, | peguei corona,
 estou com covid, | estou com covid19, | estou com corona,
 estou doente covid, | estou doente covid19, | estou doente corona,
 dor de cabeça febre, | dor de cabeça corona, | dor de cabeça covid,
@@ -148,6 +149,44 @@ Esse processo de classifcação, também como exposto no estudo mencionado acima
 
 É importante citar que a rotulação feita pela equipe é trivial: o comentário é considerado positivo se apresentar o termo em questão (tosse, febre, etc) e apresentar uma mensagem que aparente estar relacionada com a existência de sintomas. Caso contrário, o comentário foi rotulado como negativo. Não houve validação por parte de um profissional de saúde.
 
+Conforme mencionado no estudo de referência, fora utilizado um classificador binário (no caso do estudo a Regressão Logística) com um dataset de poucas centenas de comentários. Tendo essa necessidade a equipe se dispos a criar um dataset com 2756 comentários classificados como positivo / negativo.
+
+Com o dataset terminado, foi realizada uma etapa de análise de alguns algoritmos de *Machine Learning* verificando quais dos possíveise seria viável utilizar para a classificação do conteúdo.
+
+Conforme bastante explorado na literatura faz-se necessário, transformar palavras em representações numéricas para que algoritmos de *Machine Learning* possam aprender padrões representativos. Dessa maneira, foram avaliadas duas formas de criação de variáveis latentes, a contagem de termos por frase e TF-IDF. Para o pré-processamento foram realizadas algumas operações, como remoção de acentos e a stemização das palavras.
+
+Preparadas as frases para a classificação, foram analisados quatro implementações do pacote scikit-learn (LogisticRegression, SGDClassifier, SVM com kernel linear e rbf), para validar qual seria o melhor algoritmo a ser utilizado no projeto.
+
+Com resultados bem próximos, qualquer um dos métodos poderia ser utilizado. Entretanto, no top 10 dos melhores, a grande maioria das posições foi ocupada pelo SVM (com ambos os kernel), e dessa maneira este algoritmo fora o escolhido, juntamente com o TF-IDF.
+
+Terminada essa fase de avaliação, foi realizada uma busca exaustiva para encontrar os melhores parâmetros tanto para o algoritmo do TF-IDF quanto para o SVM, tendo como resultado final os parâmetros abaixo:
+
+```
+--------------------
+Best parameter (CV score=0.791):
+{'svm__C': 15, 'svm__kernel': 'rbf', 'svm__random_state': 0, 'svm__shrinking': True, 'tfidf__lowercase': False, 'tfidf__ngram_range': (1, 1)}
+
+--------------------
+Cross Validation accuracy: 0.79 (+/- 0.03)
+[0.79118329 0.79814385 0.80974478 0.76798144 0.78886311]
+
+--------------------
+Classification Report
+--------------------
+              precision    recall  f1-score   support
+
+           0       0.77      0.86      0.81       319
+           1       0.75      0.62      0.68       220
+
+    accuracy                           0.76       539
+   macro avg       0.76      0.74      0.74       539
+weighted avg       0.76      0.76      0.76       539
+```
+
+![Figure 1. Matriz de confusão](imagens/confusion_matrix.png)
+
+Por conseguinte, com o classificador selecionado foi realizada a classificação de todos os comentários coletados na etapa anterior.
+
 *Exemplos de comentários classificados*:
 
 | Classificação | Comentário |
@@ -163,25 +202,32 @@ Esse processo de classifcação, também como exposto no estudo mencionado acima
 | negativo | Meus amigos: uma enfermeira lutando pra trabalhar sem se contaminar e um jovem que está com os sintomas e até falta de ar. Hahaha AAMMOOOOO A VONTADE DE VIVER DESSES JOVENS Citar Tweet Jônatas @jonatas_maia12  · 1 h Efeitos da quarentena |
 | positivo | que falta de ar chata |
 
-*Informações da base de dados*:
-
-    Qtde. de Comentários               : 398001
-    Qtde. de Comentários positivos     : 132631, 33%
-    Qtde. de Comentários negativos     : 265370, 67%
-    Qtde. de Comentários geolocalizados: 124159, 31%
-    --------------------------------------------------
-    Qtde. de Usuários geolocalizados   : 88766
-    Qtde. de Usuários em SP            : 17539, 20%
-    Qtde. de Usuários em RJ            : 18260, 21%
-
 
 #### Análise temporal dos dados
 Após a classificação dos comentários, e já considerando a variação dos casos de COVID-19 em função do tempo, evidenciou-se estarmos trabalhando com duas séries temporais. Sendo assim, as análises estatísticas teriam de ser feitas com testes e algoritmos próprios para este tipo de dado.
 
+Abaixo, são apresentados alguns dados agregados existentes na base e suas porcentagens respectivas ao totais, assim como a nuvem de palavras (contendo as principais palavras) de todos os comentários.
+
+```
+Comentários                : 398001   100%
+Comentários positivos      : 132631    33%
+Comentários negativos      : 265370    67%
+Comentários geolocalizados : 124159    31%
+--------------------------------------------------
+Usuários geolocalizados    : 88766    100%
+Usuários em SP             : 17539     20%
+Usuários em RJ             : 18260     21%
+Usuários em MG             :  6341      7%
+Usuários em BA             :  2311      3%
+Usuários em AM             :  1773      2%
+```
+
+![Figure 2. Nuvem de palavras dos comentários](imagens/nuvem_palavras.png)
+
 Uma análise exploratória inicial mostra a evolução dos comentários positivos ao longo do tempo, como pode ser visto na figura abaixo:
 ![Figure1. Comentários positivos ao longo do tempo](imagens/comentarios_positivos.png)
 
-É possível observar um aumento no número de comentários positivos logo no início do mês de Maio. Não foi possível determinar a causa desse aumento, muito embora existam, a princípio, duas possibilidades: 1. A coleta de comentários foi limitada, de alguma forma, e não alcançou comentários feitos há mais tempo; 2. Os comentários do Twitter passaram a ser feitos com maior intensidade a partir do início de Maio. Essas possibilidades serão mencionadas na seção Trabalhos Futuros.
+É possível observar um aumento no número de comentários positivos logo no início do mê
 
 Já a figura abaixo exibe o total de comentários classificados como positivos por estado. Os dois estados com mais comentários positivos são Rio de Janeiro e São Paulo, ambos com um alto número de casos da doença.
 ![Figure2. Comentários positivos ao longo do tempo, por estado](imagens/comentarios_positivos_por_estado.png)
