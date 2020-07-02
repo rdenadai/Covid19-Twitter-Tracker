@@ -280,15 +280,19 @@ Apos ser escolhido o nome do projeto foi percebida a necessidade de estabelecer 
 ![Figure 7. Evolução do Projeto](imagens/Covid19-Twitter-Tracker.png)
 
 
+Apos ser escolhido o nome do projeto foi percebida a necessidade de estabelecer passos desde início ao fin da implantação do projeto e foi dividido em três etapas como a figura a seguir. 
+![Figure 7. Evolução do Projeto](imagens/Covid19-Twitter-Tracker.png)
+
 **Primeira Etapa**
+
 - [Definição dos termos iniciais de pesquisa de comentários](https://github.com/rdenadai/Covid19-Twitter-Tracker#defini%C3%A7%C3%A3o-dos-termos-de-busca)
-- Processamento de dados usando técnicas de Natural Language Processing.	- [Coleta dos comentários usando técnicas de Natural Language Processing](https://github.com/rdenadai/Covid19-Twitter-Tracker#coleta-dos-coment%C3%A1rios)
+- [Coleta dos comentários usando técnicas de Natural Language Processing](https://github.com/rdenadai/Covid19-Twitter-Tracker#coleta-dos-coment%C3%A1rios)
 
 A etapa inicial do projeto foi relativamente simples. Como já existiam diversas bases de dados com os números dos casos de COVID-19, bastou seguir a definição dos termos de busca dos comentários, que foram baseados na lista de sintomas disponibilizada pelo CDC (Centro de Controle e Prevenção de Doenças dos EUA) e realizar a coleta dos comentários.
 
 **Segunda Etapa**
 - [Definição do algoritmo para a Classificação dos comentários](https://github.com/rdenadai/Covid19-Twitter-Tracker#classifica%C3%A7%C3%A3o-dos-coment%C3%A1rios)
-- Análise dos dados e comparação com informações de disseminação da doença.	- [Análise dos dados e comparação com informações de disseminação da doença](https://github.com/rdenadai/Covid19-Twitter-Tracker#an%C3%A1lise-temporal-dos-dados)
+- [Análise dos dados e comparação com informações de disseminação da doença](https://github.com/rdenadai/Covid19-Twitter-Tracker#an%C3%A1lise-temporal-dos-dados)
 
 Esta segunda etapa demandou um grande esforço. A classificação dos comentários seguiu metodologias de aprendizagem de máquina que já eram conhecidas pela equipe. Entretanto, a análise dos dados evidenciou estar se tratando do estudo de séries temporais, o que demandou diversas pesquisas na internet e na literatura a fim de entender como tais análises devem ser realizadas, com diversos novos conceitos. Inclusive, não havia o entendimento inicial de que tal metodologia seria seguida, muito embora o dataset principal (casos de COVID-19) seja, em si, uma série temporal.
 
@@ -368,7 +372,7 @@ Como o modelo VECM pode fornecer também a predição futura da série temporal 
 
 Foram feitas outras avaliações a partir desse resultado. Como observado, existe um aumento considerável no número de comentários positivos a partir do mês de Maio. Dessa forma, foi feito um recorte em ambos os datasets, considerando as informações apenas a partir do dia 05/05/2020. Ainda assim, não foi possível encontrar nenhuma causalidade entre as séries, como pode ser visto abaixo:
 
-![Figure 9. Forecast do número de comentários e novos casos](imagens/casos_vs_coment_normalizados_0505.png)
+![Figure 9. Comparação novos casos com comentários (dados normalizados)](imagens/casos_vs_coment_normalizados_0505.png)
 
 ```
 Vector Error Correction Models (VECM):
@@ -398,7 +402,7 @@ Test statistic Critical value p-value df
 
 Foram feitos também recortes por estado. Como os estados de São Paulo e do Rio de Janeiro são os estados de onde vem a maioria dos comentários relacionados a COVID-19, optou-se por realizar esse filtro no dataset. Entretanto, também não foi possível determinar relação de causalidade.
 
-![Figure 9. Forecast do número de comentários e novos casos](imagens/casos_vs_coment_normalizados_SP_0505.png)
+![Figure 10. Comparação novos casos com comentários para estado de SP (dados normalizados)](imagens/casos_vs_coment_normalizados_SP_0505.png)
 
 ```
 Vector Error Correction Models (VECM):
