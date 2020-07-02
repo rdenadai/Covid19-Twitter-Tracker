@@ -276,7 +276,7 @@ Para realizar a validação de causalidade de Granger entre as séries, o fator 
 
 ### Evolução do Projeto
 Apos ser escolhido o nome do projeto foi percebida a necessidade de estabelecer passos desde início ao fin da implantação do projeto e foi dividido em três etapas como a figura a seguir. 
-![Figure 7. Evolução do Projeto](imagens/Covid19-Twitter-Tracker1.png)
+![Figure 7. Evolução do Projeto](imagens/Covid19-Twitter-Tracker.png)
 
 **Primeira Etapa**
 - [Definição dos termos iniciais de pesquisa de comentários](https://github.com/rdenadai/Covid19-Twitter-Tracker#defini%C3%A7%C3%A3o-dos-termos-de-busca)
