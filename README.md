@@ -276,15 +276,9 @@ Para realizar a validação de causalidade de Granger entre as séries, o fator 
 
 ### Evolução do Projeto
 Apos ser escolhido o nome do projeto foi percebida a necessidade de estabelecer passos desde início ao fin da implantação do projeto e foi dividido em três etapas como a figura a seguir. 
-
-![Figure 7. Evolução do Projeto](imagens/Covid19-Twitter-Tracker.png)
-
-
-Apos ser escolhido o nome do projeto foi percebida a necessidade de estabelecer passos desde início ao fin da implantação do projeto e foi dividido em três etapas como a figura a seguir. 
 ![Figure 7. Evolução do Projeto](imagens/Covid19-Twitter-Tracker.png)
 
 **Primeira Etapa**
-
 - [Definição dos termos iniciais de pesquisa de comentários](https://github.com/rdenadai/Covid19-Twitter-Tracker#defini%C3%A7%C3%A3o-dos-termos-de-busca)
 - [Coleta dos comentários usando técnicas de Natural Language Processing](https://github.com/rdenadai/Covid19-Twitter-Tracker#coleta-dos-coment%C3%A1rios)
 
@@ -466,4 +460,3 @@ A partir da conclusão deste trabalho, sugerem-se alguns trabalhos futuros:
  - [16] [Opinion Mining on Twitter Data using Unsupervised Learning Technique](https://www.ijcaonline.org/archives/volume148/number12/unnisa-2016-ijca-911317.pdf)
  - [17] [On the limited memory BFGS method for large scale optimization](https://link.springer.com/article/10.1007/BF01589116)
  - [18] [Symptoms of Coronavirus](https://www.cdc.gov/coronavirus/2019-ncov/symptoms-testing/symptoms.html)
- 
