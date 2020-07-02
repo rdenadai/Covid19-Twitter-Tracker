@@ -275,24 +275,26 @@ Para avaliar a cointegração das séries, existem dois testes pesquisados que s
 Para realizar a validação de causalidade de Granger entre as séries, o fator de atraso (ou *lag*) entre elas deve ser levado em consideração. Com isso, foram realizadas validações com o fator de atraso variando entre 1 e 30 dias.
 
 ### Evolução do Projeto
+Apos ser escolhido o nome do projeto foi percebida a necessidade de estabelecer passos desde início ao fin da implantação do projeto e foi dividido em três etapas como a figura a seguir. 
+
+![Figure 7. Evolução do Projeto](imagens/Covid19-Twitter-Tracker.png)
+
 
 **Primeira Etapa**
-- Definição dos termos iniciais de pesquisa de comentários;
-- Coleta dos comentários do Twitter.
-- Processamento de dados usando técnicas de Natural Language Processing.
+- [Definição dos termos iniciais de pesquisa de comentários](https://github.com/rdenadai/Covid19-Twitter-Tracker#defini%C3%A7%C3%A3o-dos-termos-de-busca)
+- Processamento de dados usando técnicas de Natural Language Processing.	- [Coleta dos comentários usando técnicas de Natural Language Processing](https://github.com/rdenadai/Covid19-Twitter-Tracker#coleta-dos-coment%C3%A1rios)
 
 A etapa inicial do projeto foi relativamente simples. Como já existiam diversas bases de dados com os números dos casos de COVID-19, bastou seguir a definição dos termos de busca dos comentários, que foram baseados na lista de sintomas disponibilizada pelo CDC (Centro de Controle e Prevenção de Doenças dos EUA) e realizar a coleta dos comentários.
 
 **Segunda Etapa**
-- Definição do algoritmo para a classificação dos comentários.
-- Análise dos dados e comparação com informações de disseminação da doença.
+- [Definição do algoritmo para a Classificação dos comentários](https://github.com/rdenadai/Covid19-Twitter-Tracker#classifica%C3%A7%C3%A3o-dos-coment%C3%A1rios)
+- Análise dos dados e comparação com informações de disseminação da doença.	- [Análise dos dados e comparação com informações de disseminação da doença](https://github.com/rdenadai/Covid19-Twitter-Tracker#an%C3%A1lise-temporal-dos-dados)
 
 Esta segunda etapa demandou um grande esforço. A classificação dos comentários seguiu metodologias de aprendizagem de máquina que já eram conhecidas pela equipe. Entretanto, a análise dos dados evidenciou estar se tratando do estudo de séries temporais, o que demandou diversas pesquisas na internet e na literatura a fim de entender como tais análises devem ser realizadas, com diversos novos conceitos. Inclusive, não havia o entendimento inicial de que tal metodologia seria seguida, muito embora o dataset principal (casos de COVID-19) seja, em si, uma série temporal.
 
 **Terceira Etapa**
-- Criação do Relatório final/apresentação e disponibilização no Github.
+- [Criação do Relatório final/apresentação e disponibilização no Github.](https://github.com/rdenadai/Covid19-Twitter-Tracker#an%C3%A1lise-temporal-dos-dados)
 
-![Figure 7. Evolução do Projeto](imagens/Covid19-Twitter-Tracker.png)
 
 ## Resultados e Discussão
 Como primeira avaliação, conforme o objetivo deste trabalho, foi analisada a causalidade entre o número de comentários positivos no Twitter e o número de casos de COVID-19.
@@ -333,7 +335,6 @@ Critical Values:
  - 10%: -3.079
 Is time series cointegrate? True
 
-
 Vector Error Correction Models (VECM):
 ------------------------------
 Lag: 15
@@ -348,7 +349,6 @@ Test statistic Critical value p-value     df
 -----------------------------------------------
          4.332          1.713   0.000 (16, 146)
 -----------------------------------------------
-
 
 Instantaneous causality Wald-test.
 H_0: Comentarios does not instantaneously cause Casos.
@@ -368,11 +368,63 @@ Como o modelo VECM pode fornecer também a predição futura da série temporal 
 
 Foram feitas outras avaliações a partir desse resultado. Como observado, existe um aumento considerável no número de comentários positivos a partir do mês de Maio. Dessa forma, foi feito um recorte em ambos os datasets, considerando as informações apenas a partir do dia 05/05/2020. Ainda assim, não foi possível encontrar nenhuma causalidade entre as séries, como pode ser visto abaixo:
 
-**[Inserir resultados do recorte]**
+![Figure 9. Forecast do número de comentários e novos casos](imagens/casos_vs_coment_normalizados_0505.png)
+
+```
+Vector Error Correction Models (VECM):
+------------------------------
+Lag: 15
+Trend: c
+Cointegration: 2
+
+Granger causality F-test.
+H_0: Comentarios does not Granger-cause Casos.
+Conclusion: reject H_0 at 5% significance level.
+=============================================
+Test statistic Critical value p-value    df  
+---------------------------------------------
+     1.953e+04          5.844   0.000 (16, 4)
+---------------------------------------------
+
+Instantaneous causality Wald-test. H_0:
+Comentarios does not instantaneously cause Casos.
+Conclusion: fail to reject H_0 at 5% significance level.
+========================================
+Test statistic Critical value p-value df
+----------------------------------------
+        0.3615          3.841   0.548  1
+----------------------------------------
+```
 
 Foram feitos também recortes por estado. Como os estados de São Paulo e do Rio de Janeiro são os estados de onde vem a maioria dos comentários relacionados a COVID-19, optou-se por realizar esse filtro no dataset. Entretanto, também não foi possível determinar relação de causalidade.
 
-**[Inserir resultados dos estados]**
+![Figure 9. Forecast do número de comentários e novos casos](imagens/casos_vs_coment_normalizados_SP_0505.png)
+
+```
+Vector Error Correction Models (VECM):
+------------------------------
+Lag: 15
+Trend: c
+Cointegration: 1
+
+Granger causality F-test.
+H_0: Comentarios does not Granger-cause Casos.
+Conclusion: reject H_0 at 5% significance level.
+=============================================
+Test statistic Critical value p-value    df  
+---------------------------------------------
+         110.7          5.844   0.000 (16, 4)
+---------------------------------------------
+
+Instantaneous causality Wald-test.
+H_0: Comentarios does not instantaneously cause Casos.
+Conclusion: fail to reject H_0 at 5% significance level.
+========================================
+Test statistic Critical value p-value df
+----------------------------------------
+        0.7372          3.841   0.391  1
+----------------------------------------
+```
 
 ## Conclusões
 A análise da comparação entre os comentários realizados em redes sociais e o número de casos de uma epidemia demanda estudos mais avançados e nos conduz a considerar relacionamentos que, em um primeiro instante, não estão claros.
