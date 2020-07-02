@@ -1,3 +1,7 @@
+Importar dados do desenvolvimento da doença.
+
+Importanto os dados da base de dados.
+
 ## Informações da base de dados
 
     Qtde. de Comentários               : 384281
@@ -16,16 +20,26 @@
 Exemplos de comentários com suas classificações:
 
     Classificação|Comentário
-    negativo|O Brasil realmente está matando o Brasil. Hoje procurei uma UBS pois estou com sintomas “leves” de Covid e sou asmático. A orientação foi tomar anti-inflamatórios e se em 10 dias os sintomas não reduzirem, fazer o teste. DEZ DIAS!!!! Da tempo de morrer e ressuscitar.  Vergonha!!
-    negativo|É falta de ar, é dor nas costas. Meajudameudeus
-    negativo|o de áries???? Citar Tweet Grande demais pra se calar @pgmiranda  · 20 de mai Sagitário!
-    negativo|O corona ainda não tinha me afetado, mas hoje estou com vontade de chorar com essa merda. Não por falta de roles, mas por querer que tudo volte ao normal
-    positivo|To meio gripada (??) Ou só com dor de garganta/amigdalite ?
-    negativo|Minha mãe achando que estou com corona mas é só tristeza mesmo
-    negativo|Em resposta a  @rochacbruno Dois motivos: 1) Já peguei o COVID-19 (e foi horrível!). 2) Minha esposa é profissional da saúde e dou apoio a ela levando e buscando do hospital. Isso não significa que saio de casa por qualquer coisa.
-    negativo|Em resposta a  @Milk_AndHoney  e  @JampaRobo falar q a pessoa ta com febre nesse tempo de corona é meio insensível...
-    positivo|gente... queria falar nao mas eu to com a garganta um pouco mal, to toda congestionada e com dor de cabeça, pelo que eu vi isso não é necessariamente sintomas desse virus mas como pego brt diariamente nao sei, mas acredito q nao seja pq nao tive febre e nem to com tosse seca
-    negativo|Em resposta a  @visaomacro Conheço pelo menos uns 20 que pegaram com exames ou sintomas. Ninguém morreu. 3 foram hospitalizados por causa de coágulos no pulmão. Eu peguei também,  12 dias de febre e sofrimento. Tomei Annita e melhorou.
+    negativo : RT @joicehasselmann: Amigos, comunico que fui diagnosticada com a COVID-19. Depois de crises de tosse, febre e falta de ar fui internada p/…
+    ----------
+    positivo : Em resposta a  @nilmoretto Não...estou há dias em isolamento esperando o resultado do teste,estou com pneumonia,tenho certeza de que não é covid,mas melhor prevenir ...enlouquecendo no quarto!!!!
+    ----------
+    negativo : Em resposta a  @K13PT Kkkkk mesmo quando virou febre nunca comi não.
+    ----------
+    negativo : Nossa, ontem eu chorei tanto pela minha mãe, mas hj já estou mais tranquilo, sabendo q ela n tá com COVID... Amém? Amém!
+    ----------
+    negativo : To querendo fica com febre
+    ----------
+    negativo : sonhei que eu tava com falta de ar ai desmaiei   grande dia
+    ----------
+    negativo : off: acho que peguei corona e já me curei De  Esquizopoc #VidasNegrasImportam
+    ----------
+    positivo : Meu deus a vic acha que eu to com corona por estar com dor de garganta
+    ----------
+    positivo : Não aguento mais essa dor no corpo e febre, sinceramente
+    ----------
+    positivo : Que dor de garganta
+    ----------
 
 
 ## Nuvens de palavras
@@ -33,33 +47,33 @@ Exemplos de comentários com suas classificações:
 Nuvem de palavras de todos os comentários na base de dados.
 
 
-![png](EDA_files/EDA_10_0.png)
+![png](exploratory_data_analysis_files/exploratory_data_analysis_12_0.png)
 
 
 Nuvens de palavras apenas de comentários classificados como positivos.
 
 
-![png](EDA_files/EDA_12_0.png)
+![png](exploratory_data_analysis_files/exploratory_data_analysis_14_0.png)
 
 
 ## Visualizações dos dados
 
 
-![png](EDA_files/EDA_14_0.png)
+![png](exploratory_data_analysis_files/exploratory_data_analysis_16_0.png)
 
 
 
-![png](EDA_files/EDA_15_0.png)
+![png](exploratory_data_analysis_files/exploratory_data_analysis_18_0.png)
 
 
 
-![png](EDA_files/EDA_16_0.png)
+![png](exploratory_data_analysis_files/exploratory_data_analysis_19_0.png)
 
 
 
-![png](EDA_files/EDA_17_0.png)
+![png](exploratory_data_analysis_files/exploratory_data_analysis_20_0.png)
 
 
 
-![png](EDA_files/EDA_18_0.png)
+![png](exploratory_data_analysis_files/exploratory_data_analysis_21_0.png)
 
