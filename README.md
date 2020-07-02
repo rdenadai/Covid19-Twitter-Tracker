@@ -109,13 +109,13 @@ Para a coleta dos comentários do Twitter, havia a necessidade de se definir os 
 Para este trabalho, optou-se por, além dos termos que especificam a doença, utilizar termos de sintomas da doença, especificados pela Organização Mundial da Saúde. A lista de termos utilizada é a seguinte:
 
 ||||
------ | ----- | ----- 
+----- | ----- | -----
 peguei covid, | peguei covid19, | peguei corona,
 estou com covid, | estou com covid19, | estou com corona,
 estou doente covid, | estou doente covid19, | estou doente corona,
 dor de cabeça febre, | dor de cabeça corona, | dor de cabeça covid,
 dor de cabeça covid19, | falta de ar corona, | falta de ar covid,
-falta de ar covid19, | falta de ar, | dor de garganta corona, 
+falta de ar covid19, | falta de ar, | dor de garganta corona,
 dor de garganta covid, | dor de garganta covid19, | dor de garganta,
 tosse, febre e coriza, | testei positivo covid, | testei positivo corona,
 testei negativo covid, | testei negativo corona, | dor de cabeça febre,
@@ -169,7 +169,7 @@ Best parameter (CV score=0.791):
 {
   'tfidf__lowercase': False, 'tfidf__ngram_range': (1, 1),
   'svm__C': 15, 'svm__kernel': 'rbf',
-  'svm__random_state': 0, 'svm__shrinking': True, 
+  'svm__random_state': 0, 'svm__shrinking': True,
 }
 
 --------------------
@@ -208,10 +208,6 @@ Por conseguinte, com o classificador treinado foi realizada a classificação de
 | negativo | Meus amigos: uma enfermeira lutando pra trabalhar sem se contaminar e um jovem que está com os sintomas e até falta de ar. Hahaha AAMMOOOOO A VONTADE DE VIVER DESSES JOVENS Citar Tweet Jônatas @jonatas_maia12  · 1 h Efeitos da quarentena |
 | positivo | que falta de ar chata |
 
-
-#### Análise temporal dos dados
-Após a classificação dos comentários, e já considerando a variação dos casos de COVID-19 em função do tempo, evidenciou-se estarmos trabalhando com duas séries temporais. Sendo assim, as análises estatísticas foram realizadas com testes e algoritmos próprios para este tipo de dado.
-
 Abaixo, são apresentados alguns dados agregados existentes na base e suas porcentagens de acordo com os totais, assim como a nuvem de palavras (contendo as principais palavras) de todos os comentários.
 
 ```
@@ -228,7 +224,13 @@ Qtde. de Usuários em BA             :  2289     3%
 Qtde. de Usuários em AM             :  1759     2%
 ```
 
+É importante observar que, dos comentários que possuíam geolocalização, a maioria deles vem dos estados de São Paulo e do Rio de Janeiro.
+
 ![Figure 2. Nuvem de palavras dos comentários](imagens/nuvem_palavras.png)
+
+
+#### Análise temporal dos dados
+Após a classificação dos comentários, e já considerando a variação dos casos de COVID-19 em função do tempo, evidenciou-se estarmos trabalhando com duas séries temporais. Sendo assim, as análises estatísticas foram realizadas com testes e algoritmos próprios para este tipo de dado.
 
 Uma análise exploratória inicial mostra a evolução dos comentários positivos ao longo do tempo, como pode ser visto na figura abaixo:
 
@@ -246,17 +248,56 @@ Após a normalização dos totais de comentários e de casos (a fim de evitar a 
 
 Após essa análise inicial, iniciou-se a análise estatística entre as variáveis, de forma a determinar se havia uma causalidade entre o número de comentários positivos escritos no Twitter e o número de casos de COVID-19. Para tanto, optou-se, inicialmente, pelo Teste de Causalidade de Granger, que permite validar se duas séries temporais apresentam causalidade entre si.
 
-Entretanto, como especificidade deste tipo de informação, o teste demandava que as séries temporais estivessem estacionárias, isto é, que as propriedades estatísticas das séries **não variassem em função do tempo**.
+Entretanto, como especificidade deste tipo de informação, o teste demandava que as séries temporais estivessem estacionárias, isto é, que as propriedades estatísticas das séries **não variassem em função do tempo**. O gráfico abaixo demonstra o número de casos de COVID-19 ao longo dos dias e é possível ver que a média (uma propriedade estatística) varia conforme o tempo avança. Além disso, observam-se duas características de séries temporais não estacionárias: a sazonalidade e a tendência (neste caso, de aumento).
 
-Levando em consideração tal informação sobre a séries temporais, foi realizado um estudo para avaliar se existe a possibilidade de verificar causalidade de Granger em séries não-estacionárias. Um modelo estatísico no qual é possível realizar a previsão de uma série temporal levando em consideração outras séries não estacionárias é conhecido como **Vector Error Correction Models (VECM)**, e sua implementação dentro do pacote *statsmodels* possui funcionalidades para verificar causalidade de Granger e causalidade instantânea entre séries temporais. Entretanto para o uso deste modelo é necessário que as séries testadas sejam cointegradas, ou seja, quando duas ou mais séries são integradas por uma mesma determinada ordem de integração (que é o número mínimo de diferenças [lags] para a série se tornar estacionária) e a combinação linear das séries é integrada por uma ordem menor que a calculadas para todas as séries.
+![Figure 6. Casos de COVID-19 ao longo do tempo](imagens/serie_casos_por_dia.png)
 
-Para avaliar se as séries são estacionárias existem diversos métodos como o teste de Dickey-Fuller Aumentado, que é um teste bem conhecido na literatura e amplamente utilizado. Este teste foi selecionado para verificar a estacionariedade das séries.
+Para confirmar se as séries temporais são estacionárias ou não, existem diversos métodos, entre eles o teste de Dickey-Fuller Aumentado, que é um teste bem conhecido na literatura e amplamente utilizado. Este teste foi selecionado para verificar a estacionariedade das séries. Abaixo, o resultado do teste de Dickey-Fuller para a série de casos:
 
-Com relação a cointegração das séries, existem dois testes pesquisados que são comumentes utilizados para isso, o teste de Engle-Granger e o teste de Johansen. Devido a existência de apenas duas séries temporais a serem verificadas a cointegração e por sua menor complexidade o teste de Engle-Granger foi o escolhido.
+```
+Augmented Dickey-Fuller Test:
+------------------------------
+Casos:
+------------------------------
+ADF Statistic: 2.494451
+p-value: 0.999048
+Critical Values:
+ - 1%: -3.491
+ - 5%: -2.888
+ - 10%: -2.581
+Is the time series stationary? False
+```
 
-Para realizar a validação de causalidade de Granger entre as séries, o fator de atraso, ou *lag*, entre elas deve ser levado em consideração, tendo isso em mente foram realizadas validações de atrasos variando entre 1 a 30 dias.
+Levando em consideração tal informação sobre as séries temporais, foi realizado um estudo para avaliar se existe a possibilidade de verificar causalidade de Granger em séries não-estacionárias. Um modelo estatísico no qual é possível realizar a previsão de uma série temporal levando em consideração outras séries não estacionárias é conhecido como **Vector Error Correction Models (VECM)**, e sua implementação dentro do pacote *statsmodels* possui funcionalidades para verificar causalidade de Granger e causalidade instantânea entre séries temporais. Entretanto, para o uso deste modelo é necessário que as séries testadas sejam cointegradas, ou seja, quando duas ou mais séries são integradas por uma mesma determinada ordem de integração (que é o número mínimo de diferenças [lags] para a série se tornar estacionária) e a combinação linear das séries é integrada por uma ordem menor que a calculada para todas as séries.
 
-Na comparação de causalidade de Granger entre comentários positivos e novos casos da doença, passado pela etapa de validação de estacionariedade das séries, cointegração entre elas e por fim a análise do modelo VECM, foram obtidos os seguintes resultados:
+Para avaliar a cointegração das séries, existem dois testes pesquisados que são frequentemente utilizados: o teste de Engle-Granger e o teste de Johansen. O teste de Engle-Granger foi escolhido dada a existência de apenas duas séries temporais e a menor complexidade do teste.
+
+Para realizar a validação de causalidade de Granger entre as séries, o fator de atraso (ou *lag*) entre elas deve ser levado em consideração. Com isso, foram realizadas validações com o fator de atraso variando entre 1 e 30 dias.
+
+### Evolução do Projeto
+
+**Primeira Etapa**
+- Definição dos termos iniciais de pesquisa de comentários;
+- Coleta dos comentários do Twitter.
+- Processamento de dados usando técnicas de Natural Language Processing.
+
+A etapa inicial do projeto foi relativamente simples. Como já existiam diversas bases de dados com os números dos casos de COVID-19, bastou seguir a definição dos termos de busca dos comentários, que foram baseados na lista de sintomas disponibilizada pelo CDC (Centro de Controle e Prevenção de Doenças dos EUA) e realizar a coleta dos comentários.
+
+**Segunda Etapa**
+- Definição do algoritmo para a classificação dos comentários.
+- Análise dos dados e comparação com informações de disseminação da doença.
+
+Esta segunda etapa demandou um grande esforço. A classificação dos comentários seguiu metodologias de aprendizagem de máquina que já eram conhecidas pela equipe. Entretanto, a análise dos dados evidenciou estar se tratando do estudo de séries temporais, o que demandou diversas pesquisas na internet e na literatura a fim de entender como tais análises devem ser realizadas, com diversos novos conceitos. Inclusive, não havia o entendimento inicial de que tal metodologia seria seguida, muito embora o dataset principal (casos de COVID-19) seja, em si, uma série temporal.
+
+**Terceira Etapa**
+- Criação do Relatório final/apresentação e disponibilização no Github.
+
+![Figure 7. Evolução do Projeto](imagens/Covid19-Twitter-Tracker.png)
+
+## Resultados e Discussão
+Como primeira avaliação, conforme o objetivo deste trabalho, foi analisada a causalidade entre o número de comentários positivos no Twitter e o número de casos de COVID-19.
+
+Na comparação de causalidade de Granger entre comentários positivos e novos casos da doença, passando pela etapa de validação de estacionariedade das séries, cointegração entre elas e por fim a análise do modelo VECM, foram obtidos os seguintes resultados:
 
 ```
 Augmented Dickey-Fuller Test:
@@ -303,7 +344,7 @@ Granger causality F-test.
 H_0: Comentarios does not Granger-cause Casos.
 Conclusion: reject H_0 at 5% significance level.
 ===============================================
-Test statistic Critical value p-value     df   
+Test statistic Critical value p-value     df
 -----------------------------------------------
          4.332          1.713   0.000 (16, 146)
 -----------------------------------------------
@@ -321,34 +362,34 @@ Test statistic Critical value p-value df
 
 Como o modelo VECM pode fornecer também a predição futura da série temporal e não apenas verificar causalidade de Granger, aplicando o mesmo em ambas as séries obtem-se como retorno a seguinte previsão para os próximos 3 dias (no caso os dias 28, 29 e 30 de junho) com algum erro.
 
-![Figure 7. Forecast do número de comentários e novos casos](imagens/forecast.png)
+![Figure 8. Forecast do número de comentários e novos casos](imagens/forecast.png)
 
-### Evolução do Projeto
+É importante citar que o teste de causalidade de Granger tem como hipótese nula o fato de que a série temporal A **não Granger-causa** a série temporal B. O teste exposto acima valida a hipótese nula, isto é, a série temporal de Comentários não tem relação causal com a série temporal de Casos.
 
-*Primeira Etapa*
+Foram feitas outras avaliações a partir desse resultado. Como observado, existe um aumento considerável no número de comentários positivos a partir do mês de Maio. Dessa forma, foi feito um recorte em ambos os datasets, considerando as informações apenas a partir do dia 05/05/2020. Ainda assim, não foi possível encontrar nenhuma causalidade entre as séries, como pode ser visto abaixo:
 
-- Definimos os termos iniciais de pesquisa de comentários.
-- Coletamos os dados do twitter.
-- Processamento de dados usando tecnicas de Natural Language Processing.
+**[Inserir resultados do recorte]**
 
-*Segunda Etapa*
+Foram feitos também recortes por estado. Como os estados de São Paulo e do Rio de Janeiro são os estados de onde vem a maioria dos comentários relacionados a COVID-19, optou-se por realizar esse filtro no dataset. Entretanto, também não foi possível determinar relação de causalidade.
 
-- Definição do algoritmo para a classificação dos comentários.
-- Análise dos dados e comparação com informações de disseminação da doença.
-
-*Terceira Etapa*
-
-- Criação do Relatório final/ apresentação e disponibilização no github.
-
-![Figure 8. Evolução do Projeto](imagens/Covid19-Twitter-Tracker.png)
-
-## Resultados e Discussão
-
+**[Inserir resultados dos estados]**
 
 ## Conclusões
+A análise da comparação entre os comentários realizados em redes sociais e o número de casos de uma epidemia demanda estudos mais avançados e nos conduz a considerar relacionamentos que, em um primeiro instante, não estão claros.
 
+Na primeira análise realizada, não encontrou-se causalidade entre os comentários e os casos de COVID-19. Entretanto, com algumas observações, surgem possibilidades de recorte dos dados que talvez cheguem a apontar alguma causalidade. Dentro dos recortes realizados não foi possível encontrar causalidade, mas uma análise ainda mais refinada pode ser realizada. Pode-se, por exemplo, realizar um recorte socioeconômico dos casos de COVID-19, incluindo informações de acesso a Internet, e, dessa forma, talvez chegar a um resultado diferente.
+
+Também foi possível concluir que análises estatísticas mais sofisticadas podem ser realizadas. Há ainda a questão sobre os comentários do Twitter, cuja classificação pode ser mais refinada, tendo como base um maior número de comentários rotulados previamente.
+
+Com isso, conclui-se que um trabalho que analise dados de saúde pública deve sempre observar características que, em um primeiro momento, parecem não ter relação com as análises.
 
 ## Trabalhos Futuros
+A partir da conclusão deste trabalho, sugerem-se alguns trabalhos futuros:
+- Realizar uma coleta de comentários mais refinada e bem distribuída. A atual coleta de comentários pode continuar sendo feita, enquanto durar a pandemia, e uma nova análise pode ser realizada futuramente;
+- Realizar a classificação de comentários do Twitter com base em um maior número de comentários rotulados previamente, ou, ainda, a construção de um dataset de comentários classificados manualmente;
+- Realizar recortes mais específicos nas análises entre os números de casos e de comentários positivos;
+- Utilizar análises mais sofisticadas de séries temporais;
+- Aplicar outros métodos para estacionariedade das séries temporais.
 
 
 ### Referências:
