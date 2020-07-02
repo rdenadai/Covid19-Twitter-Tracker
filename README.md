@@ -250,11 +250,11 @@ Após essa análise inicial, iniciou-se a análise estatística entre as variáv
 
 É importante denotar que a causalidade de Granger é um conceito de causalidade baseado em predições. Isto é, se uma série A "Granger-causa" a série B, isso significa que valores passados da série A provavelmente contém informações que ajudam a melhor predizer a série B, do que apenas utilizar os valores passados da série B[[29]](https://www.jneurosci.org/content/35/8/3293).
 
-Entretanto, como especificidade deste tipo de informação, o teste demandava que as séries temporais estivessem estacionárias[[19]](https://www.sciencedirect.com/science/article/pii/S0165176501004980#:~:text=1.,is%20or%20are%20non%2Dstationary.), isto é, que as propriedades estatísticas das séries **não variassem em função do tempo**. O gráfico abaixo demonstra o número de casos de COVID-19 ao longo dos dias e é possível ver que a média (uma propriedade estatística) varia conforme o tempo avança. Além disso, observam-se duas características de séries temporais não estacionárias: a sazonalidade e a tendência (neste caso, de aumento).
+Entretanto, como especificidade deste tipo de informação, o teste demandava que as séries temporais estivessem estacionárias[[19]](https://www.sciencedirect.com/science/article/pii/S0165176501004980#:~:text=1.,is%20or%20are%20non%2Dstationary.), isto é, que as propriedades estatísticas das séries **não variassem em função do tempo**. O gráfico abaixo demonstra o número de casos de COVID-19 ao longo dos dias que não variam em torno de uma média conforme o tempo avança. Além disso, observam-se duas características de séries temporais não estacionárias: a sazonalidade e tendência (neste caso, de aumento).
 
 ![Figure 6. Casos de COVID-19 ao longo do tempo](imagens/serie_casos_por_dia.png)
 
-Para confirmar se as séries temporais são estacionárias ou não, existem diversos métodos, entre eles o teste de Dickey-Fuller Aumentado[[27]](https://arch.readthedocs.io/en/latest/unitroot/unitroot_examples.html#Augmented-Dickey-Fuller-Testing), que é um teste bem conhecido na literatura e amplamente utilizado. Este teste foi selecionado para verificar a estacionariedade das séries. Abaixo, o resultado do teste de Dickey-Fuller para a série de casos:
+Para confirmar se as séries temporais são estacionárias ou não, existem diversos métodos, entre eles o teste de Dickey-Fuller Aumentado[[27]](https://arch.readthedocs.io/en/latest/unitroot/unitroot_examples.html#Augmented-Dickey-Fuller-Testing), um teste conhecido na literatura e amplamente utilizado. Este teste foi selecionado para verificar a estacionariedade das séries. Abaixo, o resultado do teste de Dickey-Fuller para a série de casos:
 
 ```
 Augmented Dickey-Fuller Test:
@@ -270,11 +270,11 @@ Critical Values:
 Is the time series stationary? False
 ```
 
-Levando em consideração tal informação sobre as séries temporais, foi realizado um estudo para avaliar se existe a possibilidade de verificar causalidade de Granger em séries não-estacionárias. Um modelo estatísico no qual é possível realizar a previsão de uma série temporal levando em consideração outras séries não estacionárias é conhecido como **Vector Error Correction Models (VECM)**[[20]](https://www.hindawi.com/journals/ddns/2018/5350308/)[[21]](http://ijcf.ticaret.edu.tr/index.php/ijcf/article/view/22)[[22]](https://ideas.repec.org/p/ams/ndfwpp/14-09.html), e sua implementação dentro do pacote *statsmodels* possui funcionalidades para verificar causalidade de Granger e causalidade instantânea entre séries temporais. Entretanto, para o uso deste modelo é necessário que as séries testadas sejam cointegradas, ou seja, quando duas ou mais séries são integradas por uma mesma determinada ordem de integração (que é o número mínimo de diferenças [lags] para a série se tornar estacionária) e a combinação linear das séries é integrada por uma ordem menor que a calculada para todas as séries.
+Levando em consideração tal informação sobre as séries temporais, foi realizado um estudo para avaliar se existe a possibilidade de verificar causalidade de Granger em séries não-estacionárias. Um modelo estatísico no qual é possível realizar a previsão de uma série temporal levando em consideração outras séries não estacionárias é conhecido como **Vector Error Correction Models (VECM)**[[20]](https://www.hindawi.com/journals/ddns/2018/5350308/)[[21]](http://ijcf.ticaret.edu.tr/index.php/ijcf/article/view/22)[[22]](https://ideas.repec.org/p/ams/ndfwpp/14-09.html), e sua implementação dentro do pacote *statsmodels* possui funcionalidades para verificar causalidade de Granger e causalidade instantânea entre séries temporais. Entretanto, para o uso deste modelo é necessário que as séries testadas sejam cointegradas, ou seja, quando duas ou mais séries são integradas por uma mesma ordem de integração (que é o número mínimo de diferenças [lags] para a série se tornar estacionária) e a combinação linear das séries é integrada por uma ordem menor que a calculada para todas as séries.
 
 Para avaliar a cointegração das séries, existem dois testes pesquisados que são frequentemente utilizados: o teste de Engle-Granger e o teste de Johansen. O teste de Engle-Granger foi escolhido dada a existência de apenas duas séries temporais e a menor complexidade do teste.
 
-Para realizar a validação de causalidade de Granger entre as séries, o fator de atraso (ou *lag*) entre elas deve ser levado em consideração. Com isso, foram realizadas validações com o fator de atraso variando entre 1 e 30 dias.
+Na validação de causalidade de Granger entre as séries, o fator de atraso (ou *lag*) entre elas deve ser levado em consideração. Com isso, foram realizadas testes e validações com o fator de atraso variando entre 1 e 30 dias, procurando encontrar o valor de menor variação de causalidade.
 
 ### Evolução do Projeto
 Apos ser escolhido o nome do projeto foi percebida a necessidade de estabelecer passos desde início ao fin da implantação do projeto e foi dividido em três etapas como a figura a seguir.
@@ -371,8 +371,6 @@ Como o modelo VECM pode fornecer também a predição futura da série temporal 
 O teste acima foi executado primeiramente para o período total de comentários, isto é, a série começou junto ao primeiro dia de notificação de casos de COVID-19, 25/02/2020, até o dia 27/06/2020.
 
 Porém, um recorte feito dos dados até o dia 10/05/2020 mostrou outro resultado: o teste de causalidade indicou que a hipótese nula **não devia ser rejeitada**, apontando que a série de comentários não Granger-causa a série de casos. Foi feita uma análise até o dia 10/05/2020 a fim de validar a rejeição à hipótese nula, uma vez que o número de comentários e de casos estão, até este período, relativamente próximos.
-
-[Inserir teste e imagens para o período 25/02/2020 - 10/05/2020]
 
 Essa divergência entre os resultados conduz a diversos questionamentos. Levantou-se o fato de que, conforme a pandemia foi avançando, os casos começaram a acontecer entre as pessoas que possuem acesso ao Twitter. Há ainda a possibilidade de que, por estarmos nas estações do Outono e do Inverno, sintomas respiratórios começaram a ser relatados como potenciais sintomas de COVID-19. Esses fatores poderiam estar gerando uma "Granger-causalidade" entre as séries temporais.
 
