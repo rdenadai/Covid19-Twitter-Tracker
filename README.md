@@ -276,23 +276,26 @@ Para realizar a validação de causalidade de Granger entre as séries, o fator 
 
 ### Evolução do Projeto
 
+Apos ser escolhido o nome do projeto foi percebida a necessidade de estabelecer passos desde início ao fin da implantação do projeto e foi dividido em três etapas como a figura a seguir. 
+![Figure 7. Evolução do Projeto](imagens/Covid19-Twitter-Tracker.png)
+
 **Primeira Etapa**
-- Definição dos termos iniciais de pesquisa de comentários;
-- Coleta dos comentários do Twitter.
-- Processamento de dados usando técnicas de Natural Language Processing.
+
+- [Definição dos termos iniciais de pesquisa de comentários](https://github.com/rdenadai/Covid19-Twitter-Tracker#defini%C3%A7%C3%A3o-dos-termos-de-busca)
+- [Coleta dos comentários usando técnicas de Natural Language Processing](https://github.com/rdenadai/Covid19-Twitter-Tracker#coleta-dos-coment%C3%A1rios)
 
 A etapa inicial do projeto foi relativamente simples. Como já existiam diversas bases de dados com os números dos casos de COVID-19, bastou seguir a definição dos termos de busca dos comentários, que foram baseados na lista de sintomas disponibilizada pelo CDC (Centro de Controle e Prevenção de Doenças dos EUA) e realizar a coleta dos comentários.
 
 **Segunda Etapa**
-- Definição do algoritmo para a classificação dos comentários.
-- Análise dos dados e comparação com informações de disseminação da doença.
+- [Definição do algoritmo para a Classificação dos comentários](https://github.com/rdenadai/Covid19-Twitter-Tracker#classifica%C3%A7%C3%A3o-dos-coment%C3%A1rios)
+- [Análise dos dados e comparação com informações de disseminação da doença](https://github.com/rdenadai/Covid19-Twitter-Tracker#an%C3%A1lise-temporal-dos-dados)
 
 Esta segunda etapa demandou um grande esforço. A classificação dos comentários seguiu metodologias de aprendizagem de máquina que já eram conhecidas pela equipe. Entretanto, a análise dos dados evidenciou estar se tratando do estudo de séries temporais, o que demandou diversas pesquisas na internet e na literatura a fim de entender como tais análises devem ser realizadas, com diversos novos conceitos. Inclusive, não havia o entendimento inicial de que tal metodologia seria seguida, muito embora o dataset principal (casos de COVID-19) seja, em si, uma série temporal.
 
 **Terceira Etapa**
-- Criação do Relatório final/apresentação e disponibilização no Github.
+- [Criação do Relatório final/apresentação e disponibilização no Github.](https://github.com/rdenadai/Covid19-Twitter-Tracker#an%C3%A1lise-temporal-dos-dados)
 
-![Figure 7. Evolução do Projeto](imagens/Covid19-Twitter-Tracker.png)
+
 
 ## Resultados e Discussão
 Como primeira avaliação, conforme o objetivo deste trabalho, foi analisada a causalidade entre o número de comentários positivos no Twitter e o número de casos de COVID-19.
