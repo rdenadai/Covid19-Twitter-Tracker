@@ -64,7 +64,7 @@ Este trabalho está organizado na seguinte forma:
    - Considerando que boa parte do conteúdo extraído não terá informações de geolocalização, é possível verificar essa disseminação por cidades ou estados?
 
 
-### Objetivo
+### 1. Objetivo
 
 O projeto tem como principal objetivo avaliar a possibilidade de se identificar, através das redes sociais, a disseminação de doenças, especificamente a COVID-19 no Brasil.
 
@@ -72,7 +72,7 @@ A identificação baseia-se na extração e análise de comentários de usuário
 
 A análise leva em conta a evolução da quantidade de comentários e novos casos da doença ao longo do tempo, e dessa maneira foram inicialmente avaliados como séries temporais. Sendo os resultados concretos, isso forneceria informações sobre possíveis casos ainda não registrados oficialmente nas estatísticas elaboradas pelos órgãos oficiais, melhorando a visão de como a doença está disseminada na sociedade.
 
-## Recursos e Métodos
+## 2. Recursos e Métodos
 
 ### Bases de Dados:
 Para esta análise, foi criada uma base de dados com os comentários realizados no Twitter. Juntamente a esta base, foram utilizadas outras bases de dados sobre os casos de COVID-19 no Brasil inclusive as oficiais do Ministério da Saúde, entretanto, devido ao apagão de dados que ocorreram recentemente no Ministério, optou-se por não utilizar a mesma como base para as análises.
@@ -95,7 +95,7 @@ Statsmodels | https://www.statsmodels.org/stable/index.html | Biblioteca com mod
 Selenium WebDriver | https://www.selenium.dev/ | Biblioteca para automatização de tarefas em navegadores web. Utilizada para automação da coleta de comentários do Twitter
 NTLK | https://www.nltk.org/ | Biblioteca com funções específicas para processamento de texto. Utilizada para classificação dos comentários
 
-## Metodologia
+## 3. Metodologia
 Como já especificado, o objetivo deste trabalho está em tentar correlacionar comentários relacionados à COVID-19 com o número de casos da doença no Brasil. Para tanto, faz-se necessária a coleta de tais comentários, o processamento destes comentários, de forma que sejam contabilizados, dentro do possível, apenas os comentários efetivamente relacionados a doença, e a posterior análise estatística com os dados oficiais sobre a COVID-19 no país.
 
 Dado o alto número de comentários, optou-se pela classificação destes através de um algoritmo de *Machine Learning*. Feita esta classificação, o problema passou a ser tratado como uma série temporal: tanto o número de comentários como de casos variavam em função do tempo. Portanto, as análises foram feitas considerando essa especificidade.
@@ -325,30 +325,32 @@ Como o modelo VECM pode fornecer também a predição futura da série temporal 
 
 ### Evolução do Projeto
 
-*Primeira Etapa*
-
-- Definimos os termos iniciais de pesquisa de comentários.
-- Coletamos os dados do twitter.
-- Processamento de dados usando tecnicas de Natural Language Processing.
-
-*Segunda Etapa*
-
-- Definição do algoritmo para a classificação dos comentários.
-- Análise dos dados e comparação com informações de disseminação da doença.
-
-*Terceira Etapa*
-
-- Criação do Relatório final/ apresentação e disponibilização no github.
-
+Apos ser escolhido o nome do projeto foi percebida a necessidade de estabelecer passos desde início ao fin da impantação do projeto e foi dividido em três etapas como a figura a seguir.
 ![Figure 8. Evolução do Projeto](imagens/Covid19-Twitter-Tracker.png)
 
-## Resultados e Discussão
+
+**Primeira Etapa**
+
+- [Definição dos termos de busca](https://github.com/rdenadai/Covid19-Twitter-Tracker#defini%C3%A7%C3%A3o-dos-termos-de-busca)
+- [Coleta dos comentários](https://github.com/rdenadai/Covid19-Twitter-Tracker#coleta-dos-coment%C3%A1rios)
+
+**Segunda Etapa**
+
+- [Classificação dos comentários](https://github.com/rdenadai/Covid19-Twitter-Tracker#classifica%C3%A7%C3%A3o-dos-coment%C3%A1rios)
+- [Análise temporal dos dados](https://github.com/rdenadai/Covid19-Twitter-Tracker#an%C3%A1lise-temporal-dos-dados)
+- [Resultados e Discussão](https://github.com/rdenadai/Covid19-Twitter-Tracker#resultados-e-discuss%C3%A3o)
+
+**Terceira Etapa**
+
+- [Apresentação e disponibilização no github](https://github.com/rdenadai/Covid19-Twitter-Tracker#an%C3%A1lise-temporal-dos-dados)
+
+## 4. Resultados e Discussão
 
 
-## Conclusões
+## 5. Conclusões
 
 
-## Trabalhos Futuros
+## 6. Trabalhos Futuros
 
 
 ### Referências:
