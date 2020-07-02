@@ -151,9 +151,9 @@ Esse processo de classifcação, também como exposto no estudo mencionado acima
 
 Com o dataset terminado, foi realizada uma etapa de análise de alguns algoritmos de *Machine Learning* verificando quais dos possíveis seria viável utilizar para a classificação do conteúdo.
 
-Para que os algoritmos de *Machine Learning* entendam frases ou palavras, é necessário transformar as mesmas em representações numéricas para que os algoritmos possam aprender padrões representativos. Dessa maneira, foram avaliadas duas formas de criação de variáveis latentes, a contagem de termos por frase e TF-IDF[[19]](https://0bc297c6-a-62cb3a1a-s-sites.googlegroups.com/site/caonmsu/ir/UsingTFIDFtoDetermineWordRelevanceinDocumentQueries.pdf?attachauth=ANoY7cqQ_C1xICCyXD-ppatj1CW6MlI4kIFWVFW7XtDmRGuCLYpaG-pN258QaZyQmjXg3LffiSL-j8TLUcqD5cGztwFTxytiIHB-dHGFok2Z-BljRZh2iEWlgdFFOFju23CASsJEw7AmBSfcw_rAwVirZYhiqxTYDeOXAIMnE_hfhRBbLpILDyuFPr8_R1AFPLtIGQ8Gn_keVH3vWyjkp3uLSpgQb0RaKblJHnNHHifRyDETwY7TRe1drr4oGVN9S5NZH09wEf617jB5tL7-gvs5oFvOpzuzjw%3D%3D&attredirects=0).  Para o pré-processamento foram realizadas algumas operações, como remoção de acentos e a stemização das palavras.
+Para que os algoritmos de *Machine Learning* entendam frases ou palavras, é necessário transformar as mesmas em representações numéricas para que os algoritmos possam aprender padrões representativos. Dessa maneira, foram avaliadas duas formas de criação de variáveis latentes, a contagem de termos por frase e TF-IDF[[23]](https://0bc297c6-a-62cb3a1a-s-sites.googlegroups.com/site/caonmsu/ir/UsingTFIDFtoDetermineWordRelevanceinDocumentQueries.pdf?attachauth=ANoY7cqQ_C1xICCyXD-ppatj1CW6MlI4kIFWVFW7XtDmRGuCLYpaG-pN258QaZyQmjXg3LffiSL-j8TLUcqD5cGztwFTxytiIHB-dHGFok2Z-BljRZh2iEWlgdFFOFju23CASsJEw7AmBSfcw_rAwVirZYhiqxTYDeOXAIMnE_hfhRBbLpILDyuFPr8_R1AFPLtIGQ8Gn_keVH3vWyjkp3uLSpgQb0RaKblJHnNHHifRyDETwY7TRe1drr4oGVN9S5NZH09wEf617jB5tL7-gvs5oFvOpzuzjw%3D%3D&attredirects=0).  Para o pré-processamento foram realizadas algumas operações, como remoção de acentos e a stemização das palavras.
 
-Preparadas as frases para a classificação, foram analisados quatro implementações do pacote scikit-learn (LogisticRegression, SGDClassifier, SVM com kernel linear e rbf), para validar qual seria o melhor algoritmo a ser utilizado no projeto.
+Preparadas as frases para a classificação, foram analisados quatro implementações do pacote scikit-learn (LogisticRegression[[24]](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html), SGDClassifier[[25]](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.SGDClassifier.html?highlight=sgdclassifier#sklearn.linear_model.SGDClassifier), SVM com kernel linear e Radial Basis Function RBF[[26]](https://scikit-learn.org/stable/modules/svm.html#parameters-of-the-rbf-kernel)), para validar qual seria o melhor algoritmo a ser utilizado no projeto.
 
 Com resultados bem próximos, qualquer um dos métodos poderia ser utilizado. Entretanto, no top 10 dos melhores, a grande maioria das posições foi ocupada pelo SVM (com ambos os kernel e variação nos parâmetros), portanto este algoritmo foi escolhido, juntamente com o TF-IDF para a geração do espaço latente.
 
@@ -276,7 +276,7 @@ Para realizar a validação de causalidade de Granger entre as séries, o fator 
 
 ### Evolução do Projeto
 Apos ser escolhido o nome do projeto foi percebida a necessidade de estabelecer passos desde início ao fin da implantação do projeto e foi dividido em três etapas como a figura a seguir. 
-![Figure 7. Evolução do Projeto](imagens/Covid19-Twitter-Tracker1.png)
+![Figure 7. Evolução do Projeto](imagens/Covid19-Twitter-Tracker_new.png)
 
 **Primeira Etapa**
 - [Definição dos termos iniciais de pesquisa de comentários](https://github.com/rdenadai/Covid19-Twitter-Tracker#defini%C3%A7%C3%A3o-dos-termos-de-busca)
@@ -464,3 +464,7 @@ A partir da conclusão deste trabalho, sugerem-se alguns trabalhos futuros:
  - [20] [VECM Model Analysis of Carbon Emissions, GDP, and International Crude Oil Prices](https://www.hindawi.com/journals/ddns/2018/5350308/)
  - [21] [Causality Relationship Between Import, Export and Growth Rate in Developing Countries](http://ijcf.ticaret.edu.tr/index.php/ijcf/article/view/22)
  - [22] [Identifying causal relationships in case of non-stationary time series](https://ideas.repec.org/p/ams/ndfwpp/14-09.html)
+ - [23] [TF-IDF](https://0bc297c6-a-62cb3a1a-s-sites.googlegroups.com/site/caonmsu/ir/UsingTFIDFtoDetermineWordRelevanceinDocumentQueries.pdf?attachauth=ANoY7cqQ_C1xICCyXD-ppatj1CW6MlI4kIFWVFW7XtDmRGuCLYpaG-pN258QaZyQmjXg3LffiSL-j8TLUcqD5cGztwFTxytiIHB-dHGFok2Z-BljRZh2iEWlgdFFOFju23CASsJEw7AmBSfcw_rAwVirZYhiqxTYDeOXAIMnE_hfhRBbLpILDyuFPr8_R1AFPLtIGQ8Gn_keVH3vWyjkp3uLSpgQb0RaKblJHnNHHifRyDETwY7TRe1drr4oGVN9S5NZH09wEf617jB5tL7-gvs5oFvOpzuzjw%3D%3D&attredirects=0)
+ - [24] [Sklearn linear_model LogisticRegression](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html)
+ - [25] [Sklearn linear_model SGDClassifier](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.SGDClassifier.html?highlight=sgdclassifier#sklearn.linear_model.SGDClassifier)
+ - [26] [SVM com o kernel Radial Basis Function (RBF)](https://scikit-learn.org/stable/modules/svm.html#parameters-of-the-rbf-kernel)
