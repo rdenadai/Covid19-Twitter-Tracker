@@ -248,6 +248,8 @@ Após a normalização dos totais de comentários e de casos (a fim de evitar a 
 
 Após essa análise inicial, iniciou-se a análise estatística entre as variáveis, de forma a determinar se havia uma causalidade entre o número de comentários positivos escritos no Twitter e o número de casos de COVID-19. Para tanto, optou-se, inicialmente, pelo Teste de Causalidade de Granger, que permite validar se duas séries temporais apresentam causalidade entre si.
 
+É importante denotar que a causalidade de Granger é um conceito de causalidade baseado em predições. Isto é, se uma série A "Granger-causa" a série B, isso significa que valores passados da série A provavelmente contém informações que ajudam a melhor predizer a série B, do que apenas utilizar os valores passados da série B [[28]](https://www.jneurosci.org/content/35/8/3293).
+
 Entretanto, como especificidade deste tipo de informação, o teste demandava que as séries temporais estivessem estacionárias [[19]](https://www.sciencedirect.com/science/article/pii/S0165176501004980#:~:text=1.,is%20or%20are%20non%2Dstationary.), isto é, que as propriedades estatísticas das séries **não variassem em função do tempo**. O gráfico abaixo demonstra o número de casos de COVID-19 ao longo dos dias e é possível ver que a média (uma propriedade estatística) varia conforme o tempo avança. Além disso, observam-se duas características de séries temporais não estacionárias: a sazonalidade e a tendência (neste caso, de aumento).
 
 ![Figure 6. Casos de COVID-19 ao longo do tempo](imagens/serie_casos_por_dia.png)
@@ -275,7 +277,7 @@ Para avaliar a cointegração das séries, existem dois testes pesquisados que s
 Para realizar a validação de causalidade de Granger entre as séries, o fator de atraso (ou *lag*) entre elas deve ser levado em consideração. Com isso, foram realizadas validações com o fator de atraso variando entre 1 e 30 dias.
 
 ### Evolução do Projeto
-Apos ser escolhido o nome do projeto foi percebida a necessidade de estabelecer passos desde início ao fin da implantação do projeto e foi dividido em três etapas como a figura a seguir. 
+Apos ser escolhido o nome do projeto foi percebida a necessidade de estabelecer passos desde início ao fin da implantação do projeto e foi dividido em três etapas como a figura a seguir.
 ![Figure 7. Evolução do Projeto](imagens/Covid19-Twitter-Tracker_new.png)
 
 **Primeira Etapa**
@@ -362,9 +364,17 @@ Como o modelo VECM pode fornecer também a predição futura da série temporal 
 
 ![Figure 8. Forecast do número de comentários e novos casos](imagens/forecast.png)
 
-É importante citar que o teste de causalidade de Granger tem como hipótese nula o fato de que a série temporal A **não Granger-causa** a série temporal B. O teste exposto acima valida a hipótese nula, isto é, a série temporal de Comentários não tem relação causal com a série temporal de Casos.
+É importante citar que o teste de causalidade de Granger tem como hipótese nula o fato de que a série temporal A **não Granger-causa** a série temporal B. O teste exposto acima **rejeita a hipótese nula**, isto é, a série temporal de Comentários aparenta ter uma causalidade de Granger com a série temporal de Casos.
 
-Foram feitas outras avaliações a partir desse resultado. Como observado, existe um aumento considerável no número de comentários positivos a partir do mês de Maio. Dessa forma, foi feito um recorte em ambos os datasets, considerando as informações apenas a partir do dia 05/05/2020. Ainda assim, não foi possível encontrar nenhuma causalidade entre as séries, como pode ser visto abaixo:
+O teste acima foi executado primeiramente para o período total de comentários, isto é, a série começou junto ao primeiro dia de notificação de casos de COVID-19, 25/02/2020, até o dia 27/06/2020.
+
+Porém, um recorte feito dos dados até o dia 10/05/2020 mostrou outro resultado: o teste de causalidade indicou que a hipótese nula **não devia ser rejeitada**, apontando que a série de comentários não Granger-causa a série de casos. Foi feita uma análise até o dia 10/05/2020 a fim de validar a rejeição à hipótese nula, uma vez que o número de comentários e de casos estão, até este período, relativamente próximos.
+
+[Inserir teste e imagens para o período 25/02/2020 - 10/05/2020]
+
+Essa divergência entre os resultados conduz a diversos questionamentos. Levantou-se o fato de que, conforme a pandemia foi avançando, os casos começaram a acontecer entre as pessoas que possuem acesso ao Twitter. Há ainda a possibilidade de que, por estarmos nas estações do Outono e do Inverno, sintomas respiratórios começaram a ser relatados como potenciais sintomas de COVID-19. Esses fatores poderiam estar gerando uma "Granger-causalidade" entre as séries temporais.
+
+Apesar das divergências encontradas, foram feitas outras avaliações em relação aos dados. Como observado, existe um aumento considerável no número de comentários positivos a partir do mês de Maio. Dessa forma, foi feito um recorte em ambos os datasets, considerando as informações apenas a partir do dia 05/05/2020. A rejeição à hipótese nula se manteve, isto é, aparentemente há causalidade entre as séries, como pode ser visto abaixo:
 
 ![Figure 9. Comparação novos casos com comentários (dados normalizados)](imagens/casos_vs_coment_normalizados_0505.png)
 
@@ -379,7 +389,7 @@ Granger causality F-test.
 H_0: Comentarios does not Granger-cause Casos.
 Conclusion: reject H_0 at 5% significance level.
 =============================================
-Test statistic Critical value p-value    df  
+Test statistic Critical value p-value    df
 ---------------------------------------------
      1.953e+04          5.844   0.000 (16, 4)
 ---------------------------------------------
@@ -394,7 +404,7 @@ Test statistic Critical value p-value df
 ----------------------------------------
 ```
 
-Foram feitos também recortes por estado. Como os estados de São Paulo e do Rio de Janeiro são os estados de onde vem a maioria dos comentários relacionados a COVID-19, optou-se por realizar esse filtro no dataset. Entretanto, também não foi possível determinar relação de causalidade.
+Foram feitos também recortes por estado. Como os estados de São Paulo e do Rio de Janeiro são os estados de onde vem a maioria dos comentários relacionados a COVID-19, optou-se por realizar esse filtro no dataset. Aqui, obteve-se resultado igual ao da análise feita para todo o país, onde foi possível determinar relação de causalidade. Esta análise considerou o período parcial (de 05/05/2020 a 27/06/2020).
 
 ![Figure 10. Comparação novos casos com comentários para estado de SP (dados normalizados)](imagens/casos_vs_coment_normalizados_SP_0505.png)
 
@@ -409,7 +419,7 @@ Granger causality F-test.
 H_0: Comentarios does not Granger-cause Casos.
 Conclusion: reject H_0 at 5% significance level.
 =============================================
-Test statistic Critical value p-value    df  
+Test statistic Critical value p-value    df
 ---------------------------------------------
          110.7          5.844   0.000 (16, 4)
 ---------------------------------------------
@@ -427,7 +437,7 @@ Test statistic Critical value p-value df
 ## 5. Conclusões
 A análise da comparação entre os comentários realizados em redes sociais e o número de casos de uma epidemia demanda estudos mais avançados e nos conduz a considerar relacionamentos que, em um primeiro instante, não estão claros.
 
-Na primeira análise realizada, não encontrou-se causalidade entre os comentários e os casos de COVID-19. Entretanto, com algumas observações, surgem possibilidades de recorte dos dados que talvez cheguem a apontar alguma causalidade. Dentro dos recortes realizados não foi possível encontrar causalidade, mas uma análise ainda mais refinada pode ser realizada. Pode-se, por exemplo, realizar um recorte socioeconômico dos casos de COVID-19, incluindo informações de acesso a Internet, e, dessa forma, talvez chegar a um resultado diferente.
+Na primeira análise realizada, encontrou-se causalidade entre os comentários e os casos de COVID-19. Entretanto, com algumas observações, surgem possibilidades de recorte dos dados que demonstram o contrário, ou seja, que não há causalidade. Isso nos leva a entender que o contexto do tempo possui uma certa influência nos resultados, de forma que não é possível determinar a causalidade entre os comentários positivos do Twitter e os casos de COVID-19; esta afirmação pede uma análise ainda mais refinada. Pode-se, por exemplo, realizar um recorte socioeconômico dos casos de COVID-19, incluindo informações de acesso a Internet, e, dessa forma, talvez chegar a um resultado diferente.
 
 Também foi possível concluir que análises estatísticas mais sofisticadas podem ser realizadas. Há ainda a questão sobre os comentários do Twitter, cuja classificação pode ser mais refinada, tendo como base um maior número de comentários rotulados previamente.
 
@@ -469,3 +479,4 @@ A partir da conclusão deste trabalho, sugerem-se alguns trabalhos futuros:
  - [25] [Sklearn linear_model SGDClassifier](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.SGDClassifier.html?highlight=sgdclassifier#sklearn.linear_model.SGDClassifier)
  - [26] [SVM com o kernel Radial Basis Function (RBF)](https://scikit-learn.org/stable/modules/svm.html#parameters-of-the-rbf-kernel)
  - [27] [Augmented Dickey-Fuller Testing](https://arch.readthedocs.io/en/latest/unitroot/unitroot_examples.html#Augmented-Dickey-Fuller-Testing)
+ - [28] [Granger Causality Analysis in Neuroscience and Neuroimaging](https://www.jneurosci.org/content/35/8/3293)
