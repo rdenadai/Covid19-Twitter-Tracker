@@ -252,7 +252,7 @@ Entretanto, como especificidade deste tipo de informação, o teste demandava qu
 
 ![Figure 6. Casos de COVID-19 ao longo do tempo](imagens/serie_casos_por_dia.png)
 
-Para confirmar se as séries temporais são estacionárias ou não, existem diversos métodos, entre eles o teste de Dickey-Fuller Aumentado, que é um teste bem conhecido na literatura e amplamente utilizado. Este teste foi selecionado para verificar a estacionariedade das séries. Abaixo, o resultado do teste de Dickey-Fuller para a série de casos:
+Para confirmar se as séries temporais são estacionárias ou não, existem diversos métodos, entre eles o teste de Dickey-Fuller Aumentado[[27]](https://arch.readthedocs.io/en/latest/unitroot/unitroot_examples.html#Augmented-Dickey-Fuller-Testing), que é um teste bem conhecido na literatura e amplamente utilizado. Este teste foi selecionado para verificar a estacionariedade das séries. Abaixo, o resultado do teste de Dickey-Fuller para a série de casos:
 
 ```
 Augmented Dickey-Fuller Test:
@@ -468,3 +468,4 @@ A partir da conclusão deste trabalho, sugerem-se alguns trabalhos futuros:
  - [24] [Sklearn linear_model LogisticRegression](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html)
  - [25] [Sklearn linear_model SGDClassifier](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.SGDClassifier.html?highlight=sgdclassifier#sklearn.linear_model.SGDClassifier)
  - [26] [SVM com o kernel Radial Basis Function (RBF)](https://scikit-learn.org/stable/modules/svm.html#parameters-of-the-rbf-kernel)
+ - [27] [Augmented Dickey-Fuller Testing](https://arch.readthedocs.io/en/latest/unitroot/unitroot_examples.html#Augmented-Dickey-Fuller-Testing)
