@@ -151,7 +151,7 @@ Esse processo de classifcação, também como exposto no estudo mencionado acima
 
 Com o dataset terminado, foi realizada uma etapa de análise de alguns algoritmos de *Machine Learning* verificando quais dos possíveis seria viável utilizar para a classificação do conteúdo.
 
-Para que os algoritmos de *Machine Learning* entendam frases ou palavras, é necessário transformar as mesmas em representações numéricas para que os algoritmos possam aprender padrões representativos. Dessa maneira, foram avaliadas duas formas de criação de variáveis latentes, a contagem de termos por frase e TF-IDF. Para o pré-processamento foram realizadas algumas operações, como remoção de acentos e a stemização das palavras.
+Para que os algoritmos de *Machine Learning* entendam frases ou palavras, é necessário transformar as mesmas em representações numéricas para que os algoritmos possam aprender padrões representativos. Dessa maneira, foram avaliadas duas formas de criação de variáveis latentes, a contagem de termos por frase e TF-IDF[[19]](https://0bc297c6-a-62cb3a1a-s-sites.googlegroups.com/site/caonmsu/ir/UsingTFIDFtoDetermineWordRelevanceinDocumentQueries.pdf?attachauth=ANoY7cqQ_C1xICCyXD-ppatj1CW6MlI4kIFWVFW7XtDmRGuCLYpaG-pN258QaZyQmjXg3LffiSL-j8TLUcqD5cGztwFTxytiIHB-dHGFok2Z-BljRZh2iEWlgdFFOFju23CASsJEw7AmBSfcw_rAwVirZYhiqxTYDeOXAIMnE_hfhRBbLpILDyuFPr8_R1AFPLtIGQ8Gn_keVH3vWyjkp3uLSpgQb0RaKblJHnNHHifRyDETwY7TRe1drr4oGVN9S5NZH09wEf617jB5tL7-gvs5oFvOpzuzjw%3D%3D&attredirects=0).  Para o pré-processamento foram realizadas algumas operações, como remoção de acentos e a stemização das palavras.
 
 Preparadas as frases para a classificação, foram analisados quatro implementações do pacote scikit-learn (LogisticRegression, SGDClassifier, SVM com kernel linear e rbf), para validar qual seria o melhor algoritmo a ser utilizado no projeto.
 
@@ -276,25 +276,25 @@ Para realizar a validação de causalidade de Granger entre as séries, o fator 
 
 ### Evolução do Projeto
 Apos ser escolhido o nome do projeto foi percebida a necessidade de estabelecer passos desde início ao fin da implantação do projeto e foi dividido em três etapas como a figura a seguir. 
-![Figure 7. Evolução do Projeto](imagens/Covid19-Twitter-Tracker.png)
+![Figure 7. Evolução do Projeto](imagens/Covid19-Twitter-Tracker1.png)
 
 **Primeira Etapa**
 - [Definição dos termos iniciais de pesquisa de comentários](https://github.com/rdenadai/Covid19-Twitter-Tracker#defini%C3%A7%C3%A3o-dos-termos-de-busca)
-- [Coleta dos comentários usando técnicas de Natural Language Processing](https://github.com/rdenadai/Covid19-Twitter-Tracker#coleta-dos-coment%C3%A1rios)
+- [Coleta dos comentários do twitter](https://github.com/rdenadai/Covid19-Twitter-Tracker#coleta-dos-coment%C3%A1rios)
 
 A etapa inicial do projeto foi relativamente simples. Como já existiam diversas bases de dados com os números dos casos de COVID-19, bastou seguir a definição dos termos de busca dos comentários, que foram baseados na lista de sintomas disponibilizada pelo CDC (Centro de Controle e Prevenção de Doenças dos EUA) e realizar a coleta dos comentários.
 
 **Segunda Etapa**
-- [Definição do algoritmo para a Classificação dos comentários](https://github.com/rdenadai/Covid19-Twitter-Tracker#classifica%C3%A7%C3%A3o-dos-coment%C3%A1rios)
+- [Definição do algoritmo para a classificação dos comentários](https://github.com/rdenadai/Covid19-Twitter-Tracker#classifica%C3%A7%C3%A3o-dos-coment%C3%A1rios)
 - [Análise dos dados e comparação com informações de disseminação da doença](https://github.com/rdenadai/Covid19-Twitter-Tracker#an%C3%A1lise-temporal-dos-dados)
 
 Esta segunda etapa demandou um grande esforço. A classificação dos comentários seguiu metodologias de aprendizagem de máquina que já eram conhecidas pela equipe. Entretanto, a análise dos dados evidenciou estar se tratando do estudo de séries temporais, o que demandou diversas pesquisas na internet e na literatura a fim de entender como tais análises devem ser realizadas, com diversos novos conceitos. Inclusive, não havia o entendimento inicial de que tal metodologia seria seguida, muito embora o dataset principal (casos de COVID-19) seja, em si, uma série temporal.
 
 **Terceira Etapa**
-- [Criação do Relatório final/apresentação e disponibilização no Github.](https://github.com/rdenadai/Covid19-Twitter-Tracker#an%C3%A1lise-temporal-dos-dados)
+- [Criação do relatório final/apresentação e disponibilização no GitHub.](https://github.com/rdenadai/Covid19-Twitter-Tracker#an%C3%A1lise-temporal-dos-dados)
 
 
-## Resultados e Discussão
+## 4. Resultados e Discussão
 Como primeira avaliação, conforme o objetivo deste trabalho, foi analisada a causalidade entre o número de comentários positivos no Twitter e o número de casos de COVID-19.
 
 Na comparação de causalidade de Granger entre comentários positivos e novos casos da doença, passando pela etapa de validação de estacionariedade das séries, cointegração entre elas e por fim a análise do modelo VECM, foram obtidos os seguintes resultados:
@@ -424,7 +424,7 @@ Test statistic Critical value p-value df
 ----------------------------------------
 ```
 
-## Conclusões
+## 5. Conclusões
 A análise da comparação entre os comentários realizados em redes sociais e o número de casos de uma epidemia demanda estudos mais avançados e nos conduz a considerar relacionamentos que, em um primeiro instante, não estão claros.
 
 Na primeira análise realizada, não encontrou-se causalidade entre os comentários e os casos de COVID-19. Entretanto, com algumas observações, surgem possibilidades de recorte dos dados que talvez cheguem a apontar alguma causalidade. Dentro dos recortes realizados não foi possível encontrar causalidade, mas uma análise ainda mais refinada pode ser realizada. Pode-se, por exemplo, realizar um recorte socioeconômico dos casos de COVID-19, incluindo informações de acesso a Internet, e, dessa forma, talvez chegar a um resultado diferente.
@@ -433,7 +433,7 @@ Também foi possível concluir que análises estatísticas mais sofisticadas pod
 
 Com isso, conclui-se que um trabalho que analise dados de saúde pública deve sempre observar características que, em um primeiro momento, parecem não ter relação com as análises.
 
-## Trabalhos Futuros
+## 6. Trabalhos Futuros
 A partir da conclusão deste trabalho, sugerem-se alguns trabalhos futuros:
 - Realizar uma coleta de comentários mais refinada e bem distribuída. A atual coleta de comentários pode continuar sendo feita, enquanto durar a pandemia, e uma nova análise pode ser realizada futuramente;
 - Realizar a classificação de comentários do Twitter com base em um maior número de comentários rotulados previamente, ou, ainda, a construção de um dataset de comentários classificados manualmente;
@@ -460,3 +460,4 @@ A partir da conclusão deste trabalho, sugerem-se alguns trabalhos futuros:
  - [16] [Opinion Mining on Twitter Data using Unsupervised Learning Technique](https://www.ijcaonline.org/archives/volume148/number12/unnisa-2016-ijca-911317.pdf)
  - [17] [On the limited memory BFGS method for large scale optimization](https://link.springer.com/article/10.1007/BF01589116)
  - [18] [Symptoms of Coronavirus](https://www.cdc.gov/coronavirus/2019-ncov/symptoms-testing/symptoms.html)
+ - [19] [Using TF-IDF to Determine Word Relevance in Document Queries](https://0bc297c6-a-62cb3a1a-s-sites.googlegroups.com/site/caonmsu/ir/UsingTFIDFtoDetermineWordRelevanceinDocumentQueries.pdf?attachauth=ANoY7cqQ_C1xICCyXD-ppatj1CW6MlI4kIFWVFW7XtDmRGuCLYpaG-pN258QaZyQmjXg3LffiSL-j8TLUcqD5cGztwFTxytiIHB-dHGFok2Z-BljRZh2iEWlgdFFOFju23CASsJEw7AmBSfcw_rAwVirZYhiqxTYDeOXAIMnE_hfhRBbLpILDyuFPr8_R1AFPLtIGQ8Gn_keVH3vWyjkp3uLSpgQb0RaKblJHnNHHifRyDETwY7TRe1drr4oGVN9S5NZH09wEf617jB5tL7-gvs5oFvOpzuzjw%3D%3D&attredirects=0)
